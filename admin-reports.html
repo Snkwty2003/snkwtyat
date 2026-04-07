@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقارير - لوحة تحكم الإدارة</title>
+    <meta name="description" content="التقارير والإحصائيات في لوحة تحكم الإدارة">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sidebar-header h2 {
+            color: #E33E10;
+            font-size: 24px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #fff5f2;
+            color: #E33E10;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 30px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .content-header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-title {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .stat-icon.revenue {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .stat-icon.orders {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .stat-icon.users {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .stat-icon.products {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .stat-change.positive {
+            color: #388e3c;
+        }
+
+        .stat-change.negative {
+            color: #c62828;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .chart-filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-filter {
+            padding: 5px 12px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+        }
+
+        .chart-filter:hover,
+        .chart-filter.active {
+            border-color: #E33E10;
+            color: #E33E10;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .reports-table {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .reports-table h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .content-header h1 {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>لوحة الإدارة</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="fas fa-chart-line"></i> نظرة عامة</a></li>
+                <li><a href="admin-orders.html"><i class="fas fa-shopping-bag"></i> إدارة الطلبات</a></li>
+                <li><a href="admin-products.html"><i class="fas fa-box"></i> إدارة المنتجات</a></li>
+                <li><a href="admin-users.html"><i class="fas fa-users"></i> إدارة المستخدمين</a></li>
+                <li><a href="admin-reports.html" class="active"><i class="fas fa-chart-bar"></i> التقارير</a></li>
+                <li><a href="admin-settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                <li><a href="index.html"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1>التقارير والإحصائيات</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">إجمالي المبيعات</span>
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">15,420 ر.س</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12.5% من الشهر الماضي</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">عدد الطلبات</span>
+                        <div class="stat-icon orders">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">245</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8.3% من الشهر الماضي</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">المستخدمون الجدد</span>
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">128</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>15.2% من الشهر الماضي</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">المنتجات المباعة</span>
+                        <div class="stat-icon products">
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">567</div>
+                    <div class="stat-change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>3.1% من الشهر الماضي</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>المبيعات الشهرية</h3>
+                        <div class="chart-filters">
+                            <button class="chart-filter active">6 أشهر</button>
+                            <button class="chart-filter">سنة</button>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <span>سيتم عرض المخطط هنا</span>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>توزيع الفئات</h3>
+                        <div class="chart-filters">
+                            <button class="chart-filter active">اليوم</button>
+                            <button class="chart-filter">الأسبوع</button>
+                            <button class="chart-filter">الشهر</button>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>سيتم عرض المخطط هنا</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reports-table">
+                <h3>أحدث التقارير</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>رقم التقرير</th>
+                            <th>التاريخ</th>
+                            <th>النوع</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RPT-001</td>
+                            <td>2024-01-15</td>
+                            <td>تقرير المبيعات</td>
+                            <td><span style="color: #388e3c;">مكتمل</span></td>
+                            <td>
+                                <button class="btn" style="background: #e3f2fd; color: #1976d2; padding: 5px 12px; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-download"></i> تحميل
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RPT-002</td>
+                            <td>2024-01-14</td>
+                            <td>تقرير المستخدمين</td>
+                            <td><span style="color: #388e3c;">مكتمل</span></td>
+                            <td>
+                                <button class="btn" style="background: #e3f2fd; color: #1976d2; padding: 5px 12px; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-download"></i> تحميل
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RPT-003</td>
+                            <td>2024-01-13</td>
+                            <td>تقرير المنتجات</td>
+                            <td><span style="color: #f57c00;">قيد المعالجة</span></td>
+                            <td>
+                                <button class="btn" style="background: #e3f2fd; color: #1976d2; padding: 5px 12px; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-download"></i> تحميل
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

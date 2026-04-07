@@ -1,0 +1,96 @@
+/* =======================
+   CSS VARIABLES
+   ======================= */
+
+:root {
+    /* Colors */
+    --primary-color: #E33E10;
+    --primary-dark: #c9360e;
+    --primary-light: #ff6b4a;
+    --secondary-color: #2c3e50;
+    --accent-color: #3498db;
+
+    /* Text Colors */
+    --text-color: #333;
+    --text-light: #666;
+    --text-lighter: #999;
+    --text-white: #fff;
+
+    /* Background Colors */
+    --bg-light: #fffcfb;
+    --bg-white: #ffffff;
+    --bg-gray: #f5f7fa;
+    --bg-dark: #1a1a1a;
+
+    /* Border Colors */
+    --border-color: #f0f0f0;
+    --border-light: #e0e0e0;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    --gradient-secondary: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 50%;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Font Sizes */
+    --font-xs: 12px;
+    --font-sm: 14px;
+    --font-base: 16px;
+    --font-lg: 18px;
+    --font-xl: 20px;
+    --font-2xl: 24px;
+    --font-3xl: 32px;
+    --font-4xl: 48px;
+
+    /* Z-Index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-light: #1a1a1a;
+        --bg-white: #2c2c2c;
+        --bg-gray: #363636;
+        --text-color: #f5f5f5;
+        --text-light: #d4d4d4;
+        --text-lighter: #a3a3a3;
+        --border-color: #404040;
+        --border-light: #505050;
+        --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+        --shadow-md: 0 5px 15px rgba(0,0,0,0.4);
+        --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
+        --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+    }
+}

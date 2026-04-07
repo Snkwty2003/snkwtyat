@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page - قالب احترافي</title>
+<meta name="description" content="قالب Landing Page احترافي ومتجاوب">
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* =======================
+   RESET & BASE STYLES
+======================= */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+    font-family: 'Tajawal', sans-serif; 
+    margin: 0; 
+    background: #fff; 
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* =======================
+   HEADER
+======================= */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    z-index: 1000;
+    padding: 15px 30px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 24px;
+    color: #E33E10;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #E33E10;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.primary {
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+}
+
+/* =======================
+   HERO SECTION
+======================= */
+.hero {
+    height: 100vh;
+    min-height: 600px;
+    background: linear-gradient(135deg, rgba(227, 62, 16, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 900px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* =======================
+   FEATURES SECTION
+======================= */
+.features {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    margin: 0 0 15px;
+    color: #333;
+}
+
+.section-title p {
+    color: #666;
+    font-size: 18px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #f0f0f0;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+    color: #fff;
+}
+
+.feature-card h3 {
+    margin: 0 0 15px;
+    color: #E33E10;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+/* =======================
+   CTA SECTION
+======================= */
+.cta {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta h2 {
+    font-size: 36px;
+    margin: 0 0 20px;
+}
+
+.cta p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.cta .btn {
+    background: white;
+    color: #E33E10;
+}
+
+/* =======================
+   FOOTER
+======================= */
+footer {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 50px 30px 20px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    margin: 0 0 20px;
+    color: #E33E10;
+}
+
+.footer-section p {
+    color: #999;
+    line-height: 1.8;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #999;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #E33E10;
+    padding-right: 5px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    background: #E33E10;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #666;
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width:768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width:480px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="nav-container">
+        <div class="logo">✨ شنكوتيات</div>
+        <nav class="nav-links">
+            <a href="#features">المميزات</a>
+            <a href="#contact">اتصل بنا</a>
+        </nav>
+        <button class="btn primary" onclick="goBack()">العودة</button>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>ابدأ مشروعك بقوة 🚀</h1>
+        <p>قالب Landing Page احترافي ومتجاوب مع جميع الأجهزة</p>
+        <div class="hero-buttons">
+            <button class="btn primary">ابدأ الآن</button>
+            <button class="btn" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);">تعرف على المزيد</button>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features">
+    <div class="features-container">
+        <div class="section-title">
+            <h2>لماذا تختار هذا القالب؟</h2>
+            <p>مميزات تجعل موقعك يبرز عن المنافسين</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>متجاوب تماماً</h3>
+                <p>يعمل بشكل مثالي على جميع الأجهزة والشاشات</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>سريع وخفيف</h3>
+                <p>أداء عالي مع تحميل سريع للصفحات</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3>تصميم عصري</h3>
+                <p>واجهة مستخدم جذابة وسهلة الاستخدام</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>كود نظيف</h3>
+                <p>هيكل برمجي منظم وسهل التعديل</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-content">
+        <h2>جاهز للبدء؟</h2>
+        <p>احصل على هذا القالب الآن وابدأ في بناء موقعك الاحترافي</p>
+        <button class="btn">احصل على القالب</button>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>عن شنكوتيات</h3>
+            <p>منصة متخصصة في تقديم القوالب الاحترافية وخدمات التصميم المخصصة لمشاريعك الرقمية.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="#features">المميزات</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+                <li><a href="#">الأسئلة الشائعة</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>تواصل معنا</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        جميع الحقوق محفوظة © 2026 شنكوتيات
+    </div>
+</footer>
+
+<script>
+function goBack(){
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

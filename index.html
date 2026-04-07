@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة شنكوتيات - قوالب ويب احترافية جاهزة وخدمات تصميم مخصصة. ابدأ مشروعك مع أفضل القوالب المتجاوبة والسريعة.">
+    <meta name="keywords" content="قوالب ويب, تصميم مواقع, صفحات هبوط, متاجر إلكترونية, تصميم UI/UX, قوالب HTML, قوالب CSS">
+    <meta name="author" content="شنكوتيات">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#E33E10">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="شنكوتيات - منصة القوالب الاحترافية">
+    <meta property="og:description" content="قوالب ويب احترافية جاهزة وخدمات تصميم مخصصة">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://snkwtyat.com">
+    <meta property="og:image" content="https://snkwtyat.com/banner/banner.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="شنكوتيات - منصة القوالب الاحترافية">
+    <meta name="twitter:description" content="قوالب ويب احترافية جاهزة وخدمات تصميم مخصصة">
+    <meta name="twitter:image" content="https://snkwtyat.com/banner/banner.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://snkwtyat.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.ico">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="شنكوتيات">
+
+    <title>شنكوتيات - منصة القوالب الاحترافية</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/advanced.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/features.css">
+<link rel="stylesheet" href="css/stats.css">
+<link rel="stylesheet" href="css/templates.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/testimonials.css">
+<link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/faq.css">
+<link rel="stylesheet" href="css/notifications.css">
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/accessibility.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/advanced-features.css">
+
+<style>
+/* =======================
+   RESET & BASE STYLES
+======================= */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+    font-family: 'Tajawal', sans-serif; 
+    margin: 0; 
+    background: #fffcfb; 
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* =======================
+   HEADER
+======================= */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+nav.scrolled {
+    padding: 10px 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.logo { 
+    font-weight: 800; 
+    font-size: 24px; 
+    color: #E33E10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: max-height 0.4s ease;
+}
+
+nav a { 
+    text-decoration: none; 
+    color: #333; 
+    font-weight: 500; 
+    padding: 10px 15px; 
+    transition: 0.3s;
+    border-radius: 8px;
+    position: relative;
+}
+
+nav a:hover { 
+    color: #E33E10;
+    background: #fff5f2;
+}
+
+.btn { 
+    padding: 12px 25px; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    border: none; 
+    transition: 0.3s;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.primary { 
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+}
+
+.btn:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+}
+
+/* =======================
+   HERO / BANNER
+======================= */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    max-height: 600px;
+    background: url('banner/banner.png') no-repeat center center;
+    background-size: contain;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(227, 62, 16, 0.85) 0%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: 1;
+}
+
+.hero-banner .banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 0 20px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-banner h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-banner p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.hero-banner .btn {
+    margin: 0 10px;
+    padding: 15px 35px;
+    font-size: 16px;
+}
+
+.hero-banner .btn:not(.primary) {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* =======================
+   FEATURES SECTION
+======================= */
+.features-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #f0f0f0;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+    color: #fff;
+}
+
+.feature-card h3 {
+    margin: 0 0 15px;
+    color: #E33E10;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+/* =======================
+   ABOUT SECTION
+======================= */
+.about-section {
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, #fff, #fffcfb);
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-content {
+    padding: 20px;
+}
+
+.about-text {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+}
+
+.value-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.value-item i {
+    font-size: 32px;
+    color: #E33E10;
+    margin-bottom: 15px;
+}
+
+.value-item h3 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 18px;
+}
+
+.value-item p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(227, 62, 16, 0.3);
+}
+
+/* =======================
+   STATISTICS SECTION
+======================= */
+.stats-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+}
+
+.stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 24px;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* =======================
+   TEMPLATES SECTION
+======================= */
+.templates-section {
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, #fff, #fffcfb);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    margin: 0 0 15px;
+    color: #333;
+}
+
+.section-title p {
+    color: #666;
+    font-size: 18px;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.template-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border: 1px solid #f0f0f0;
+}
+
+.template-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.template-preview {
+    height: 200px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.template-preview::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(227, 62, 16, 0.1) 0%, rgba(255, 107, 74, 0.1) 100%);
+}
+
+.template-preview i {
+    font-size: 60px;
+    color: #E33E10;
+    position: relative;
+    z-index: 1;
+}
+
+.template-info {
+    padding: 25px;
+}
+
+.template-info h3 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.template-info p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.template-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.template-features span {
+    background: #fff5f2;
+    color: #E33E10;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* =======================
+   FAQ SECTION
+======================= */
+.faq-section {
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, #fff, #fffcfb);
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: #fff;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.faq-item:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.faq-question {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.faq-question:hover {
+    background: #fff5f2;
+}
+
+.faq-question h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.faq-question i {
+    color: #E33E10;
+    transition: 0.3s;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
+.faq-answer p {
+    padding: 0 25px 20px;
+    margin: 0;
+    color: #666;
+    line-height: 1.8;
+}
+
+/* =======================
+   TESTIMONIALS SECTION
+======================= */
+.testimonials-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border: 1px solid #f0f0f0;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+.testimonial-info h4 {
+    margin: 0 0 5px;
+    color: #333;
+}
+
+.testimonial-info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.testimonial-rating {
+    margin-right: auto;
+    color: #ffc107;
+}
+
+.testimonial-text {
+    color: #666;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+/* =======================
+   NEWSLETTER SECTION
+======================= */
+.newsletter-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+}
+
+.newsletter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.newsletter-content h2 {
+    font-size: 36px;
+    margin: 0 0 15px;
+}
+
+.newsletter-content p {
+    font-size: 18px;
+    opacity: 0.95;
+    margin-bottom: 30px;
+}
+
+.newsletter-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.newsletter-input-group input {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+}
+
+.newsletter-input-group input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-input-group button {
+    padding: 15px 30px;
+    white-space: nowrap;
+}
+
+/* =======================
+   CONTACT SECTION
+======================= */
+.contact-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.contact-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 40px;
+}
+
+.contact-form {
+    display: grid;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 15px;
+    border: 2px solid #f0f0f0;
+    border-radius: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #E33E10;
+    box-shadow: 0 0 0 3px rgba(227, 62, 16, 0.1);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* =======================
+   FOOTER
+======================= */
+footer {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 50px 30px 20px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    margin: 0 0 20px;
+    color: #E33E10;
+}
+
+.footer-section p {
+    color: #999;
+    line-height: 1.8;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #999;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #E33E10;
+    padding-right: 5px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    background: #E33E10;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #666;
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =======================
+   SCROLL ANIMATIONS
+======================= */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animation delay for grid items */
+.features-grid .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.features-grid .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.features-grid .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+.features-grid .animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+
+.templates-grid .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.templates-grid .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.templates-grid .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width:768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 24px;
+        margin-top: 10px;
+        color: #E33E10;
+        align-self: flex-end;
+    }
+
+    nav .nav-links {
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+        max-height: 0;
+        padding: 0;
+    }
+
+    nav .nav-links.show {
+        max-height: 500px;
+        padding: 10px 0;
+    }
+
+    .hero-banner {
+        background: url('banner/banner1.png') no-repeat center center;
+        background-size: cover;
+        min-height: 500px;
+    }
+
+    .hero-banner h1 {
+        font-size: 36px;
+    }
+
+    .hero-banner p {
+        font-size: 16px;
+    }
+
+    .hero-banner .btn {
+        padding: 12px 25px;
+        font-size: 14px;
+        margin: 5px;
+    }
+
+    .features-section,
+    .templates-section,
+    .contact-section {
+        padding: 50px 15px;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+
+    .contact-container {
+        padding: 25px;
+    }
+}
+
+@media (max-width:480px) {
+    .hero-banner h1 {
+        font-size: 28px;
+    }
+
+    .hero-banner p {
+        font-size: 14px;
+    }
+
+    .features-grid,
+    .templates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =======================
+   TOAST NOTIFICATION
+======================= */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #4CAF50;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+/* =======================
+   SCROLL PROGRESS BAR
+======================= */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #E33E10 0%, #ff6b4a 100%);
+    z-index: 10001;
+    transition: width 0.3s ease;
+}
+
+/* =======================
+   BACK TO TOP BUTTON
+======================= */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+    box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- BACK TO TOP BUTTON -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- NAV -->
+<nav class="navbar" role="navigation" aria-label="القائمة الرئيسية">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-palette" aria-hidden="true"></i>
+            <span>شنكوتيات</span>
+        </div>
+
+        <div class="nav-links" role="menubar">
+            <a href="#features" class="nav-link" role="menuitem">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <span>المميزات</span>
+            </a>
+            <a href="#templates" class="nav-link" role="menuitem">
+                <i class="fas fa-th-large" aria-hidden="true"></i>
+                <span>القوالب</span>
+            </a>
+            <a href="#about" class="nav-link" role="menuitem">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                <span>من نحن</span>
+            </a>
+            <a href="#contact" class="nav-link" role="menuitem">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <span>اطلب تصميم</span>
+            </a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-outline btn-lg" aria-label="انتقل إلى صفحة تسجيل الدخول">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <button class="btn btn-primary btn-lg" onclick="goTemplates()" aria-label="ابدأ باستخدام قالب">
+                <i class="fas fa-rocket" aria-hidden="true"></i>
+                <span>ابدأ الآن</span>
+            </button>
+        </div>
+
+        <button class="mobile-menu-toggle" onclick="toggleMenu()" aria-label="فتح القائمة" aria-expanded="false">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO / BANNER -->
+<section class="hero-banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-particles"></div>
+    <div class="banner-content">
+        <div class="badge-container">
+            <span class="badge-new">جديد</span>
+            <span class="badge-hot">الأكثر مبيعاً</span>
+        </div>
+        <h1 class="animate-fade-in-up">
+            <span class="gradient-text">ابدأ مشروعك</span><br>
+            بسهولة واحترافية
+        </h1>
+        <p class="animate-fade-in-up" style="animation-delay: 0.2s;">
+            اختر من بين قوالبنا الجاهزة أو اطلب تصميم خاص يناسب احتياجاتك
+        </p>
+        <div class="banner-buttons animate-fade-in-up" style="animation-delay: 0.4s;">
+            <button class="btn btn-primary btn-lg" onclick="goTemplates()">
+                <i class="fas fa-rocket"></i> ابدأ بقالب
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="goContact()">
+                <i class="fas fa-pencil-alt"></i> طلب تصميم
+            </button>
+        </div>
+        <div class="banner-stats animate-fade-in-up" style="animation-delay: 0.6s;">
+            <div class="stat-item">
+                <div class="stat-number" data-counter="500">0</div>
+                <div class="stat-label">عميل سعيد</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-counter="350">0</div>
+                <div class="stat-label">مشروع منجز</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-counter="98">0</div>
+                <div class="stat-label">% نسبة الرضا</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">لماذا تختار شنكوتيات؟</h2>
+        <p>نقدم لك أفضل الحلول لتطوير مشروعك الرقمي</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card" data-animate style="animation-delay: 0.1s;">
+            <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>سرعة في التنفيذ</h3>
+            <p>قوالب جاهزة قابلة للتخصيص بسرعة، مما يوفر عليك الوقت والجهد في بناء موقعك من الصفر</p>
+            <div class="feature-details">
+                <span class="badge badge-success">جاهز للاستخدام</span>
+                <span class="badge badge-info">تخصيص سريع</span>
+            </div>
+        </div>
+
+        <div class="feature-card" data-animate style="animation-delay: 0.2s;">
+            <div class="feature-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>تصميم متجاوب</h3>
+            <p>جميع قوالبنا متجاوبة مع جميع الأجهزة والشاشات، مما يضمن تجربة مستخدم مثالية لزوار موقعك</p>
+            <div class="feature-details">
+                <span class="badge badge-primary">موبايل</span>
+                <span class="badge badge-secondary">تابلت</span>
+                <span class="badge badge-info">ديسكتوب</span>
+            </div>
+        </div>
+
+        <div class="feature-card" data-animate style="animation-delay: 0.3s;">
+            <div class="feature-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <h3>تصميم احترافي</h3>
+            <p>قوالب مصممة بأحدث معايير التصميم الحديث، مع التركيز على تجربة المستخدم وجاذبية المظهر</p>
+            <div class="feature-details">
+                <span class="badge badge-warning">UX/UI</span>
+                <span class="badge badge-success">حديث</span>
+            </div>
+        </div>
+
+        <div class="feature-card" data-animate style="animation-delay: 0.4s;">
+            <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h3>دعم فني مستمر</h3>
+            <p>فريق دعم فني متخصص جاهز لمساعدتك في أي وقت وحل جميع استفساراتك ومشاكلك التقنية</p>
+            <div class="feature-details">
+                <span class="badge badge-primary">24/7</span>
+                <span class="badge badge-info">فريق محترف</span>
+            </div>
+        </div>
+
+        <div class="feature-card" data-animate style="animation-delay: 0.5s;">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>أمان عالي</h3>
+            <p>نستخدم أحدث تقنيات الأمان لحماية موقعك وبيانات عملائك من أي تهديدات محتملة</p>
+            <div class="feature-details">
+                <span class="badge badge-success">SSL</span>
+                <span class="badge badge-warning">HTTPS</span>
+            </div>
+        </div>
+
+        <div class="feature-card" data-animate style="animation-delay: 0.6s;">
+            <div class="feature-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h3>أداء عالي</h3>
+            <p>قوالب محسنة للأداء السريع، مما يحسن تجربة المستخدم ويساعد في تصدر نتائج البحث</p>
+            <div class="feature-details">
+                <span class="badge badge-primary">SEO</span>
+                <span class="badge badge-info">سريع</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATISTICS -->
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item" data-animate style="animation-delay: 0.1s;">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number" data-counter="500" data-duration="2000">0</div>
+            <div class="stat-label">عميل سعيد</div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+15% هذا الشهر</span>
+            </div>
+        </div>
+        <div class="stat-item" data-animate style="animation-delay: 0.2s;">
+            <div class="stat-icon">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="stat-number" data-counter="350" data-duration="2000">0</div>
+            <div class="stat-label">مشروع منجز</div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+20% هذا الشهر</span>
+            </div>
+        </div>
+        <div class="stat-item" data-animate style="animation-delay: 0.3s;">
+            <div class="stat-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-number" data-counter="98" data-duration="2000">0</div>
+            <div class="stat-label">% نسبة الرضا</div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+5% هذا الشهر</span>
+            </div>
+        </div>
+        <div class="stat-item" data-animate style="animation-delay: 0.4s;">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-number" data-counter="5" data-duration="2000">0</div>
+            <div class="stat-label">سنوات خبرة</div>
+            <div class="stat-trend">
+                <i class="fas fa-check"></i>
+                <span>خبرة متخصصة</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="templates-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">قوالبنا الجاهزة</h2>
+        <p>اختر القالب المناسب لمشروعك وابدأ العمل فوراً</p>
+    </div>
+
+    <div class="templates-grid">
+        <div class="template-card" data-animate style="animation-delay: 0.1s;">
+            <div class="template-badge">
+                <span class="badge badge-hot">الأكثر مبيعاً</span>
+            </div>
+            <div class="template-preview">
+                <i class="fas fa-rocket"></i>
+                <div class="template-overlay">
+                    <button class="btn btn-primary" onclick="useTemplate('Landing')">
+                        <i class="fas fa-eye"></i> معاينة
+                    </button>
+                </div>
+            </div>
+            <div class="template-info">
+                <h3>Landing Page</h3>
+                <p>قالب صفحة هبوط احترافي مثالي للمنتجات والخدمات</p>
+                <div class="template-features">
+                    <span class="badge badge-success">تصميم متجاوب</span>
+                    <span class="badge badge-info">سريع التحميل</span>
+                    <span class="badge badge-primary">سهل التخصيص</span>
+                </div>
+                <div class="template-price">
+                    <span class="price">$29.99</span>
+                    <button class="btn btn-primary" onclick="useTemplate('Landing')">
+                        <i class="fas fa-shopping-cart"></i> اشترِ الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-animate style="animation-delay: 0.2s;">
+            <div class="template-badge">
+                <span class="badge badge-new">جديد</span>
+            </div>
+            <div class="template-preview">
+                <i class="fas fa-store"></i>
+                <div class="template-overlay">
+                    <button class="btn btn-primary" onclick="useTemplate('Store')">
+                        <i class="fas fa-eye"></i> معاينة
+                    </button>
+                </div>
+            </div>
+            <div class="template-info">
+                <h3>متجر إلكتروني</h3>
+                <p>قالب متجر إلكتروني متكامل مع نظام سلة تسوق</p>
+                <div class="template-features">
+                    <span class="badge badge-success">نظام سلة</span>
+                    <span class="badge badge-info">بوابة دفع</span>
+                    <span class="badge badge-primary">لوحة تحكم</span>
+                </div>
+                <div class="template-price">
+                    <span class="price">$49.99</span>
+                    <button class="btn btn-primary" onclick="useTemplate('Store')">
+                        <i class="fas fa-shopping-cart"></i> اشترِ الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-animate style="animation-delay: 0.3s;">
+            <div class="template-badge">
+                <span class="badge badge-warning">مميز</span>
+            </div>
+            <div class="template-preview">
+                <i class="fas fa-building"></i>
+                <div class="template-overlay">
+                    <button class="btn btn-primary" onclick="useTemplate('Company')">
+                        <i class="fas fa-eye"></i> معاينة
+                    </button>
+                </div>
+            </div>
+            <div class="template-info">
+                <h3>موقع شركة</h3>
+                <p>قالب احترافي للشركات والمشاريع الكبيرة</p>
+                <div class="template-features">
+                    <span class="badge badge-success">صفحات متعددة</span>
+                    <span class="badge badge-info">معرض أعمال</span>
+                    <span class="badge badge-primary">اتصال بنا</span>
+                </div>
+                <div class="template-price">
+                    <span class="price">$39.99</span>
+                    <button class="btn btn-primary" onclick="useTemplate('Company')">
+                        <i class="fas fa-shopping-cart"></i> اشترِ الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+    <div class="about-container">
+        <div class="about-content" data-animate>
+            <div class="section-title">
+                <h2 class="gradient-text">من نحن</h2>
+                <p>تعرف على رحلتنا وقيمنا</p>
+            </div>
+            <div class="about-text">
+                <p>نحن فريق من المصممين والمطورين المحترفين، نعمل معاً لتقديم حلول رقمية مبتكرة تساعدك على تحقيق أهدافك. بدأنا رحلتنا في عام 2018 بشغف بسيط نحو التصميم، واليوم نحن فخورون بكوننا منصة رائدة في مجال القوالب الجاهزة وخدمات التصميم المخصص.</p>
+                <p>نؤمن بأن التصميم الجيد ليس مجرد شكل جميل، بل هو تجربة متكاملة تجمع بين الجمال والوظائف. نسعى دائماً لفهم احتياجات عملائنا وتحويل أفكارهم إلى واقع رقمي متميز.</p>
+            </div>
+            <div class="about-values">
+                <div class="value-item" data-animate style="animation-delay: 0.1s;">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>الإبداع</h3>
+                    <p>نبتكر حلولاً فريدة تميزك عن المنافسين</p>
+                </div>
+                <div class="value-item" data-animate style="animation-delay: 0.2s;">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>الشفافية</h3>
+                    <p>نكون واضحين مع عملائنا في كل مرحلة من مراحل المشروع</p>
+                </div>
+                <div class="value-item" data-animate style="animation-delay: 0.3s;">
+                    <div class="value-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>الجودة</h3>
+                    <p>نلتزم بأعلى معايير الجودة في كل ما نقدمه</p>
+                </div>
+                <div class="value-item" data-animate style="animation-delay: 0.4s;">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>العمل الجماعي</h3>
+                    <p>نعمل كفريق واحد لتحقيق أفضل النتائج</p>
+                </div>
+                <div class="value-item" data-animate style="animation-delay: 0.5s;">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>السرعة</h3>
+                    <p>نلتزم بالمواعيد النهائية ونسلم في الوقت المحدد</p>
+                </div>
+                <div class="value-item" data-animate style="animation-delay: 0.6s;">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>الاهتمام</h3>
+                    <p>نهتم بكل تفاصيل مشروعك ونقدم الدعم المستمر</p>
+                </div>
+            </div>
+        </div>
+        <div class="about-image" data-animate style="animation-delay: 0.2s;">
+            <div class="image-wrapper">
+                <div class="image-content">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="image-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-counter="500" data-duration="2000">0</span>
+                        <span class="stat-label">مشروع</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-counter="350" data-duration="2000">0</span>
+                        <span class="stat-label">عميل</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">ماذا يقول عملاؤنا؟</h2>
+        <p>آراء حقيقية من عملاء راضين عن خدماتنا</p>
+    </div>
+    <div class="testimonials-container">
+        <div class="testimonial-card" data-animate style="animation-delay: 0.1s;">
+            <div class="testimonial-badge">
+                <span class="badge badge-success">موثق</span>
+            </div>
+            <div class="testimonial-header">
+                <div class="testimonial-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="testimonial-info">
+                    <h4>أحمد محمد</h4>
+                    <p>رائد أعمال</p>
+                    <div class="testimonial-date">
+                        <i class="fas fa-calendar"></i> قبل شهر
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="testimonial-text">"خدمة ممتازة وجودة عالية في التصميم. أنصح بشدة بالتعامل معهم لأي مشروع تصميم."</p>
+            <div class="testimonial-footer">
+                <span class="badge badge-primary">Landing Page</span>
+                <span class="badge badge-info">تصميم مخصص</span>
+            </div>
+        </div>
+
+        <div class="testimonial-card" data-animate style="animation-delay: 0.2s;">
+            <div class="testimonial-badge">
+                <span class="badge badge-success">موثق</span>
+            </div>
+            <div class="testimonial-header">
+                <div class="testimonial-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="testimonial-info">
+                    <h4>سارة العلي</h4>
+                    <p>صاحبة متجر إلكتروني</p>
+                    <div class="testimonial-date">
+                        <i class="fas fa-calendar"></i> قبل أسبوعين
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="testimonial-text">"القوالب سهلة التخصيص والفريق دائماً متاح للمساعدة. تجربة رائعة بكل المقاييس."</p>
+            <div class="testimonial-footer">
+                <span class="badge badge-primary">متجر إلكتروني</span>
+                <span class="badge badge-info">دعم فني</span>
+            </div>
+        </div>
+
+        <div class="testimonial-card" data-animate style="animation-delay: 0.3s;">
+            <div class="testimonial-badge">
+                <span class="badge badge-success">موثق</span>
+            </div>
+            <div class="testimonial-header">
+                <div class="testimonial-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="testimonial-info">
+                    <h4>خالد الحربي</h4>
+                    <p>مدير تسويق</p>
+                    <div class="testimonial-date">
+                        <i class="fas fa-calendar"></i> قبل ثلاثة أسابيع
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="testimonial-text">"سرعة في التنفيذ وجودة في العمل. فريق محترف يعرف كيف يحقق توقعات العملاء."</p>
+            <div class="testimonial-footer">
+                <span class="badge badge-primary">موقع شركة</span>
+                <span class="badge badge-info">تصميم UI/UX</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">الأسئلة الشائعة</h2>
+        <p>إجابات على أكثر الأسئلة شيوعاً حول خدماتنا</p>
+    </div>
+    <div class="faq-container">
+        <div class="faq-item" data-animate style="animation-delay: 0.1s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>ما هي مدة تنفيذ المشروع؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>تختلف مدة التنفيذ حسب حجم المشروع ومتطلباته. عادةً ما تتراوح المدة بين 3-7 أيام للقوالب الجاهزة، و2-4 أسابيع للمشاريع المخصصة.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-info">سريع</span>
+                    <span class="badge badge-success">موثوق</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-animate style="animation-delay: 0.2s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>هل يمكنني تعديل القالب بعد الشراء؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>نعم، جميع قوالبنا قابلة للتخصيص بالكامل. ستحصل على كود المصدر الكامل ويمكنك تعديله حسب احتياجاتك.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-primary">قابل للتخصيص</span>
+                    <span class="badge badge-success">مفتوح المصدر</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-animate style="animation-delay: 0.3s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>هل تقدمون دعماً فنياً بعد الشراء؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>نعم، نقدم دعماً فنياً مجانياً لمدة 30 يوماً بعد الشراء. يمكنك أيضاً الاشتراك في خطط الدعم الممتد.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-success">دعم 24/7</span>
+                    <span class="badge badge-info">مجاني</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-animate style="animation-delay: 0.4s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>ما هي طرق الدفع المتاحة؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>نقبل جميع طرق الدفع الرئيسية بما في ذلك البطاقات الائتمانية، التحويل البنكي، وخدمات الدفع الإلكتروني مثل PayPal وStripe.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-primary">آمن</span>
+                    <span class="badge badge-success">متعدد</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-animate style="animation-delay: 0.5s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>هل القوالب متجاوبة مع الأجهزة المختلفة؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>نعم، جميع قوالبنا مصممة لتكون متجاوبة بالكامل مع جميع الأجهزة والشاشات، من الهواتف الذكية إلى أجهزة الكمبيوتر المكتبية.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-success">متجاوب</span>
+                    <span class="badge badge-info">حديث</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-animate style="animation-delay: 0.6s;">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="faq-content">
+                    <h3>هل تقدمون ضماناً على القوالب؟</h3>
+                </div>
+                <div class="faq-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="faq-answer">
+                <p>نعم، نقدم ضماناً لمدة 30 يوماً على جميع قوالبنا. إذا واجهت أي مشاكل تقنية لا يمكن حلها، سنقوم برد المبلغ بالكامل.</p>
+                <div class="faq-tags">
+                    <span class="badge badge-success">ضمان</span>
+                    <span class="badge badge-info">استرداد</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">اطلب تصميم خاص</h2>
+        <p>هل تحتاج إلى تصميم مخصص؟ تواصل معنا وسنكون سعداء بمساعدتك</p>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-info" data-animate style="animation-delay: 0.1s;">
+            <div class="contact-details">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>البريد الإلكتروني</h3>
+                        <p>info@snkwtyat.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>الهاتف</h3>
+                        <p>+966 50 123 4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>ساعات العمل</h3>
+                        <p>الأحد - الخميس: 9:00 ص - 6:00 م</p>
+                    </div>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://facebook.com/snkwtyat" class="social-link" title="فيسبوك" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/snkwtyat" class="social-link" title="تويتر" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/snkwtyat" class="social-link" title="انستغرام" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/company/snkwtyat" class="social-link" title="لينكد إن" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+
+        <form class="contact-form" data-animate style="animation-delay: 0.2s;" onsubmit="sendForm(event)" novalidate>
+            <div class="form-group">
+                <label for="fullName">الاسم الكامل <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" placeholder="أدخل اسمك الكامل" required 
+                       aria-required="true" aria-describedby="fullNameFeedback"
+                       pattern="[\u0600-\u06FF\s]{3,50}" title="الاسم يجب أن يكون بالعربية و بين 3-50 حرف">
+                <div class="form-feedback" id="fullNameFeedback" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required 
+                       aria-required="true" aria-describedby="emailFeedback"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="أدخل بريد إلكتروني صحيح">
+                <div class="form-feedback" id="emailFeedback" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">رقم الهاتف <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required 
+                       aria-required="true" aria-describedby="phoneFeedback"
+                       pattern="^[0-9+\-\s]{8,20}$" title="أدخل رقم هاتف صحيح">
+                <div class="form-feedback" id="phoneFeedback" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="serviceType">نوع الخدمة <span class="required">*</span></label>
+                <select id="serviceType" name="serviceType" required aria-required="true" 
+                        aria-describedby="serviceTypeFeedback">
+                    <option value="">اختر الخدمة المطلوبة</option>
+                    <option value="landing">صفحة هبوط</option>
+                    <option value="website">موقع كامل</option>
+                    <option value="store">متجر إلكتروني</option>
+                    <option value="ui">تصميم واجهة مستخدم</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <div class="form-feedback" id="serviceTypeFeedback" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="projectDetails">تفاصيل المشروع <span class="required">*</span></label>
+                <textarea id="projectDetails" name="projectDetails" 
+                          placeholder="اكتب تفاصيل مشروعك ومتطلباتك بالتفصيل" required 
+                          aria-required="true" aria-describedby="projectDetailsFeedback"
+                          minlength="10" maxlength="500" 
+                          title="اكتب بين 10-500 حرف"></textarea>
+                <div class="form-feedback" id="projectDetailsFeedback" role="alert" aria-live="polite"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" 
+                    aria-label="إرسال طلب تصميم">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i> إرسال الطلب
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+    <div class="newsletter-container">
+        <div class="newsletter-content" data-animate>
+            <div class="newsletter-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <h2 class="gradient-text">اشترك في نشرتنا البريدية</h2>
+            <p>احصل على آخر الأخبار والعروض والقوالب الجديدة مباشرة في بريدك الإلكتروني</p>
+            <div class="newsletter-benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>قوالب جديدة أسبوعياً</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>عروض حصرية للمشتركين</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>نصائح وتوجيهات احترافية</span>
+                </div>
+            </div>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)" novalidate>
+                <div class="newsletter-input-group">
+                    <input type="email" id="newsletterEmail" name="email" 
+                           placeholder="أدخل بريدك الإلكتروني" required 
+                           aria-required="true" aria-describedby="newsletterEmailFeedback"
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                           title="أدخل بريد إلكتروني صحيح">
+                    <button type="submit" class="btn btn-primary btn-lg" aria-label="اشترك في النشرة البريدية">
+                        <i class="fas fa-paper-plane" aria-hidden="true"></i> اشترك الآن
+                    </button>
+                </div>
+                <div class="form-feedback" id="newsletterEmailFeedback" role="alert" aria-live="polite"></div>
+                <div class="newsletter-privacy">
+                    <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
+                    <label for="privacy">أوافق على <a href="privacy.html" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a> و <a href="terms.html" target="_blank" rel="noopener noreferrer">شروط الاستخدام</a></label>
+                </div>
+            </form>
+            <div class="newsletter-stats">
+                <div class="stat">
+                    <span class="stat-number" data-counter="5000" data-duration="2000">0</span>
+                    <span class="stat-label">مشترك</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-counter="150" data-duration="2000">0</span>
+                    <span class="stat-label">نشرة</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <i class="fas fa-palette"></i>
+                <h3>شنكوتيات</h3>
+            </div>
+            <p>منصة رائدة في مجال توفير القوالب الجاهزة وخدمات التصميم المخصص، نساعدك على تحويل أفكارك إلى واقع رقمي متميز.</p>
+            <div class="social-links">
+                <a href="https://facebook.com/snkwtyat" class="social-link" title="فيسبوك" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/snkwtyat" class="social-link" title="تويتر" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/snkwtyat" class="social-link" title="انستغرام" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/company/snkwtyat" class="social-link" title="لينكد إن" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://youtube.com/snkwtyat" class="social-link" title="يوتيوب" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h3>روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="#features">المميزات</a></li>
+                <li><a href="#templates">القوالب</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#contact">اطلب تصميم</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>خدماتنا</h3>
+            <ul class="footer-links">
+                <li><a href="#contact" onclick="selectService('landing')">تصميم صفحات هبوط</a></li>
+                <li><a href="#contact" onclick="selectService('website')">تصميم مواقع</a></li>
+                <li><a href="#contact" onclick="selectService('store')">متاجر إلكترونية</a></li>
+                <li><a href="#contact" onclick="selectService('ui')">تصميم واجهة مستخدم</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>تواصل معنا</h3>
+            <ul class="footer-links">
+                <li><i class="fas fa-envelope"></i> info@snkwtyat.com</li>
+                <li><i class="fas fa-phone"></i> +966 50 123 4567</li>
+                <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <p>جميع الحقوق محفوظة © 2026 شنكوتيات</p>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">سياسة الخصوصية</a>
+                <a href="terms.html">شروط الاستخدام</a>
+                <a href="#contact" onclick="showFaqModal()">الأسئلة الشائعة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast" class="toast"></div>
+
+<script src="js/navbar.js"></script>
+<script src="js/advanced.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/form-validator.js"></script>
+<script src="js/counters.js"></script>
+<script src="js/search.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/reviews.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+// Scroll Progress & Back to Top
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = (scrollTop / scrollHeight) * 100;
+    document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    
+    const backToTop = document.getElementById('backToTop');
+    if (scrollTop > 300) {
+        backToTop.classList.add('show');
+    } else {
+        backToTop.classList.remove('show');
+    }
+});
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Navigation Functions
+function goTemplates(){
+    document.getElementById("templates").scrollIntoView({behavior:"smooth"});
+}
+
+function goContact(){
+    document.getElementById("contact").scrollIntoView({behavior:"smooth"});
+}
+
+function useTemplate(name){
+    if(name === "Landing"){
+        window.location.href = "template-landing.html";
+    } else if(name === "Store"){
+        window.location.href = "template-store.html";
+    }
+}
+
+// Newsletter Subscription with validation
+function subscribeNewsletter(e) {
+    e.preventDefault();
+
+    try {
+        const form = e.target;
+        const emailInput = document.getElementById('newsletterEmail');
+        const email = emailInput ? emailInput.value : '';
+        const privacyCheckbox = document.getElementById('privacy');
+
+        // Validate email
+        if (!email || !isValidEmail(email)) {
+            showValidationError('newsletterEmail', 'البريد الإلكتروني غير صحيح');
+            return;
+        }
+
+        // Validate privacy checkbox
+        if (!privacyCheckbox || !privacyCheckbox.checked) {
+            showToast('يجب الموافقة على سياسة الخصوصية', 'error');
+            return;
+        }
+
+        // Sanitize email
+        const sanitizedEmail = sanitizeInput(email);
+
+        // Here you would typically send data to server
+        // For demo purposes, we'll just show success message
+        showToast('تم الاشتراك في النشرة البريدية بنجاح! 🎉');
+        form.reset();
+
+        // Clear validation messages
+        clearValidationMessages(form);
+    } catch (error) {
+        console.error('Error subscribing to newsletter:', error);
+        showToast('حدث خطأ أثناء الاشتراك. يرجى المحاولة مرة أخرى.', 'error');
+    }
+}
+
+// Form Handling with XSS Protection
+function sendForm(e){
+    e.preventDefault();
+
+    try {
+        const form = e.target;
+        const formData = new FormData(form);
+        const data = {};
+
+        // Sanitize form data
+        for (let [key, value] of formData.entries()) {
+            data[key] = sanitizeInput(value);
+        }
+
+        // Validate form data
+        if (!validateForm(data)) {
+            return;
+        }
+
+        // Here you would typically send data to server
+        // For demo purposes, we'll just show success message
+        showToast("تم إرسال طلبك بنجاح! سنتواصل معك قريباً ✅");
+        form.reset();
+
+        // Clear any validation messages
+        clearValidationMessages(form);
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        showToast('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى.');
+    }
+}
+
+// Menu Toggle with ARIA support
+function toggleMenu(){
+    const menu = document.querySelector('.nav-links');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    const isExpanded = menu.classList.toggle('show');
+
+    // Update ARIA attributes
+    if (toggleBtn) {
+        toggleBtn.setAttribute('aria-expanded', isExpanded);
+        toggleBtn.setAttribute('aria-label', isExpanded ? 'إغلاق القائمة' : 'فتح القائمة');
+    }
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = isExpanded ? 'hidden' : '';
+}
+
+function closeMenu(){
+    const menu = document.querySelector('.nav-links');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+
+    if(menu.classList.contains('show')){
+        menu.classList.remove('show');
+
+        // Update ARIA attributes
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('aria-label', 'فتح القائمة');
+        }
+
+        // Restore body scroll
+        document.body.style.overflow = '';
+    }
+}
+
+// Toast Notification with error handling
+function showToast(message, type = 'success'){
+    try {
+        const toast = document.getElementById('toast');
+        if (!toast) {
+            console.warn('Toast element not found');
+            return;
+        }
+
+        // Sanitize message
+        const sanitizedMessage = sanitizeInput(message);
+        toast.textContent = sanitizedMessage;
+
+        // Set toast type
+        toast.className = 'toast';
+        toast.classList.add(type === 'error' ? 'error' : 'success');
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    } catch (error) {
+        console.error('Error showing toast:', error);
+    }
+}
+
+// Input sanitization function
+function sanitizeInput(input) {
+    if (typeof input !== 'string') return input;
+
+    // Remove potentially dangerous HTML tags and attributes
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML;
+}
+
+// Form validation function
+function validateForm(data) {
+    let isValid = true;
+
+    // Validate required fields
+    const requiredFields = ['fullName', 'email', 'phone', 'serviceType', 'projectDetails'];
+    requiredFields.forEach(field => {
+        if (!data[field] || data[field].trim() === '') {
+            showValidationError(field, 'هذا الحقل مطلوب');
+            isValid = false;
+        }
+    });
+
+    // Validate email format
+    if (data.email && !isValidEmail(data.email)) {
+        showValidationError('email', 'البريد الإلكتروني غير صحيح');
+        isValid = false;
+    }
+
+    // Validate phone format
+    if (data.phone && !isValidPhone(data.phone)) {
+        showValidationError('phone', 'رقم الهاتف غير صحيح');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+// Email validation
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
+// Phone validation
+function isValidPhone(phone) {
+    const phoneRegex = /^[0-9+\-\s]{8,20}$/;
+    return phoneRegex.test(phone);
+}
+
+// Show validation error
+function showValidationError(fieldId, message) {
+    const feedbackElement = document.getElementById(`${fieldId}Feedback`);
+    if (feedbackElement) {
+        feedbackElement.textContent = message;
+        feedbackElement.style.display = 'block';
+    }
+}
+
+// Clear validation messages
+function clearValidationMessages(form) {
+    const feedbackElements = form.querySelectorAll('.form-feedback');
+    feedbackElements.forEach(element => {
+        element.textContent = '';
+        element.style.display = 'none';
+    });
+}
+
+// Animated Counter
+
+        
+      
+
+// FAQ Toggle
+function toggleFaq(element) {
+    const faqItem = element.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Open clicked item if it wasn't active
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
+// Scroll Animations
+function initScrollAnimations() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Initialize scroll animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', initScrollAnimations);
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Select service in contact form
+function selectService(serviceType) {
+    const serviceSelect = document.getElementById('serviceType');
+    if (serviceSelect) {
+        serviceSelect.value = serviceType;
+        // Scroll to contact section
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+// Show FAQ modal
+function showFaqModal() {
+    alert(`الأسئلة الشائعة:
+1. كيف يمكنني طلب تصميم؟
+- يمكنك ملء نموذج الاتصال واختيار الخدمة المطلوبة
+2. كم تستغرق عملية التصميم؟
+- عادةً من 3 إلى 7 أيام
+3. هل يوجد دعم فني؟
+- نعم، دعم لمدة 30 يوم`);
+}
+</script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyCzlJRfoFi8jBevT6fZb6cMTcEslOazmN8",
+  authDomain: "snkwtyat.firebaseapp.com",
+  projectId: "snkwtyat"
+});
+
+const db = firebase.firestore();
+
+// Test Counter Section
+document.addEventListener('DOMContentLoaded', () => {
+    const testStat = document.getElementById('testCounter');
+    if (testStat) {
+        testStat.addEventListener('click', () => {
+            animateCounters(testStat);
+            showToast('تم تفعيل العداد التجريبي!', 'success');
+        });
+    }
+});
+</script>
+
+<!-- Test Counter Section -->
+<section style="text-align:center; margin-top:50px; padding: 40px 20px;">
+    <h2>اختبار العدادات التفاعلية</h2>
+    <div id="testCounter" class="stat" style="cursor:pointer; display:inline-block; margin:20px;">
+        <span class="stat-number" data-target="100">0</span>
+        <span class="stat-label">مشترك تجريبي</span>
+    </div>
+</section>
+
+</body>
+</html>

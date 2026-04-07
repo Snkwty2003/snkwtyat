@@ -1,0 +1,351 @@
+/* =======================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================= */
+
+/* Skip Links */
+.skip-links {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background: #E33E10;
+    color: #fff;
+    padding: 12px 20px;
+    text-align: center;
+    transition: top 0.3s;
+}
+
+.skip-links:focus {
+    top: 0;
+}
+
+.skip-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Focus States */
+*:focus {
+    outline: 2px solid #E33E10;
+    outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid #E33E10;
+    outline-offset: 2px;
+}
+
+/* Buttons Focus */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #E33E10;
+    outline-offset: 2px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    * {
+        border-width: 2px !important;
+    }
+
+    .btn {
+        border: 2px solid currentColor !important;
+    }
+
+    .notification {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* Keyboard Navigation */
+.keyboard-nav-visible {
+    outline: 2px solid #E33E10;
+    outline-offset: 2px;
+}
+
+/* Tab Order */
+[tabindex="-1"] {
+    outline: none;
+}
+
+/* ARIA Live Regions */
+[aria-live="polite"],
+[aria-live="assertive"] {
+    position: relative;
+}
+
+/* Color Contrast Improvements */
+.text-high-contrast {
+    color: #000000;
+}
+
+.bg-high-contrast {
+    background: #ffffff;
+}
+
+/* Form Accessibility */
+.form-group input[aria-invalid="true"],
+.form-group select[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.form-group input[aria-invalid="false"],
+.form-group select[aria-invalid="false"],
+.form-group textarea[aria-invalid="false"] {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+/* Error Messages */
+[role="alert"] {
+    color: #ef4444;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Success Messages */
+[role="status"] {
+    color: #10b981;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Link Accessibility */
+a:focus {
+    text-decoration: underline;
+}
+
+a[aria-current="page"] {
+    font-weight: 700;
+    color: #E33E10;
+}
+
+/* Button Accessibility */
+button[aria-pressed="true"] {
+    background: #E33E10;
+    color: #fff;
+}
+
+button[aria-pressed="false"] {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Modal Accessibility */
+[role="dialog"] {
+    z-index: 10000;
+}
+
+[role="dialog"][aria-modal="true"] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Table Accessibility */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: right;
+    border: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f9fafb;
+    font-weight: 600;
+}
+
+caption {
+    caption-side: bottom;
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+/* List Accessibility */
+ul[role="list"],
+ol[role="list"] {
+    list-style: none;
+    padding: 0;
+}
+
+/* Navigation Accessibility */
+nav[role="navigation"] ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav[role="navigation"] li {
+    margin: 0;
+}
+
+/* Breadcrumb Accessibility */
+[role="navigation"][aria-label="Breadcrumb"] ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+}
+
+[role="navigation"][aria-label="Breadcrumb"] li::after {
+    content: '/';
+    margin-right: 8px;
+    color: #6b7280;
+}
+
+[role="navigation"][aria-label="Breadcrumb"] li:last-child::after {
+    content: '';
+}
+
+/* Search Accessibility */
+[role="search"] input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+[role="search"] input:focus {
+    outline: 2px solid #E33E10;
+    outline-offset: 2px;
+}
+
+/* Tab Accessibility */
+[role="tablist"] {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+[role="tab"] {
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.3s;
+}
+
+[role="tab"][aria-selected="true"] {
+    color: #E33E10;
+    border-bottom-color: #E33E10;
+    font-weight: 600;
+}
+
+[role="tab"]:focus {
+    outline: 2px solid #E33E10;
+    outline-offset: -2px;
+}
+
+/* Accordion Accessibility */
+[role="region"][aria-expanded="false"] {
+    display: none;
+}
+
+[role="region"][aria-expanded="true"] {
+    display: block;
+}
+
+/* Carousel Accessibility */
+[role="region"][aria-roledescription="carousel"] {
+    position: relative;
+}
+
+[role="region"][aria-roledescription="carousel"] [aria-label="Previous"],
+[role="region"][aria-roledescription="carousel"] [aria-label="Next"] {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+[role="region"][aria-roledescription="carousel"] [aria-label="Previous"] {
+    right: 10px;
+}
+
+[role="region"][aria-roledescription="carousel"] [aria-label="Next"] {
+    left: 10px;
+}
+
+/* Responsive Accessibility */
+@media (max-width: 768px) {
+    .skip-links {
+        padding: 10px 16px;
+    }
+
+    .skip-links a {
+        font-size: 14px;
+    }
+}
+
+/* Dark Mode Accessibility */
+@media (prefers-color-scheme: dark) {
+    *:focus-visible {
+        outline-color: #ff6b4a;
+    }
+
+    .text-high-contrast {
+        color: #ffffff;
+    }
+
+    .bg-high-contrast {
+        background: #000000;
+    }
+}

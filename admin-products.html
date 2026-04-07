@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المنتجات - لوحة تحكم الإدارة</title>
+    <meta name="description" content="إدارة المنتجات في لوحة تحكم الإدارة">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sidebar-header h2 {
+            color: #E33E10;
+            font-size: 24px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #fff5f2;
+            color: #E33E10;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 30px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .content-header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #E33E10;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: white;
+        }
+
+        .product-status.active {
+            color: #388e3c;
+        }
+
+        .product-status.inactive {
+            color: #c62828;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-info p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #E33E10;
+        }
+
+        .product-category {
+            font-size: 13px;
+            color: #666;
+            background: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-edit {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-edit:hover {
+            background: #bbdefb;
+        }
+
+        .btn-delete {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-delete:hover {
+            background: #ffcdd2;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+        }
+
+        .pagination button:hover,
+        .pagination button.active {
+            border-color: #E33E10;
+            color: #E33E10;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .content-header h1 {
+                font-size: 24px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .filter-group select,
+            .filter-group input {
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>لوحة الإدارة</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="fas fa-chart-line"></i> نظرة عامة</a></li>
+                <li><a href="admin-orders.html"><i class="fas fa-shopping-bag"></i> إدارة الطلبات</a></li>
+                <li><a href="admin-products.html" class="active"><i class="fas fa-box"></i> إدارة المنتجات</a></li>
+                <li><a href="admin-users.html"><i class="fas fa-users"></i> إدارة المستخدمين</a></li>
+                <li><a href="admin-reports.html"><i class="fas fa-chart-bar"></i> التقارير</a></li>
+                <li><a href="admin-settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                <li><a href="index.html"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1>إدارة المنتجات</h1>
+                <button class="btn btn-primary" onclick="openAddProductModal()">
+                    <i class="fas fa-plus"></i> إضافة منتج
+                </button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>الفئة:</label>
+                    <select id="categoryFilter">
+                        <option value="all">الكل</option>
+                        <option value="landing">صفحة هبوط</option>
+                        <option value="store">متجر إلكتروني</option>
+                        <option value="company">شركة</option>
+                        <option value="blog">مدونة</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>الحالة:</label>
+                    <select id="statusFilter">
+                        <option value="all">الكل</option>
+                        <option value="active">نشط</option>
+                        <option value="inactive">غير نشط</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>البحث:</label>
+                    <input type="text" id="searchFilter" placeholder="ابحث باسم المنتج">
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample products data
+        const products = [
+            {
+                id: 1,
+                name: "قالب Landing Page احترافي",
+                desc: "قالب صفحة هبوط عصري ومتجاوب مع جميع الأجهزة",
+                price: 29.99,
+                category: "landing",
+                image: "https://via.placeholder.com/400x300",
+                status: "active",
+                features: ["متجاوب", "سريع", "سهل التعديل"]
+            },
+            {
+                id: 2,
+                name: "قالب متجر إلكتروني",
+                desc: "قالب متجر إلكتروني متكامل مع نظام سلة تسوق",
+                price: 49.99,
+                category: "store",
+                image: "https://via.placeholder.com/400x300",
+                status: "active",
+                features: ["متجر كامل", "سلة تسوق", "بوابة دفع"]
+            },
+            {
+                id: 3,
+                name: "قالب شركة",
+                desc: "قالب احترافي للشركات والمشاريع",
+                price: 39.99,
+                category: "company",
+                image: "https://via.placeholder.com/400x300",
+                status: "active",
+                features: ["صفحات متعددة", "معرض أعمال", "اتصال بنا"]
+            },
+            {
+                id: 4,
+                name: "قالب مدونة",
+                desc: "قالب مدونة عصرية مع تصميم أنيق",
+                price: 24.99,
+                category: "blog",
+                image: "https://via.placeholder.com/400x300",
+                status: "active",
+                features: ["تصميم نظيف", "سهولة القراءة", "مشاركة اجتماعية"]
+            },
+            {
+                id: 5,
+                name: "قالب متجر عصري",
+                desc: "قالب متجر إلكتروني عصري مع تصميم متجاوب",
+                price: 59.99,
+                category: "store",
+                image: "https://via.placeholder.com/400x300",
+                status: "active",
+                features: ["تصميم عصري", "متجاوب", "سهل التعديل"]
+            },
+            {
+                id: 6,
+                name: "قالب صفحة منتج",
+                desc: "قالب صفحة منتج احترافي مع تصميم جذاب",
+                price: 34.99,
+                category: "landing",
+                image: "https://via.placeholder.com/400x300",
+                status: "inactive",
+                features: ["تصميم جذاب", "متجاوب", "سهل التعديل"]
+            }
+        ];
+
+        // Current page
+        let currentPage = 1;
+        const itemsPerPage = 6;
+
+        // Render products
+        function renderProducts(productsToRender) {
+            const container = document.getElementById('productsGrid');
+            if (!container) return;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedProducts = productsToRender.slice(startIndex, endIndex);
+
+            container.innerHTML = paginatedProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <span class="product-status ${product.status}">
+                            ${product.status === 'active' ? 'نشط' : 'غير نشط'}
+                        </span>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.desc}</p>
+                        <div class="product-meta">
+                            <span class="product-price">$${product.price.toFixed(2)}</span>
+                            <span class="product-category">${getCategoryName(product.category)}</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-action btn-edit" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            renderPagination(productsToRender.length);
+        }
+
+        // Get category name
+        function getCategoryName(category) {
+            const categories = {
+                'landing': 'صفحة هبوط',
+                'store': 'متجر إلكتروني',
+                'company': 'شركة',
+                'blog': 'مدونة'
+            };
+            return categories[category] || category;
+        }
+
+        // Render pagination
+        function renderPagination(totalItems) {
+            const container = document.getElementById('pagination');
+            if (!container) return;
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            let paginationHTML = `
+                <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <button onclick="changePage(${i})" ${i === currentPage ? 'class="active"' : ''}>
+                        ${i}
+                    </button>
+                `;
+            }
+
+            paginationHTML += `
+                <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+
+            container.innerHTML = paginationHTML;
+        }
+
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            applyFilters();
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+
+            let filtered = products;
+
+            if (categoryFilter !== 'all') {
+                filtered = filtered.filter(p => p.category === categoryFilter);
+            }
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(p => p.status === statusFilter);
+            }
+
+            if (searchFilter) {
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(searchFilter) ||
+                    p.desc.toLowerCase().includes(searchFilter)
+                );
+            }
+
+            currentPage = 1;
+            renderProducts(filtered);
+        }
+
+        // Edit product
+        function editProduct(productId) {
+            alert('سيتم فتح نافذة تعديل المنتج رقم: ' + productId);
+            // TODO: Implement edit product modal
+        }
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                // TODO: Implement delete product functionality
+                alert('تم حذف المنتج رقم: ' + productId);
+            }
+        }
+
+        // Open add product modal
+        function openAddProductModal() {
+            alert('سيتم فتح نافذة إضافة منتج جديد');
+            // TODO: Implement add product modal
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const statusFilter = document.getElementById('statusFilter');
+            const searchFilter = document.getElementById('searchFilter');
+
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', applyFilters);
+            }
+
+            if (statusFilter) {
+                statusFilter.addEventListener('change', applyFilters);
+            }
+
+            if (searchFilter) {
+                searchFilter.addEventListener('input', debounce(applyFilters, 300));
+            }
+        }
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts(products);
+            setupEventListeners();
+        });
+    </script>
+</body>
+</html>

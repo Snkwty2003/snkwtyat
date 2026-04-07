@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعدة والدعم الفني - شنكوتيات</title>
+    <meta name="description" content="مركز المساعدة والدعم الفني في منصة شنكوتيات">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .support-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-section {
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #E33E10;
+            box-shadow: 0 0 0 3px rgba(227, 62, 16, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+        }
+
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+
+        .category-icon.account {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .category-icon.orders {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .category-icon.payment {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .category-icon.technical {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .category-card h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 20px 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .faq-question h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            flex: 1;
+        }
+
+        .faq-question i {
+            color: #E33E10;
+            transition: 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+            padding: 10px 0;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            border-radius: 15px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .contact-section p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-method i {
+            font-size: 24px;
+            opacity: 0.9;
+        }
+
+        .contact-method span {
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-white {
+            background: white;
+            color: #E33E10;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .support-container {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .help-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-methods {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="support-container">
+        <div class="header">
+            <h1>مركز المساعدة والدعم الفني</h1>
+            <p>نحن هنا لمساعدتك في حل أي مشكلة أو الإجابة على أي استفسار قد يكون لديك</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" placeholder="ابحث عن موضوع أو سؤال...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div class="help-categories">
+            <div class="category-card" onclick="showCategory('account')">
+                <div class="category-icon account">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h3>الحساب والملف الشخصي</h3>
+                <p>إدارة حسابك وتحديث بياناتك الشخصية</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('orders')">
+                <div class="category-icon orders">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h3>الطلبات والشراء</h3>
+                <p>تتبع طلباتك والتعامل مع المشاكل المتعلقة بالشراء</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('payment')">
+                <div class="category-icon payment">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>الدفع والفوترة</h3>
+                <p>طرق الدفع المتاحة والاستفسارات المالية</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('technical')">
+                <div class="category-icon technical">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>الدعم الفني</h3>
+                <p>المشاكل التقنية واستخدام القوالب</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2 class="section-title">الأسئلة الشائعة</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>كيف يمكنني تغيير كلمة المرور؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>لتغيير كلمة المرور، قم بتسجيل الدخول إلى حسابك، ثم انتقل إلى صفحة الإعدادات واختر "تغيير كلمة المرور". يمكنك أيضاً استخدام رابط "نسيت كلمة المرور" في صفحة تسجيل الدخول.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>كم من الوقت يستغرق استلام القالب بعد الشراء؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>بمجرد إتمام عملية الدفع بنجاح، ستحصل على رابط تحميل القالب فوراً في بريدك الإلكتروني ويمكنك أيضاً العثور عليه في قسم "طلباتي" في لوحة التحكم الخاصة بك.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>هل يمكنني طلب استرداد المال؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>نحن نقدم ضمان استرداد الأموال لمدة 14 يوماً من تاريخ الشراء، بشرط ألا يكون القالب قد تم استخدامه في مشروع منشور. يمكنك طلب الاسترداد من خلال صفحة "اتصل بنا" أو مراسلة فريق الدعم.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>كيف يمكنني تخصيص القالب؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>كل قالب يأتي مع دليل شامل للتخصيص يتضمن تعليمات خطوة بخطوة. يمكنك أيضاً مشاهدة الفيديوهات التعليمية المتاحة في قسم "الدعم الفني" أو التواصل مع فريق الدعم للحصول على مساعدة إضافية.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>هل لم تجد إجابة على سؤالك؟</h2>
+            <p>فريق الدعم لدينا جاهز لمساعدتك على مدار الساعة</p>
+            <button class="btn btn-white" onclick="contactSupport()">
+                <i class="fas fa-envelope"></i> تواصل معنا
+            </button>
+
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <span>support@snkwtyat.com</span>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <span>+966 50 000 0000</span>
+                </div>
+                <div class="contact-method">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        function showCategory(category) {
+            // Scroll to FAQ section
+            document.querySelector('.faq-section').scrollIntoView({ behavior: 'smooth' });
+
+            // Filter FAQ items based on category
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                item.style.display = 'block';
+            });
+        }
+
+        function contactSupport() {
+            // Redirect to contact page or open contact modal
+            window.location.href = 'index.html#contact';
+        }
+    </script>
+</body>
+</html>

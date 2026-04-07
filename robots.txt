@@ -1,0 +1,15 @@
+# Robots.txt for شنكوتيات
+# Allow all crawlers to access the site
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin/
+
+# Disallow private areas
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /notifications/
+
+# Sitemap location
+Sitemap: https://snkwtyat.com/sitemap.xml

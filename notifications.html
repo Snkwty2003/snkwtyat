@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإشعارات - شنكوتيات</title>
+    <meta name="description" content="إشعارات منصة شنكوتيات">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .notifications-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #E33E10;
+            color: #E33E10;
+        }
+
+        .btn-outline:hover {
+            background: #fff5f2;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: #E33E10;
+            color: white;
+            border-color: #E33E10;
+        }
+
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            transition: 0.3s;
+            border-right: 4px solid transparent;
+        }
+
+        .notification-card:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .notification-card.unread {
+            background: #fff8f6;
+            border-right-color: #E33E10;
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.order {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .notification-icon.promo {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .notification-icon.system {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .notification-icon.security {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .notification-message {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .notification-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-link {
+            color: #E33E10;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .notifications-container {
+                padding: 20px 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+            }
+
+            .notification-card {
+                flex-direction: column;
+            }
+
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notifications-container">
+        <div class="header">
+            <h1>الإشعارات</h1>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="markAllAsRead()">
+                    <i class="fas fa-check-double"></i> تعليم الكل كمقروء
+                </button>
+                <button class="btn btn-primary" onclick="goToDashboard()">
+                    <i class="fas fa-arrow-right"></i> لوحة التحكم
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <div class="filter-tab active" onclick="filterNotifications('all', this)">الكل</div>
+            <div class="filter-tab" onclick="filterNotifications('unread', this)">غير مقروء</div>
+            <div class="filter-tab" onclick="filterNotifications('orders', this)">الطلبات</div>
+            <div class="filter-tab" onclick="filterNotifications('promo', this)">العروض</div>
+            <div class="filter-tab" onclick="filterNotifications('system', this)">النظام</div>
+        </div>
+
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample notifications data
+        const notifications = [
+            {
+                id: 1,
+                type: 'order',
+                icon: 'shopping-bag',
+                title: 'تم تأكيد طلبك',
+                message: 'تم تأكيد طلبك #1234 بنجاح. سيتم شحن المنتجات قريباً.',
+                time: 'منذ 5 دقائق',
+                unread: true,
+                actions: [
+                    { text: 'عرض التفاصيل', link: '#' }
+                ]
+            },
+            {
+                id: 2,
+                type: 'promo',
+                icon: 'gift',
+                title: 'عرض خاص لك!',
+                message: 'احصل على خصم 20% على جميع القوالب الجديدة. العرض ساري حتى نهاية الأسبوع.',
+                time: 'منذ ساعة',
+                unread: true,
+                actions: [
+                    { text: 'تصفح القوالب', link: '#templates' }
+                ]
+            },
+            {
+                id: 3,
+                type: 'system',
+                icon: 'bell',
+                title: 'تحديث النظام',
+                message: 'تم تحديث النظام بنجاح مع تحسينات جديدة في الأداء والأمان.',
+                time: 'منذ 3 ساعات',
+                unread: false,
+                actions: [
+                    { text: 'معرفة المزيد', link: '#' }
+                ]
+            },
+            {
+                id: 4,
+                type: 'security',
+                icon: 'shield-alt',
+                title: 'تنبيه أمني',
+                message: 'تم تسجيل دخول جديد إلى حسابك من جهاز مختلف. إذا لم تكن أنت، قم بتغيير كلمة المرور فوراً.',
+                time: 'منذ يوم',
+                unread: true,
+                actions: [
+                    { text: 'تغيير كلمة المرور', link: 'reset-password.html' }
+                ]
+            },
+            {
+                id: 5,
+                type: 'order',
+                icon: 'truck',
+                title: 'تم شحن طلبك',
+                message: 'تم شحن طلبك #1235 وسيصلك خلال 2-3 أيام عمل.',
+                time: 'منذ يومين',
+                unread: false,
+                actions: [
+                    { text: 'تتبع الشحنة', link: '#' }
+                ]
+            }
+        ];
+
+        // Render notifications
+        function renderNotifications(filter = 'all') {
+            const container = document.getElementById('notificationList');
+            let filteredNotifications = notifications;
+
+            if (filter === 'unread') {
+                filteredNotifications = notifications.filter(n => n.unread);
+            } else if (filter !== 'all') {
+                filteredNotifications = notifications.filter(n => n.type === filter);
+            }
+
+            if (filteredNotifications.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>لا توجد إشعارات</h3>
+                        <p>لم تجد أي إشعارات في هذه الفئة</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredNotifications.map(notification => `
+                <div class="notification-card ${notification.unread ? 'unread' : ''}" data-id="${notification.id}">
+                    <div class="notification-icon ${notification.type}">
+                        <i class="fas fa-${notification.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <div class="notification-title">${notification.title}</div>
+                            <div class="notification-time">${notification.time}</div>
+                        </div>
+                        <div class="notification-message">${notification.message}</div>
+                        ${notification.actions ? `
+                            <div class="notification-actions">
+                                ${notification.actions.map(action => `
+                                    <a href="${action.link}" class="action-link">${action.text}</a>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter notifications
+        function filterNotifications(filter, element) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Render filtered notifications
+            renderNotifications(filter);
+        }
+
+        // Mark all notifications as read
+        function markAllAsRead() {
+            notifications.forEach(notification => {
+                notification.unread = false;
+            });
+            renderNotifications();
+            showToast('تم تعليم جميع الإشعارات كمقروءة');
+        }
+
+        // Go to dashboard
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4CAF50;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: fadeIn 0.3s ease-out;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize notifications
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNotifications();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "templates": "Templates",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "title": "Professional Web Templates",
+      "subtitle": "Start your project with the best responsive and fast templates",
+      "cta": "Browse Templates"
+    },
+    "features": {
+      "title": "Our Features",
+      "responsive": {
+        "title": "Responsive Design",
+        "description": "Works perfectly on all devices and screens"
+      },
+      "fast": {
+        "title": "Fast & High Performance",
+        "description": "Optimized for best performance and loading speed"
+      },
+      "customizable": {
+        "title": "Customizable",
+        "description": "Easy to modify and customize to your needs"
+      }
+    },
+    "stats": {
+      "templates": "Ready Templates",
+      "customers": "Happy Customers",
+      "projects": "Completed Projects",
+      "support": "Technical Support"
+    }
+  },
+  "templates": {
+    "title": "Templates",
+    "filter": {
+      "all": "All",
+      "landing": "Landing Page",
+      "ecommerce": "E-commerce",
+      "corporate": "Corporate",
+      "blog": "Blog"
+    },
+    "sort": {
+      "newest": "Newest",
+      "popular": "Most Popular",
+      "price_low": "Price: Low to High",
+      "price_high": "Price: High to Low"
+    },
+    "view": "View Details",
+    "demo": "Demo",
+    "buy": "Buy",
+    "free": "Free"
+  },
+  "search": {
+    "placeholder": "Search templates, services, or articles...",
+    "results": "Search Results",
+    "no_results": "No results found",
+    "loading": "Searching...",
+    "error": "An error occurred while searching"
+  },
+  "filters": {
+    "title": "Filter Results",
+    "category": "Category",
+    "price": "Price",
+    "rating": "Rating",
+    "tags": "Tags",
+    "apply": "Apply",
+    "clear": "Clear All"
+  },
+  "reviews": {
+    "title": "Ratings & Reviews",
+    "write": "Write a Review",
+    "rating": "Rating",
+    "title": "Title",
+    "content": "Content",
+    "submit": "Submit Review",
+    "helpful": "Helpful",
+    "reply": "Reply",
+    "average": "Average Rating",
+    "total": "Total Ratings"
+  },
+  "forms": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Submit",
+    "required": "Required",
+    "invalid": "Invalid"
+  },
+  "notifications": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact Us",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "social": "Follow Us",
+    "newsletter": "Newsletter",
+    "subscribe": "Subscribe",
+    "copyright": "All rights reserved"
+  }
+}

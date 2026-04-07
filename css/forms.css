@@ -1,0 +1,329 @@
+/* =======================
+   ENHANCED FORM STYLES
+   ======================= */
+
+/* Form Container */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.form-group label .required {
+    color: #ef4444;
+    margin-right: 4px;
+}
+
+/* Form Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #E33E10;
+    box-shadow: 0 0 0 3px rgba(227, 62, 16, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Input States */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.form-group input.success,
+.form-group select.success,
+.form-group textarea.success {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+/* Form Feedback */
+.form-feedback {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #ef4444;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.form-feedback.error {
+    display: block;
+    color: #ef4444;
+}
+
+.form-feedback.success {
+    display: block;
+    color: #10b981;
+}
+
+/* Form Buttons */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.form-actions .btn-primary {
+    background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(227, 62, 16, 0.3);
+}
+
+.form-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(227, 62, 16, 0.4);
+}
+
+.form-actions .btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.form-actions .btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* Checkbox and Radio */
+.form-group .checkbox-group,
+.form-group .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.form-group .checkbox-item,
+.form-group .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.form-group input[type="checkbox"],
+.form-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Form Progress */
+.form-progress {
+    margin-bottom: 32px;
+}
+
+.progress-bar {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #E33E10 0%, #ff6b4a 100%);
+    transition: width 0.3s ease;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.progress-step.active {
+    color: #E33E10;
+    font-weight: 600;
+}
+
+.progress-step.completed {
+    color: #10b981;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.form-section h3 {
+    margin-bottom: 24px;
+    font-size: 18px;
+    color: #1f2937;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .form-container {
+        background: #1f2937;
+    }
+
+    .form-group label {
+        color: #f9fafb;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f9fafb;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #6b7280;
+    }
+
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+        background: #450a0a;
+    }
+
+    .form-group input.success,
+    .form-group select.success,
+    .form-group textarea.success {
+        background: #064e3b;
+    }
+
+    .form-section {
+        border-bottom-color: #374151;
+    }
+
+    .form-section h3 {
+        color: #f9fafb;
+    }
+
+    .progress-bar {
+        background: #374151;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading State */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f4f6;
+    border-top-color: #E33E10;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}

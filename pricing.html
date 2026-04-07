@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسعار والباقات - شنكوتيات</title>
+    <meta name="description" content="استكشف خطط الاشتراك والأسعار المتاحة في منصة شنكوتيات">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #E33E10;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            right: 32px;
+        }
+
+        .billing-label {
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .billing-label.active {
+            color: #E33E10;
+            font-weight: 700;
+        }
+
+        .discount-badge {
+            background: #fff3e0;
+            color: #f57c00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #E33E10;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #E33E10;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            color: #E33E10;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .plan-price span {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .plan-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+        }
+
+        .plan-features li i {
+            color: #4CAF50;
+        }
+
+        .plan-features li.disabled {
+            color: #999;
+        }
+
+        .plan-features li.disabled i {
+            color: #999;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #E33E10;
+            color: #E33E10;
+        }
+
+        .btn-outline:hover {
+            background: #fff5f2;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 20px 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .faq-question h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            flex: 1;
+        }
+
+        .faq-question i {
+            color: #E33E10;
+            transition: 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+            padding: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-container {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <div class="header">
+            <h1>الأسعار والباقات</h1>
+            <p>اختر الباقة المناسبة لاحتياجاتك وابدأ في بناء مشروعك الرقمي اليوم</p>
+        </div>
+
+        <div class="billing-toggle">
+            <span class="billing-label active" onclick="setBilling('monthly')">شهري</span>
+            <div class="toggle-switch" onclick="toggleBilling()"></div>
+            <span class="billing-label" onclick="setBilling('yearly')">سنوي</span>
+            <span class="discount-badge">وفر 20%</span>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">البداية</div>
+                <div class="plan-price" data-monthly="29" data-yearly="23">
+                    $29<span>/شهر</span>
+                </div>
+                <div class="plan-description">مثالي للمشاريع الصغيرة والمبتدئين</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> قالب واحد</li>
+                    <li><i class="fas fa-check"></i> دعم فني لمدة 30 يوماً</li>
+                    <li><i class="fas fa-check"></i> تحديثات مجانية</li>
+                    <li><i class="fas fa-check"></i> استخدام تجاري</li>
+                    <li class="disabled"><i class="fas fa-times"></i> قوالب إضافية</li>
+                    <li class="disabled"><i class="fas fa-times"></i> دعم أولوية</li>
+                </ul>
+                <button class="btn btn-outline" onclick="selectPlan('starter')">اختر الباقة</button>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">الأكثر شعبية</div>
+                <div class="plan-name">المحترف</div>
+                <div class="plan-price" data-monthly="59" data-yearly="47">
+                    $59<span>/شهر</span>
+                </div>
+                <div class="plan-description">مثالي للمشاريع المتوسطة والمتوسطة</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 5 قوالب</li>
+                    <li><i class="fas fa-check"></i> دعم فني لمدة 90 يوماً</li>
+                    <li><i class="fas fa-check"></i> تحديثات مجانية</li>
+                    <li><i class="fas fa-check"></i> استخدام تجاري</li>
+                    <li><i class="fas fa-check"></i> قوالب إضافية بخصم 20%</li>
+                    <li class="disabled"><i class="fas fa-times"></i> دعم أولوية</li>
+                </ul>
+                <button class="btn btn-primary" onclick="selectPlan('professional')">اختر الباقة</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">الشركات</div>
+                <div class="plan-price" data-monthly="99" data-yearly="79">
+                    $99<span>/شهر</span>
+                </div>
+                <div class="plan-description">مثالي للمشاريع الكبيرة والشركات</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> قوالب غير محدودة</li>
+                    <li><i class="fas fa-check"></i> دعم فني على مدار الساعة</li>
+                    <li><i class="fas fa-check"></i> تحديثات مجانية</li>
+                    <li><i class="fas fa-check"></i> استخدام تجاري</li>
+                    <li><i class="fas fa-check"></i> قوالب إضافية بخصم 40%</li>
+                    <li><i class="fas fa-check"></i> دعم أولوية</li>
+                </ul>
+                <button class="btn btn-outline" onclick="selectPlan('enterprise')">اختر الباقة</button>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2 class="section-title">الأسئلة الشائعة حول الأسعار</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>هل يمكنني تغيير الباقة لاحقاً؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، يمكنك ترقية أو تخفيض باقتك في أي وقت. عند الترقية، سيتم خصم المبلغ المدفوع بالفعل من السعر الجديد. عند التخفيض، سيتم تطبيق التغيير في دورة الفوترة القادمة.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>ما هي طرق الدفع المتاحة؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>نقبل جميع البطاقات الائتمانية الرئيسية (Visa, MasterCard, American Express)، PayPal، والتحويل البنكي. جميع المدفوعات مشفرة وآمنة.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>هل تقدمون ضمان استرداد الأموال؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، نقدم ضمان استرداد الأموال لمدة 14 يوماً من تاريخ الشراء. إذا لم تكن راضياً عن خدمتنا، يمكنك طلب استرداد كامل دون أي أسئلة.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>ماذا يحدث عند انتهاء الاشتراك؟</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>عند انتهاء الاشتراك، ستظل قادراً على استخدام القوالب التي قمت بتنزيلها، لكنك لن تحصل على تحديثات جديدة أو دعم فني. يمكنك تجديد الاشتراك في أي وقت لاستئناف هذه المزايا.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBilling = 'monthly';
+
+        function toggleBilling() {
+            const toggle = document.querySelector('.toggle-switch');
+            const labels = document.querySelectorAll('.billing-label');
+            const prices = document.querySelectorAll('.plan-price');
+
+            currentBilling = currentBilling === 'monthly' ? 'yearly' : 'monthly';
+
+            toggle.classList.toggle('active');
+            labels.forEach((label, index) => {
+                label.classList.toggle('active');
+            });
+
+            prices.forEach(price => {
+                const monthlyPrice = price.dataset.monthly;
+                const yearlyPrice = price.dataset.yearly;
+                price.innerHTML = `$${currentBilling === 'monthly' ? monthlyPrice : yearlyPrice}<span>/شهر</span>`;
+            });
+        }
+
+        function setBilling(type) {
+            if (currentBilling === type) return;
+            toggleBilling();
+        }
+
+        function selectPlan(plan) {
+            // Here you would typically redirect to a checkout page
+            alert(`تم اختيار باقة ${plan}. سيتم توجيهك إلى صفحة الدفع.`);
+        }
+
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

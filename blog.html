@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة - شنكوتيات</title>
+    <meta name="description" content="مدونة شنكوتيات - مقالات ونصائح حول تصميم وتطوير المواقع">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .featured-post {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+        }
+
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: #fff5f2;
+            color: #E33E10;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .featured-content h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .featured-content p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #E33E10;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .blog-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .category-tag {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .category-tag:hover,
+        .category-tag.active {
+            background: #E33E10;
+            color: white;
+            border-color: #E33E10;
+        }
+
+        .newsletter-section {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .newsletter-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-section p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 15px;
+        }
+
+        .newsletter-form button {
+            padding: 15px 30px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #222;
+        }
+
+        @media (max-width: 992px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <div class="header">
+            <h1>المدونة</h1>
+            <p>اكتشف أحدث النصائح والحيل في عالم تصميم وتطوير المواقع</p>
+        </div>
+
+        <div class="categories">
+            <div class="category-tag active">الكل</div>
+            <div class="category-tag">تصميم الويب</div>
+            <div class="category-tag">تطوير المواقع</div>
+            <div class="category-tag">تجربة المستخدم</div>
+            <div class="category-tag">التسويق الرقمي</div>
+        </div>
+
+        <div class="featured-post">
+            <div class="featured-image">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="featured-content">
+                <span class="featured-badge">مقال مميز</span>
+                <h2>كيف تبدأ مشروعك الأول على الإنترنت؟</h2>
+                <p>دليل شامل للمبتدئين يشرح الخطوات الأساسية لإنشاء وتطوير موقع ناجح على الإنترنت، من اختيار الفكرة إلى إطلاق الموقع.</p>
+                <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                    اقرأ المقال
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 15 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 5 دقائق</span>
+                    </div>
+                    <h3>أهم اتجاهات تصميم المواقع في 2024</h3>
+                    <p>استكشف أحدث الاتجاهات في تصميم المواقع وكيفية تطبيقها في مشاريعك القادمة.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 12 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 7 دقائق</span>
+                    </div>
+                    <h3>أفضل ممارسات التصميم المتجاوب</h3>
+                    <p>تعلم كيفية إنشاء مواقع تعمل بشكل مثالي على جميع الأجهزة والشاشات.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 10 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 6 دقائق</span>
+                    </div>
+                    <h3>تحسين أداء موقعك لتحسين ترتيبه في محركات البحث</h3>
+                    <p>اكتشف أهم العوامل التي تؤثر على أداء موقعك وكيفية تحسينها.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 8 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 4 دقائق</span>
+                    </div>
+                    <h3>فهم سلوك المستخدم لتحسين تجربة التصفح</h3>
+                    <p>كيفية تحليل سلوك المستخدمين واستخدام البيانات لتحسين تجربة المستخدم.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 5 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 8 دقائق</span>
+                    </div>
+                    <h3>حماية موقعك من الهجمات الإلكترونية</h3>
+                    <p>أفضل الممارسات لتأمين موقعك وحماية بيانات المستخدمين من التهديدات الإلكترونية.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> 3 يناير 2024</span>
+                        <span><i class="far fa-clock"></i> 5 دقائق</span>
+                    </div>
+                    <h3>استراتيجيات التسويق الرقمي للمواقع الصغيرة</h3>
+                    <p>كيفية الترويج لموقعك وجذب المزيد من الزوار باستخدام استراتيجيات التسويق الرقمي الفعالة.</p>
+                    <a href="index.html#contact" class="read-more" onclick="selectService('website')">
+                        اقرأ المزيد
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="newsletter-section">
+            <h2>اشترك في نشرتنا البريدية</h2>
+            <p>احصل على أحدث المقالات والنصائح مباشرة في بريدك الإلكتروني</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                <input type="email" placeholder="أدخل بريدك الإلكتروني" required>
+                <button type="submit">اشترك الآن</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering
+        document.querySelectorAll('.category-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Newsletter subscription
+        function subscribeNewsletter(e) {
+            e.preventDefault();
+            showToast('تم الاشتراك في النشرة البريدية بنجاح! 🎉');
+            e.target.reset();
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4CAF50;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: fadeInUp 0.3s ease-out;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - شنكوتيات</title>
+    <meta name="description" content="إدارة الملف الشخصي في منصة شنكوتيات">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(227, 62, 16, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 62, 16, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #E33E10;
+            color: #E33E10;
+        }
+
+        .btn-outline:hover {
+            background: #fff5f2;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #E33E10;
+            font-size: 16px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            color: #E33E10;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #E33E10;
+            box-shadow: 0 0 0 3px rgba(227, 62, 16, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .password-group {
+            position: relative;
+        }
+
+        .password-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .password-group i:hover {
+            color: #E33E10;
+        }
+
+        .password-group input {
+            padding-left: 45px;
+        }
+
+        .notification-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .notification-info h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .notification-info p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #e0e0e0;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #E33E10;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            right: 26px;
+        }
+
+        @media (max-width: 992px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 30px 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+            }
+
+            .profile-stats {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="header">
+            <h1>الملف الشخصي</h1>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="goToDashboard()">
+                    <i class="fas fa-arrow-right"></i> لوحة التحكم
+                </button>
+                <button class="btn btn-primary" onclick="saveProfile()">
+                    <i class="fas fa-save"></i> حفظ التغييرات
+                </button>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                    <div class="avatar-upload" onclick="uploadAvatar()">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <h2 class="profile-name">أحمد محمد</h2>
+                <p class="profile-email">ahmed@example.com</p>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">طلب</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">قالب</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">مراجعة</div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-outline" onclick="goToOrders()">
+                        <i class="fas fa-shopping-bag"></i> طلباتي
+                    </button>
+                    <button class="btn btn-outline" onclick="goToWishlist()">
+                        <i class="fas fa-heart"></i> المفضلة
+                    </button>
+                    <button class="btn btn-outline" onclick="goToReviews()">
+                        <i class="fas fa-star"></i> تقييماتي
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-sections">
+                <div class="form-section">
+                    <h2 class="section-title">المعلومات الشخصية</h2>
+                    <form id="profileForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>الاسم الأول</label>
+                                <input type="text" value="أحمد" required>
+                            </div>
+                            <div class="form-group">
+                                <label>اسم العائلة</label>
+                                <input type="text" value="محمد" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>البريد الإلكتروني</label>
+                                <input type="email" value="ahmed@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الهاتف</label>
+                                <input type="tel" value="+966 50 000 0000">
+                            </div>
+                            <div class="form-group">
+                                <label>المدينة</label>
+                                <select>
+                                    <option value="">اختر المدينة</option>
+                                    <option value="riyadh" selected>الرياض</option>
+                                    <option value="jeddah">جدة</option>
+                                    <option value="dammam">الدمام</option>
+                                    <option value="mecca">مكة</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>العنوان</label>
+                                <textarea placeholder="أدخل عنوانك الكامل"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">تغيير كلمة المرور</h2>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>كلمة المرور الحالية</label>
+                            <div class="password-group">
+                                <input type="password" placeholder="أدخل كلمة المرور الحالية">
+                                <i class="fas fa-eye" onclick="togglePassword(this)"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>كلمة المرور الجديدة</label>
+                            <div class="password-group">
+                                <input type="password" placeholder="أدخل كلمة المرور الجديدة">
+                                <i class="fas fa-eye" onclick="togglePassword(this)"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>تأكيد كلمة المرور</label>
+                            <div class="password-group">
+                                <input type="password" placeholder="أعد إدخال كلمة المرور">
+                                <i class="fas fa-eye" onclick="togglePassword(this)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">إعدادات الإشعارات</h2>
+                    <div class="notification-settings">
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>الإشعارات البريدية</h4>
+                                <p>استقبل تحديثات حول طلباتك وعروضنا عبر البريد الإلكتروني</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleNotification(this)"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>إشعارات الطلبات</h4>
+                                <p>احصل على إشعارات فورية عند تحديث حالة طلبك</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleNotification(this)"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>العروض والترويجات</h4>
+                                <p>استقبل أحدث العروض والخصومات الخاصة</p>
+                            </div>
+                            <div class="toggle-switch" onclick="toggleNotification(this)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword(icon) {
+            const input = icon.previousElementSibling;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Toggle notification setting
+        function toggleNotification(element) {
+            element.classList.toggle('active');
+        }
+
+        // Save profile changes
+        function saveProfile() {
+            const form = document.getElementById('profileForm');
+            if (form.checkValidity()) {
+                showToast('تم حفظ التغييرات بنجاح!');
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // Navigate to dashboard
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Navigate to orders
+        function goToOrders() {
+            window.location.href = 'dashboard.html#orders';
+        }
+
+        // Navigate to wishlist
+        function goToWishlist() {
+            window.location.href = 'dashboard.html#wishlist';
+        }
+
+        // Navigate to reviews
+        function goToReviews() {
+            window.location.href = 'dashboard.html#reviews';
+        }
+
+        // Upload avatar
+        function uploadAvatar() {
+            showToast('سيتم فتح نافذة رفع الصورة');
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4CAF50;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: fadeInUp 0.3s ease-out;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر شنكوتيات</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:#f5f5f5;
+  direction:rtl;
+}
+
+/* HEADER */
+#header{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+  z-index:1000;
+}
+
+.logo{
+  color:#ff5722;
+  margin:0 auto;
+  font-size:22px;
+  text-align:center;
+}
+
+.header-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.header-buttons a,
+.header-buttons button{
+  background:#ff5722;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* SEARCH */
+.top-bar{
+  margin-top:80px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.top-bar input, .top-bar select{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+/* PRODUCTS */
+.products-container{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+  margin-top:20px;
+  padding-bottom:100px;
+}
+
+.product{
+  width:230px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  text-align:center;
+  transition:.3s;
+}
+
+.product:hover{
+  transform:translateY(-10px);
+}
+
+.product img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px 12px 0 0;
+}
+
+.product button{
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:6px;
+  border:none;
+  background:#ff5722;
+  color:#fff;
+  cursor:pointer;
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* CART */
+#cartBox{
+  position:fixed;
+  top:70px;
+  right:20px;
+  width:280px;
+  background:#fff;
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  display:none;
+  z-index:1001;
+}
+
+/* FOOTER */
+#footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#1e1e1e;
+  color:#fff;
+  padding:10px 40px;
+  text-align:center;
+}
+
+/* MODAL */
+#modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:2000;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#fff;
+  padding:20px;
+  width:90%;
+  max-width:400px;
+  border-radius:10px;
+  text-align:right;
+}
+
+.modal-content button{
+  margin-top:10px;
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  background:#ff5722;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* رسالة */
+#toast{
+  position:fixed;
+  bottom:80px;
+  right:20px;
+  background:#4caf50;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:6px;
+  display:none;
+  z-index:3000;
+}
+</style>
+</head>
+
+<body>
+
+<div id="header">
+  <div class="header-buttons">
+    <a href="index.html">العودة</a>
+    <button onclick="toggleCart()">
+      السلة (<span id="cart-count">0</span>)
+    </button>
+  </div>
+  <h1 class="logo">متجر شنكوتيات</h1>
+</div>
+
+<div class="top-bar">
+  <input type="text" id="search" placeholder="بحث...">
+  <select id="filter">
+    <option value="all">كل القوالب</option>
+    <option value="HTML">HTML</option>
+    <option value="CSS">CSS</option>
+  </select>
+</div>
+
+<div class="products-container" id="products"></div>
+
+<div id="cartBox">
+  <h3>سلة الشراء</h3>
+  <div id="cart-items"></div>
+
+  <div id="cart-total" style="margin-top:10px;font-weight:bold;"></div>
+
+  <button onclick="clearCart()" style="margin-top:10px;background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;width:100%;">
+    تفريغ السلة
+  </button>
+
+  <!-- ⭐ التعديل الأول -->
+  <button onclick="goCheckout()" style="margin-top:10px;background:#25D366;color:#fff;border:none;padding:8px;border-radius:6px;cursor:pointer;width:100%;">
+    إتمام الطلب
+  </button>
+
+</div>
+
+<div id="modal">
+  <div class="modal-content">
+    <h3 id="mName"></h3>
+    <p id="mDesc"></p>
+    <span id="mPrice"></span><br><br>
+    <button onclick="addToCart()">أضف للسلة</button>
+    <button onclick="closeModal()">إغلاق</button>
+  </div>
+</div>
+
+<div id="toast">تمت الإضافة للسلة ✅</div>
+
+<div id="footer">
+  <span>© 2026 شنكوتيات</span>
+</div>
+
+<script>
+let data=[
+  {id:1,name:"القالب الأول",desc:"وصف القالب",price:19.99,cat:"HTML",img:"https://via.placeholder.com/300x200"},
+  {id:2,name:"القالب الثاني",desc:"وصف القالب",price:24.99,cat:"CSS",img:"https://via.placeholder.com/300x200"},
+  {id:3,name:"القالب الثالث",desc:"وصف القالب",price:29.99,cat:"HTML",img:"https://via.placeholder.com/300x200"}
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let current=null;
+
+function render(list=data){
+  let html='';
+  list.forEach(p=>{
+    html+=`
+    <div class="product">
+      <img src="${p.img}">
+      <h3>${p.name}</h3>
+      <p>${p.desc}</p>
+      <span>$${p.price}</span><br>
+      <button onclick="openModal(${p.id})">معاينة</button>
+    </div>`;
+  });
+  document.getElementById('products').innerHTML=html;
+}
+render();
+
+updateCart();
+
+function openModal(id){
+  current=data.find(p=>p.id==id);
+  mName.textContent=current.name;
+  mDesc.textContent=current.desc;
+  mPrice.textContent="$"+current.price;
+  modal.style.display='flex';
+}
+
+function closeModal(){modal.style.display='none';}
+
+function addToCart(){
+  let found = cart.find(item => item.id === current.id);
+
+  if(found){
+    found.qty++;
+  }else{
+    cart.push({...current, qty:1});
+  }
+
+  updateCart();
+  closeModal();
+  showToast();
+}
+
+function showToast(){
+  let t=document.getElementById('toast');
+  t.style.display='block';
+  setTimeout(()=>{t.style.display='none';},2000);
+}
+
+function updateCart(){
+  let html='';
+  let total=0;
+
+  cart.forEach((p,index)=>{
+    let qty = p.qty || 1;
+    total += p.price * qty;
+
+    html+=`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      
+      <img src="${p.img}" style="width:50px;height:50px;border-radius:6px;">
+
+      <div style="flex:1;">
+        <div>${p.name}</div>
+        <div>$${p.price}</div>
+
+        <div style="margin-top:5px;">
+          <button onclick="changeQty(${index}, -1)">-</button>
+          <span style="margin:0 8px;">${qty}</span>
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </div>
+      </div>
+
+      <button onclick="removeFromCart(${index})" style="background:red;color:#fff;border:none;padding:4px 6px;border-radius:4px;cursor:pointer;">
+      حذف
+      </button>
+
+    </div>`;
+  });
+
+  document.getElementById('cart-items').innerHTML=html;
+  document.getElementById('cart-count').textContent = cart.length;
+  document.getElementById('cart-total').textContent = "الإجمالي: $" + total.toFixed(2);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function changeQty(index, change){
+  cart[index].qty = (cart[index].qty || 1) + change;
+
+  if(cart[index].qty <= 0){
+    cart.splice(index,1);
+  }
+
+  updateCart();
+}
+
+function removeFromCart(index){
+  cart.splice(index,1);
+  updateCart();
+}
+
+function clearCart(){
+  if(confirm("هل أنت متأكد من تفريغ السلة؟")){
+    cart=[];
+    updateCart();
+  }
+}
+
+/* ⭐ التعديل الجديد */
+function goCheckout(){
+  if(cart.length === 0){
+    alert("السلة فارغة!");
+    return;
+  }
+
+  window.location.href = "checkout.html";
+}
+
+function toggleCart(){
+  let box=document.getElementById('cartBox');
+  box.style.display=box.style.display=='block'?'none':'block';
+}
+
+document.getElementById('search').oninput=function(){
+  let val=this.value.toLowerCase();
+  render(data.filter(p=>p.name.toLowerCase().includes(val)));
+}
+
+document.getElementById('filter').onchange=function(){
+  if(this.value=='all'){render();}
+  else{
+    render(data.filter(p=>p.cat==this.value));
+  }
+}
+
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>

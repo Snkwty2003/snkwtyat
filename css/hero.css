@@ -1,0 +1,198 @@
+/* =======================
+   HERO BANNER STYLES
+   ======================= */
+
+.hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    max-height: 800px;
+    background: url('banner/banner.png') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-white);
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(227, 62, 16, 0.85) 0%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: 1;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 2;
+}
+
+.banner-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 4;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+.badge-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.badge-new,
+.badge-hot {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.badge-new {
+    background: var(--success-color);
+    color: var(--text-white);
+}
+
+.badge-hot {
+    background: var(--danger-color);
+    color: var(--text-white);
+}
+
+.hero-banner h1 {
+    font-size: 56px;
+    margin-bottom: 25px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-banner p {
+    font-size: 22px;
+    margin-bottom: 40px;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+.banner-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.banner-buttons .btn {
+    padding: 18px 40px;
+    font-size: 18px;
+    border-radius: 12px;
+}
+
+.banner-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.banner-stats .stat-item {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.banner-stats .stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.banner-stats .stat-number {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--text-white);
+}
+
+.banner-stats .stat-label {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-banner {
+        min-height: 500px;
+        margin-top: 70px;
+    }
+
+    .hero-banner h1 {
+        font-size: 36px;
+    }
+
+    .hero-banner p {
+        font-size: 18px;
+    }
+
+    .banner-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .banner-buttons .btn {
+        width: 100%;
+        padding: 15px 30px;
+    }
+
+    .banner-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .banner-stats .stat-number {
+        font-size: 36px;
+    }
+}
