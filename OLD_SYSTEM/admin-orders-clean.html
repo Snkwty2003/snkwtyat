@@ -4,34 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة الطلبات - لوحة تحكم الإدارة</title>
-    <meta name="description" content="إدارة الطلبات في لوحة تحكم الإدارة">
-
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Tajawal', sans-serif;
             background: #f5f7fa;
             color: #333;
             line-height: 1.6;
         }
-
         .admin-container {
             display: flex;
             min-height: 100vh;
         }
-
         .sidebar {
             width: 280px;
             background: white;
@@ -42,26 +32,21 @@
             overflow-y: auto;
             z-index: 100;
         }
-
         .sidebar-header {
             margin-bottom: 40px;
             padding-bottom: 20px;
             border-bottom: 1px solid #f0f0f0;
         }
-
         .sidebar-header h2 {
             color: #E33E10;
             font-size: 24px;
         }
-
         .sidebar-menu {
             list-style: none;
         }
-
         .sidebar-menu li {
             margin-bottom: 10px;
         }
-
         .sidebar-menu a {
             display: flex;
             align-items: center;
@@ -72,54 +57,45 @@
             border-radius: 10px;
             transition: 0.3s;
         }
-
         .sidebar-menu a:hover,
         .sidebar-menu a.active {
             background: #fff5f2;
             color: #E33E10;
         }
-
         .sidebar-menu i {
             width: 20px;
             text-align: center;
         }
-
         .main-content {
             flex: 1;
             margin-right: 280px;
             padding: 30px;
         }
-
         .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
         }
-
         .content-header h1 {
             font-size: 28px;
             color: #333;
         }
-
         .filters {
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-
         .filter-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .filter-group label {
             font-weight: 500;
             color: #666;
         }
-
         .filter-group select,
         .filter-group input {
             padding: 10px 15px;
@@ -129,13 +105,11 @@
             font-family: 'Tajawal', sans-serif;
             transition: 0.3s;
         }
-
         .filter-group select:focus,
         .filter-group input:focus {
             outline: none;
             border-color: #E33E10;
         }
-
         .orders-table-container {
             background: white;
             border-radius: 15px;
@@ -143,58 +117,48 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             overflow-x: auto;
         }
-
         .orders-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 800px;
         }
-
         .orders-table th,
         .orders-table td {
             padding: 15px;
             text-align: right;
             border-bottom: 1px solid #f0f0f0;
         }
-
         .orders-table th {
             background: #f8f9fa;
             font-weight: 600;
             color: #333;
             white-space: nowrap;
         }
-
         .orders-table tr:hover {
             background: #f8f9fa;
         }
-
         .order-status {
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
         }
-
         .order-status.pending {
             background: #fff3e0;
             color: #f57c00;
         }
-
         .order-status.processing {
             background: #e3f2fd;
             color: #1976d2;
         }
-
         .order-status.completed {
             background: #e8f5e9;
             color: #388e3c;
         }
-
         .order-status.cancelled {
             background: #ffebee;
             color: #c62828;
         }
-
         .btn {
             padding: 8px 15px;
             border: none;
@@ -206,34 +170,27 @@
             font-family: 'Tajawal', sans-serif;
             margin-left: 5px;
         }
-
         .btn-view {
             background: #e3f2fd;
             color: #1976d2;
         }
-
         .btn-view:hover {
             background: #bbdefb;
         }
-
         .btn-edit {
             background: #fff3e0;
             color: #f57c00;
         }
-
         .btn-edit:hover {
             background: #ffe0b2;
         }
-
         .btn-delete {
             background: #ffebee;
             color: #c62828;
         }
-
         .btn-delete:hover {
             background: #ffcdd2;
         }
-
         .pagination {
             display: flex;
             justify-content: center;
@@ -241,7 +198,6 @@
             gap: 10px;
             margin-top: 30px;
         }
-
         .pagination button {
             padding: 10px 15px;
             border: 2px solid #e0e0e0;
@@ -252,86 +208,19 @@
             font-family: 'Tajawal', sans-serif;
             font-weight: 500;
         }
-
         .pagination button:hover,
         .pagination button.active {
             border-color: #E33E10;
             color: #E33E10;
         }
-
         .pagination button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            }
-
-            .sidebar.show {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-right: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 20px 15px;
-            }
-
-            .content-header h1 {
-                font-size: 24px;
-            }
-
-            .filters {
-                flex-direction: column;
-            }
-
-            .filter-group {
-                width: 100%;
-            }
-
-            .filter-group select,
-            .filter-group input {
-                width: 100%;
-            }
-
-            /* Status select styling */
-            .status-select {
-                padding: 6px 12px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                background-color: white;
-                font-family: 'Tajawal', sans-serif;
-                font-size: 14px;
-                color: #333;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-
-            .status-select:hover {
-                border-color: #E33E10;
-            }
-
-            .status-select:focus {
-                outline: none;
-                border-color: #E33E10;
-                box-shadow: 0 0 0 3px rgba(227, 62, 16, 0.1);
-            }
-
-            /* Status cell styling */
-            .status-cell {
-                padding: 12px;
-            }
+        .no-orders {
+            text-align: center;
+            padding: 40px;
+            color: #999;
         }
     </style>
 </head>
@@ -413,88 +302,5 @@
     </div>
 
     <script type="module" src="admin-orders.js"></script>
-        // Orders data is now loaded from Firebase via admin-orders.js
-
-        // Status labels are now handled in admin-orders.js
-
-        // Render orders table
-        function renderOrders(filteredOrders) {
-            const tbody = document.getElementById('ordersTableBody');
-            tbody.innerHTML = filteredOrders.map(order => `
-                <tr>
-                    <td>#${order.id}</td>
-                    <td>${order.date}</td>
-                    <td>${order.customer}</td>
-                    <td>${order.products}</td>
-                    <td>$${order.amount.toFixed(2)}</td>
-                    <td><span class="order-status ${order.status}">${statusLabels[order.status]}</span></td>
-                    <td>
-                        <button class="btn btn-view" onclick="viewOrder(${order.id})">
-                            <i class="fas fa-eye"></i> عرض
-                        </button>
-                        <button class="btn btn-edit" onclick="editOrder(${order.id})">
-                            <i class="fas fa-edit"></i> تعديل
-                        </button>
-                        <button class="btn btn-delete" onclick="deleteOrder(${order.id})">
-                            <i class="fas fa-trash"></i> حذف
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Filter orders
-        function filterOrders() {
-            const status = document.getElementById('statusFilter').value;
-            const date = document.getElementById('dateFilter').value;
-            const search = document.getElementById('searchFilter').value.toLowerCase();
-
-            let filtered = orders;
-
-            if (status !== 'all') {
-                filtered = filtered.filter(order => order.status === status);
-            }
-
-            if (date) {
-                filtered = filtered.filter(order => order.date === date);
-            }
-
-            if (search) {
-                filtered = filtered.filter(order => 
-                    order.id.toString().includes(search) ||
-                    order.customer.toLowerCase().includes(search)
-                );
-            }
-
-            renderOrders(filtered);
-        }
-
-        // View order details
-        function viewOrder(orderId) {
-            alert(`عرض تفاصيل الطلب #${orderId}`);
-        }
-
-        // Edit order
-        function editOrder(orderId) {
-            alert(`تعديل الطلب #${orderId}`);
-        }
-
-        // Delete order
-        function deleteOrder(orderId) {
-            if (confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
-                alert(`تم حذف الطلب #${orderId}`);
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            renderOrders(orders);
-
-            // Add event listeners to filters
-            document.getElementById('statusFilter').addEventListener('change', filterOrders);
-            document.getElementById('dateFilter').addEventListener('change', filterOrders);
-            document.getElementById('searchFilter').addEventListener('input', filterOrders);
-        });
-    </script>
 </body>
 </html>

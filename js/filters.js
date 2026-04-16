@@ -42,6 +42,11 @@ class FilterSystem {
     }
 
     collectFilters() {
+        if (!this.container) {
+            console.debug("Filter container not found");
+            return;
+        }
+        
         const filterGroups = this.container.querySelectorAll(".filter-group");
 
         filterGroups.forEach(group => {
@@ -57,6 +62,11 @@ class FilterSystem {
     }
 
     collectItems() {
+        if (!this.itemsContainer) {
+            console.debug("Items container not found");
+            return;
+        }
+        
         const items = this.itemsContainer.querySelectorAll(".filter-item");
 
         this.items = Array.from(items).map(item => ({
@@ -66,31 +76,50 @@ class FilterSystem {
     }
 
     getItemData(item) {
-        return {
-            id: item.dataset.id,
-            category: item.dataset.category,
-            price: parseFloat(item.dataset.price) || 0,
-            rating: parseFloat(item.dataset.rating) || 0,
-            tags: item.dataset.tags?.split(",") || []
-        };
+        try {
+            return {
+                id: item.dataset.id || "",
+                category: item.dataset.category || "",
+                price: parseFloat(item.dataset.price) || 0,
+                rating: parseFloat(item.dataset.rating) || 0,
+                tags: item.dataset.tags?.split(",") || []
+            };
+        } catch (error) {
+            console.debug("Error getting item data:", error);
+            return {
+                id: "",
+                category: "",
+                price: 0,
+                rating: 0,
+                tags: []
+            };
+        }
     }
 
     addEventListeners() {
-        // Add change event listeners to all filter inputs
-        Object.values(this.filters).flat().forEach(filter => {
-            filter.element.addEventListener("change", () => this.applyFilters());
-        });
+        try {
+            // Add change event listeners to all filter inputs
+            Object.values(this.filters).flat().forEach(filter => {
+                try {
+                    filter.element.addEventListener("change", () => this.applyFilters());
+                } catch (error) {
+                    console.debug("Error adding listener to filter:", error);
+                }
+            });
 
-        // Add clear filters button listener
-        const clearButton = this.container.querySelector(".clear-filters");
-        if (clearButton) {
-            clearButton.addEventListener("click", () => this.clearFilters());
-        }
+            // Add clear filters button listener
+            const clearButton = this.container.querySelector(".clear-filters");
+            if (clearButton) {
+                clearButton.addEventListener("click", () => this.clearFilters());
+            }
 
-        // Add apply filters button listener
-        const applyButton = this.container.querySelector(".apply-filters");
-        if (applyButton) {
-            applyButton.addEventListener("click", () => this.applyFilters());
+            // Add apply filters button listener
+            const applyButton = this.container.querySelector(".apply-filters");
+            if (applyButton) {
+                applyButton.addEventListener("click", () => this.applyFilters());
+            }
+        } catch (error) {
+            console.debug("Error adding event listeners:", error);
         }
     }
 
@@ -116,7 +145,11 @@ class FilterSystem {
     }
 
     filterItems() {
+        if (!this.items || this.items.length === 0) return;
+        
         this.items.forEach(item => {
+            if (!item.element) return;
+            
             const isVisible = this.isItemVisible(item);
             item.element.style.display = isVisible ? "" : "none";
             item.element.classList.toggle("hidden", !isVisible);
@@ -177,8 +210,14 @@ class FilterSystem {
     }
 
     updateFilterCounts() {
+        if (!this.filters) return;
+        
         Object.entries(this.filters).forEach(([groupName, filters]) => {
+            if (!filters) return;
+            
             filters.forEach(filter => {
+                if (!filter || !filter.element) return;
+                
                 const count = this.countMatchingItems(groupName, filter.value);
                 const countElement = filter.element.nextElementSibling?.querySelector(".filter-count");
                 if (countElement) {
@@ -221,19 +260,27 @@ class FilterSystem {
     }
 
     clearFilters() {
+        if (!this.filters) return;
+        
         // Uncheck all filter inputs
         Object.values(this.filters).flat().forEach(filter => {
-            filter.element.checked = false;
+            if (filter && filter.element) {
+                filter.element.checked = false;
+            }
         });
 
         // Clear active filters
         this.activeFilters = {};
 
         // Show all items
-        this.items.forEach(item => {
-            item.element.style.display = "";
-            item.element.classList.remove("hidden");
-        });
+        if (this.items) {
+            this.items.forEach(item => {
+                if (item.element) {
+                    item.element.style.display = "";
+                    item.element.classList.remove("hidden");
+                }
+            });
+        }
 
         // Update UI
         this.updateUI();
@@ -244,16 +291,22 @@ class FilterSystem {
     }
 
     setActiveFilters(filters) {
+        if (!filters) return;
+        
         this.activeFilters = { ...filters };
 
         // Update filter inputs
-        Object.entries(this.activeFilters).forEach(([groupName, values]) => {
-            if (this.filters[groupName]) {
-                this.filters[groupName].forEach(filter => {
-                    filter.element.checked = values.includes(filter.value);
-                });
-            }
-        });
+        if (this.filters) {
+            Object.entries(this.activeFilters).forEach(([groupName, values]) => {
+                if (this.filters[groupName]) {
+                    this.filters[groupName].forEach(filter => {
+                        if (filter && filter.element) {
+                            filter.element.checked = values.includes(filter.value);
+                        }
+                    });
+                }
+            });
+        }
 
         // Apply filters
         this.filterItems();

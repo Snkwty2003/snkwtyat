@@ -12,8 +12,6 @@ function animateCounters(container = null) {
 
 
         counters.forEach(counter => {
-            if (!counter) return;
-            
             const target = +counter.getAttribute("data-counter") || +counter.getAttribute("data-target") || 0;
             const duration = +counter.getAttribute("data-duration") || 2000;
             const increment = target / (duration / 16);
@@ -60,38 +58,53 @@ function animateCounters(container = null) {
             observer.observe(counter);
         });
     } catch (error) {
-        console.error("Error initializing counters:", error);
+        console.debug("Error initializing counters:", error);
     }
 }
 
 // Confetti effect function
 function triggerConfetti() {
     try {
-        if (!document.body) return;
+        if (!document || !document.body) {
+            console.debug("Document or body not available for confetti");
+            return;
+        }
         
         const colors = ['#E33E10', '#FF6B35', '#FFD700', '#FF4500', '#FF6347'];
         const confettiCount = 100;
 
         for (let i = 0; i < confettiCount; i++) {
-            const confetti = document.createElement('div');
-            confetti.style.cssText = `
-                position: fixed;
-                width: ${Math.random() * 10 + 5}px;
-                height: ${Math.random() * 10 + 5}px;
-                background: ${colors[Math.floor(Math.random() * colors.length)]};
-                left: ${Math.random() * 100}vw;
-                top: -10px;
-                border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-                pointer-events: none;
-                z-index: 9999;
-                animation: fall ${Math.random() * 3 + 2}s linear forwards;
-            `;
-            document.body.appendChild(confetti);
+            try {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: ${Math.random() * 10 + 5}px;
+                    height: ${Math.random() * 10 + 5}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}vw;
+                    top: -10px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    pointer-events: none;
+                    z-index: 9999;
+                    animation: fall ${Math.random() * 3 + 2}s linear forwards;
+                `;
+                document.body.appendChild(confetti);
 
-            setTimeout(() => confetti.remove(), 5000);
+                setTimeout(() => {
+                    try {
+                        if (confetti && confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    } catch (error) {
+                        console.debug("Error removing confetti:", error);
+                    }
+                }, 5000);
+            } catch (error) {
+                console.debug("Error creating confetti:", error);
+            }
         }
     } catch (error) {
-        console.debug("Error triggering confetti:", error);
+        console.debug("Error in triggerConfetti:", error);
     }
 }
 
@@ -103,12 +116,6 @@ let userInteracted = false;
 function initAudioContext() {
     if (!audioInitialized && userInteracted) {
         try {
-            // Check if AudioContext is supported
-            if (!(window.AudioContext || window.webkitAudioContext)) {
-                console.debug("AudioContext not supported");
-                return null;
-            }
-            
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             audioInitialized = true;
         } catch (error) {
@@ -121,7 +128,7 @@ function initAudioContext() {
 function playFireworksSound() {
     // Only play sound if user has interacted with the page
     if (!userInteracted) return;
-    
+
     try {
         const ctx = initAudioContext();
         if (!ctx) return;
@@ -139,12 +146,6 @@ function playFireworksSound() {
 
         const oscillator = ctx.createOscillator();
         const gainNode = ctx.createGain();
-
-        // Check if oscillator and gainNode were created successfully
-        if (!oscillator || !gainNode) {
-            console.debug("Failed to create audio nodes");
-            return;
-        }
 
         oscillator.connect(gainNode);
         gainNode.connect(ctx.destination);
@@ -165,28 +166,20 @@ function playFireworksSound() {
 
 // Mark user interaction and initialize audio
 function handleUserInteraction() {
-    try {
-        userInteracted = true;
-        initAudioContext();
-    } catch (error) {
-        console.debug("Error handling user interaction:", error);
-    }
+    userInteracted = true;
+    initAudioContext();
 }
 
 // Initialize audio on first user interaction
-try {
-    if (document) {
-        document.addEventListener('click', handleUserInteraction, { once: true });
-        document.addEventListener('touchstart', handleUserInteraction, { once: true });
-        document.addEventListener('keydown', handleUserInteraction, { once: true });
-    }
-} catch (error) {
-    console.debug("Error initializing event listeners:", error);
-}
+document.addEventListener('click', handleUserInteraction, { once: true });
+document.addEventListener('touchstart', handleUserInteraction, { once: true });
+document.addEventListener('keydown', handleUserInteraction, { once: true });
 
 // Add CSS animations for confetti and bounce
 try {
-    if (document && document.head) {
+    if (!document || !document.head) {
+        console.debug("Document or head not available for styles");
+    } else {
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fall {
@@ -211,20 +204,18 @@ try {
         document.head.appendChild(style);
     }
 } catch (error) {
-    console.debug("Error adding CSS styles:", error);
+    console.debug("Error adding CSS animations:", error);
 }
 
 // Initialize counters when DOM is loaded
 try {
-    if (document) {
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                animateCounters();
-            } catch (error) {
-                console.debug("Error initializing counters:", error);
-            }
-        });
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+        try {
+            animateCounters();
+        } catch (error) {
+            console.debug("Error initializing counters on DOMContentLoaded:", error);
+        }
+    });
 } catch (error) {
-    console.debug("Error setting up DOMContentLoaded listener:", error);
+    console.debug("Error setting up DOMContentLoaded listener for counters:", error);
 }

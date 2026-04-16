@@ -11,18 +11,27 @@ class I18n {
         this.currentLanguage = this.getCurrentLanguage();
         this.translations = {};
         this.rtlLanguages = ["ar", "he", "fa"];
+        this.isLoading = false;
 
         this.init();
     }
 
     init() {
-        this.loadTranslations();
-        this.applyLanguage(this.currentLanguage);
-        this.initLanguageSwitcher();
+        try {
+            this.loadTranslations();
+            this.applyLanguage(this.currentLanguage);
+            this.initLanguageSwitcher();
 
-        document.addEventListener("languageChange", (e) => {
-            this.applyLanguage(e.detail.language);
-        });
+            if (document) {
+                document.addEventListener("languageChange", (e) => {
+                    if (e && e.detail && e.detail.language) {
+                        this.applyLanguage(e.detail.language);
+                    }
+                });
+            }
+        } catch (error) {
+            console.debug("Error initializing i18n system:", error);
+        }
     }
 
     getCurrentLanguage() {
@@ -39,41 +48,54 @@ class I18n {
 
             return this.options.defaultLanguage;
         } catch (error) {
-            console.error("Error getting current language:", error);
+            console.debug("Error getting current language:", error);
             return this.options.defaultLanguage;
         }
     }
 
     async loadTranslations() {
-        // Prevent multiple simultaneous loads
-        if (this.isLoading) return;
-        this.isLoading = true;
+        try {
+            // Prevent multiple simultaneous loads
+            if (this.isLoading) return;
+            this.isLoading = true;
 
-        for (const lang of this.options.availableLanguages) {
-            // Skip if already loaded
-            if (this.translations[lang] && Object.keys(this.translations[lang]).length > 0) {
-                continue;
+            if (!this.options || !this.options.availableLanguages || !Array.isArray(this.options.availableLanguages)) {
+                console.debug("Invalid available languages configuration");
+                this.isLoading = false;
+                return;
             }
 
-            try {
-                const response = await fetch(`locales/${lang}.json`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                this.translations[lang] = await response.json();
-            } catch (error) {
-                console.debug(`Failed to load translations for ${lang}:`, error);
-                // Use empty object as fallback to prevent crashes
-                this.translations[lang] = {};
+            for (const lang of this.options.availableLanguages) {
+                if (!lang) continue;
                 
-                // If default language failed to load, use minimal fallback translations
-                if (lang === this.options.defaultLanguage) {
-                    this.translations[lang] = this.getFallbackTranslations();
+                // Skip if already loaded
+                if (this.translations[lang] && Object.keys(this.translations[lang]).length > 0) {
+                    continue;
+                }
+
+                try {
+                    const response = await fetch(`locales/${lang}.json`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    this.translations[lang] = data || {};
+                } catch (error) {
+                    console.debug(`Failed to load translations for ${lang}:`, error);
+                    // Use empty object as fallback to prevent crashes
+                    this.translations[lang] = {};
+
+                    // If default language failed to load, use minimal fallback translations
+                    if (lang === this.options.defaultLanguage) {
+                        this.translations[lang] = this.getFallbackTranslations();
+                    }
                 }
             }
+        } catch (error) {
+            console.debug("Error in loadTranslations:", error);
+        } finally {
+            this.isLoading = false;
         }
-        
-        this.isLoading = false;
     }
 
     getFallbackTranslations() {
@@ -105,7 +127,7 @@ class I18n {
             }
 
             this.currentLanguage = language;
-            
+
             // Safely store in localStorage
             try {
                 localStorage.setItem(this.options.storageKey, language);
@@ -156,13 +178,28 @@ class I18n {
             if (!key) return "";
 
             const keys = key.split(".");
-            let translation = this.translations[this.currentLanguage] || this.translations[this.options.defaultLanguage] || {};
+
+            // Try current language first, then default language, then fallback
+            let translation = this.translations[this.currentLanguage] || 
+                            this.translations[this.options.defaultLanguage] || 
+                            this.getFallbackTranslations();
 
             for (const k of keys) {
                 if (translation && typeof translation === 'object' && translation[k] !== undefined) {
                     translation = translation[k];
                 } else {
-                    return key;
+                    // Try to get from fallback translations
+                    const fallback = this.getFallbackTranslations();
+                    let fallbackValue = fallback;
+                    for (const fallbackKey of keys) {
+                        if (fallbackValue && typeof fallbackValue === 'object' && fallbackValue[fallbackKey] !== undefined) {
+                            fallbackValue = fallbackValue[fallbackKey];
+                        } else {
+                            return key;
+                        }
+                    }
+                    translation = fallbackValue;
+                    break;
                 }
             }
 
@@ -172,7 +209,7 @@ class I18n {
 
             return key;
         } catch (error) {
-            console.error("Error translating key:", key, error);
+            console.debug("Error translating key:", key, error);
             return key;
         }
     }

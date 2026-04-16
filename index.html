@@ -25,8 +25,8 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://snkwtyat.com">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.ico">
+    <!-- Favicon - Using inline SVG to avoid 404 error -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -1257,7 +1257,52 @@ footer {
         <p>اختر القالب المناسب لمشروعك وابدأ العمل فوراً</p>
     </div>
 
-    <div class="templates-grid">
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن قالب..." autocomplete="off">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <!-- Filter Section -->
+    <div id="filterContainer" class="filter-container">
+        <div class="filter-header">
+            <h3>تصفية النتائج</h3>
+            <button class="clear-filters">مسح الفلاتر</button>
+        </div>
+        <div class="filter-groups">
+            <div class="filter-group" data-filter="category">
+                <h4>التصنيف</h4>
+                <label>
+                    <input type="checkbox" value="landing"> صفحة هبوط
+                </label>
+                <label>
+                    <input type="checkbox" value="store"> متجر إلكتروني
+                </label>
+                <label>
+                    <input type="checkbox" value="company"> موقع شركة
+                </label>
+            </div>
+            <div class="filter-group" data-filter="price">
+                <h4>السعر</h4>
+                <label>
+                    <input type="checkbox" value="0-30"> أقل من $30
+                </label>
+                <label>
+                    <input type="checkbox" value="30-50"> $30 - $50
+                </label>
+                <label>
+                    <input type="checkbox" value="50-100"> أكثر من $50
+                </label>
+            </div>
+        </div>
+        <div class="results-count">0 نتيجة</div>
+    </div>
+
+    <!-- Items Container -->
+    <div id="itemsContainer" class="templates-grid">
         <div class="template-card" data-animate style="animation-delay: 0.1s;">
             <div class="template-badge">
                 <span class="badge badge-hot">الأكثر مبيعاً</span>
@@ -1344,6 +1389,39 @@ footer {
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="reviews-section">
+    <div class="section-title" data-animate>
+        <h2 class="gradient-text">آراء العملاء</h2>
+        <p>شاركنا رأيك وساعد الآخرين في اختيار القالب المناسب</p>
+    </div>
+
+    <div id="reviewContainer" class="reviews-container">
+        <div class="reviews-list"></div>
+
+        <form id="reviewForm" class="review-form">
+            <h3>أضف مراجعتك</h3>
+            <div class="form-group">
+                <label for="reviewAuthor">الاسم</label>
+                <input type="text" id="reviewAuthor" name="author" required>
+            </div>
+            <div class="form-group">
+                <label for="reviewTitle">العنوان</label>
+                <input type="text" id="reviewTitle" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="reviewContent">المراجعة</label>
+                <textarea id="reviewContent" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>التقييم</label>
+                <div id="ratingInput" class="rating-input" data-rating="0"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">إرسال المراجعة</button>
+        </form>
     </div>
 </section>
 
@@ -1900,11 +1978,11 @@ footer {
 <script src="js/advanced.js"></script>
 <script src="js/notifications.js"></script>
 <script src="js/form-validator.js"></script>
-<script src="js/counters.js"></script>
-<script src="js/search.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/reviews.js"></script>
-<script src="js/i18n.js"></script>
+<script src="js/counters-new.js"></script>
+<script src="js/search-new.js"></script>
+<script src="js/filters-new.js"></script>
+<script src="js/reviews-new.js"></script>
+<script src="js/i18n-new.js"></script>
 <script>
 // Scroll Progress & Back to Top
 window.addEventListener('scroll', () => {
@@ -2200,29 +2278,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
 // Select service in contact form
 function selectService(serviceType) {
     const serviceSelect = document.getElementById('serviceType');
+
     if (serviceSelect) {
         serviceSelect.value = serviceType;
-        // Scroll to contact section
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
+    }
+
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
+
+
 // Show FAQ modal
 function showFaqModal() {
-    alert(`الأسئلة الشائعة:
+    const faq = `
+الأسئلة الشائعة:
+
 1. كيف يمكنني طلب تصميم؟
 - يمكنك ملء نموذج الاتصال واختيار الخدمة المطلوبة
+
 2. كم تستغرق عملية التصميم؟
 - عادةً من 3 إلى 7 أيام
+
 3. هل يوجد دعم فني؟
-- نعم، دعم لمدة 30 يوم`);
+- نعم، دعم لمدة 30 يوم
+`;
+
+    alert(faq);
 }
+
 </script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -2234,27 +2323,6 @@ firebase.initializeApp({
 });
 
 const db = firebase.firestore();
-
-// Test Counter Section
-document.addEventListener('DOMContentLoaded', () => {
-    const testStat = document.getElementById('testCounter');
-    if (testStat) {
-        testStat.addEventListener('click', () => {
-            animateCounters(testStat);
-            showToast('تم تفعيل العداد التجريبي!', 'success');
-        });
-    }
-});
 </script>
-
-<!-- Test Counter Section -->
-<section style="text-align:center; margin-top:50px; padding: 40px 20px;">
-    <h2>اختبار العدادات التفاعلية</h2>
-    <div id="testCounter" class="stat" style="cursor:pointer; display:inline-block; margin:20px;">
-        <span class="stat-number" data-target="100">0</span>
-        <span class="stat-label">مشترك تجريبي</span>
-    </div>
-</section>
-
 </body>
 </html>

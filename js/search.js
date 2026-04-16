@@ -43,19 +43,12 @@ class AdvancedSearch {
 
         // Close results on click outside
         document.addEventListener("click", (e) => {
-            if (!this.searchInput.contains(e.target) && 
+            if (this.searchInput && this.resultsContainer &&
+                !this.searchInput.contains(e.target) &&
                 !this.resultsContainer.contains(e.target)) {
                 this.hideResults();
             }
         });
-
-        // Create results container if not exists
-        if (!this.resultsContainer) {
-            this.resultsContainer = document.createElement("div");
-            this.resultsContainer.id = this.options.resultsContainerId;
-            this.resultsContainer.className = "search-results";
-            this.searchInput.parentElement.appendChild(this.resultsContainer);
-        }
     }
 
     handleInput(e) {
@@ -87,7 +80,7 @@ class AdvancedSearch {
             const results = await this.fetchResults(term);
             this.displayResults(results);
         } catch (error) {
-            console.error("Search error:", error);
+            console.debug("Search error:", error);
             this.showError();
         } finally {
             this.isSearching = false;
@@ -119,6 +112,8 @@ class AdvancedSearch {
     }
 
     displayResults(results) {
+        if (!this.resultsContainer) return;
+        
         if (results.length === 0) {
             this.showNoResults();
             return;
@@ -162,6 +157,8 @@ class AdvancedSearch {
     }
 
     showLoading() {
+        if (!this.resultsContainer) return;
+        
         this.resultsContainer.innerHTML = `
             <div class="search-loading">
                 <div class="loading-spinner"></div>
@@ -172,6 +169,8 @@ class AdvancedSearch {
     }
 
     showError() {
+        if (!this.resultsContainer) return;
+        
         this.resultsContainer.innerHTML = `
             <div class="search-error">
                 <i class="fas fa-exclamation-circle"></i>
@@ -182,6 +181,8 @@ class AdvancedSearch {
     }
 
     showNoResults() {
+        if (!this.resultsContainer) return;
+        
         this.resultsContainer.innerHTML = `
             <div class="search-no-results">
                 <i class="fas fa-search"></i>
@@ -192,16 +193,20 @@ class AdvancedSearch {
     }
 
     showResults() {
-        if (this.searchTerm && this.searchTerm.length >= this.options.minChars) {
+        if (this.resultsContainer && this.searchTerm && this.searchTerm.length >= this.options.minChars) {
             this.resultsContainer.classList.add("show");
         }
     }
 
     hideResults() {
-        this.resultsContainer.classList.remove("show");
+        if (this.resultsContainer) {
+            this.resultsContainer.classList.remove("show");
+        }
     }
 
     handleKeyboard(e) {
+        if (!this.resultsContainer) return;
+        
         const results = this.resultsContainer.querySelectorAll(".search-result");
         const focusedResult = this.resultsContainer.querySelector(".search-result.focused");
 
@@ -249,15 +254,19 @@ class AdvancedSearch {
     }
 
     selectResult(result) {
+        if (!result) return;
+        
         const id = result.dataset.id;
         // Handle result selection - navigate to result page
-        console.log("Selected result:", id);
+        console.debug("Selected result:", id);
         this.hideResults();
     }
 
     performSearch() {
+        if (!this.searchTerm) return;
+        
         // Perform full search - navigate to search results page
-        console.log("Performing search for:", this.searchTerm);
+        console.debug("Performing search for:", this.searchTerm);
         this.hideResults();
     }
 

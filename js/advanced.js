@@ -306,8 +306,12 @@ const Format = {
 document.addEventListener("DOMContentLoaded", () => {
     lazyLoadImages();
     initParallax();
+   if (typeof initSmoothScroll === "function") {
     initSmoothScroll();
+}
+if (typeof initScrollAnimations === "function") {
     initScrollAnimations();
+}
   
     animateProgressBars();
     initTypingEffect();

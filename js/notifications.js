@@ -8,45 +8,75 @@ class NotificationSystem {
     }
 
     createContainer() {
-        let container = document.getElementById("notification-container");
-        if (!container) {
-            container = document.createElement("div");
-            container.id = "notification-container";
-            container.className = "notification-container";
-            document.body.appendChild(container);
+        try {
+            if (!document || !document.body) {
+                console.debug("Document or body not available for notification container");
+                return null;
+            }
+            
+            let container = document.getElementById("notification-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.id = "notification-container";
+                container.className = "notification-container";
+                document.body.appendChild(container);
+            }
+            return container;
+        } catch (error) {
+            console.debug("Error creating notification container:", error);
+            return null;
         }
-        return container;
     }
 
     show(message, type = "info", options = {}) {
-        const notification = this.createNotification(message, type, options);
-        this.addNotification(notification);
-        return notification;
+        try {
+            if (!this.container) {
+                console.debug("Notification container not available");
+                return null;
+            }
+            
+            const notification = this.createNotification(message, type, options);
+            if (!notification) {
+                console.debug("Failed to create notification");
+                return null;
+            }
+            
+            this.addNotification(notification);
+            return notification;
+        } catch (error) {
+            console.debug("Error showing notification:", error);
+            return null;
+        }
     }
 
     createNotification(message, type, options) {
-        const notification = document.createElement("div");
-        notification.className = `notification notification-${type}`;
+        try {
+            const notification = document.createElement("div");
+            notification.className = `notification notification-${type || "info"}`;
 
-        const icon = this.getIcon(type);
-        const duration = options.duration || this.defaultDuration;
+            const icon = this.getIcon(type) || "fas fa-info-circle";
+            const duration = options && options.duration ? options.duration : this.defaultDuration;
+            const sanitizedMessage = this.sanitize(message) || "";
+            const sanitizedDetails = options && options.details ? this.sanitize(options.details) : "";
 
-        notification.innerHTML = `
-            <div class="notification-icon">
-                <i class="${icon}"></i>
-            </div>
-            <div class="notification-content">
-                <div class="notification-message">${this.sanitize(message)}</div>
-                ${options.details ? `<div class="notification-details">${this.sanitize(options.details)}</div>` : ""}
-            </div>
-            <button class="notification-close" aria-label="إغلاق">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-message">${sanitizedMessage}</div>
+                    ${sanitizedDetails ? `<div class="notification-details">${sanitizedDetails}</div>` : ""}
+                </div>
+                <button class="notification-close" aria-label="إغلاق">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
 
-        // Add close button functionality
-        const closeBtn = notification.querySelector(".notification-close");
-        closeBtn.addEventListener("click", () => this.removeNotification(notification));
+            // Add close button functionality
+            const closeBtn = notification.querySelector(".notification-close");
+            if (closeBtn) {
+                closeBtn.addEventListener("click", () => this.removeNotification(notification));
+            }
 
         // Auto remove after duration
         if (duration > 0) {
@@ -57,16 +87,27 @@ class NotificationSystem {
     }
 
     addNotification(notification) {
-        // Remove oldest if max reached
-        if (this.notifications.length >= this.maxNotifications) {
-            this.removeNotification(this.notifications[0]);
-        }
+        try {
+            if (!notification) {
+                console.debug("No notification provided to add");
+                return;
+            }
+            
+            if (!this.container) {
+                console.debug("Notification container not available");
+                return;
+            }
+            
+            // Remove oldest if max reached
+            if (this.notifications.length >= this.maxNotifications) {
+                this.removeNotification(this.notifications[0]);
+            }
 
-        this.notifications.push(notification);
-        this.container.appendChild(notification);
+            this.notifications.push(notification);
+            this.container.appendChild(notification);
 
-        // Trigger animation
-        requestAnimationFrame(() => {
+            // Trigger animation
+            requestAnimationFrame(() => {
             notification.classList.add("show");
         });
     }

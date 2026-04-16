@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل مطعم - شنكوتيات</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            background: #fffcfb;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: #E33E10;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">شنكوتيات</div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="form-container">
+        <h2>تسجيل مطعم</h2>
+
+        <form id="restaurantForm">
+
+            <div class="form-group">
+                <input id="restaurantName" placeholder="اسم المطعم" required>
+            </div>
+
+            <div class="form-group">
+                <input id="ownerName" placeholder="اسم المالك" required>
+            </div>
+
+            <div class="form-group">
+                <input id="phoneNumber" placeholder="رقم الهاتف" required>
+            </div>
+
+            <div class="form-group">
+                <input id="city" placeholder="المدينة" required>
+            </div>
+
+            <div class="form-group">
+                <select id="restaurantType" required>
+                    <option value="">اختر النوع</option>
+                    <option value="مطعم">مطعم</option>
+                    <option value="كافيه">كافيه</option>
+                    <option value="وجبات سريعة">وجبات سريعة</option>
+                </select>
+            </div>
+
+            <button class="btn-submit" type="submit">
+                حفظ البيانات
+            </button>
+
+        </form>
+    </div>
+
+</div>
+
+<!-- 🚀 Firebase Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCzlJRfoFi8jBevT6fZb6cMTcEslOazmN8",
+    authDomain: "snkwtyat.firebaseapp.com",
+    projectId: "snkwtyat",
+    storageBucket: "snkwtyat.firebasestorage.app",
+    messagingSenderId: "582497228076",
+    appId: "1:582497228076:web:b7373413aa6ddb9d1a0889"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("restaurantForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "businesses"), {
+        name: restaurantName.value,
+        owner: ownerName.value,
+        phone: phoneNumber.value,
+        city: city.value,
+        type: restaurantType.value,
+        date: new Date().toISOString()
+      });
+
+      alert("تم الحفظ في Firebase ✅");
+
+      e.target.reset();
+
+    } catch (err) {
+      console.error(err);
+      alert("حدث خطأ ❌");
+    }
+  });
+</script>
+
+</body>
+</html>

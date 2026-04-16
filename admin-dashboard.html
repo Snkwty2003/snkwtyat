@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -307,6 +307,38 @@
             color: #E33E10;
         }
 
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .restaurant-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .restaurant-info h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .restaurant-info p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .restaurant-info i {
+            margin-left: 8px;
+            color: #E33E10;
+        }
+
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(100%);
@@ -527,5 +559,6 @@
             </div>
         </main>
     </div>
+    <script type="module" src="admin-dashboard.js"></script>
 </body>
 </html>

@@ -1,46 +1,9 @@
-// Sample orders data
-const orders = [
-    {
-        id: 1001,
-        date: "2024-01-15",
-        customer: "أحمد محمد",
-        products: 3,
-        amount: 149.97,
-        status: "pending"
-    },
-    {
-        id: 1002,
-        date: "2024-01-14",
-        customer: "سارة العلي",
-        products: 1,
-        amount: 49.99,
-        status: "processing"
-    },
-    {
-        id: 1003,
-        date: "2024-01-13",
-        customer: "خالد الحربي",
-        products: 2,
-        amount: 79.98,
-        status: "completed"
-    },
-    {
-        id: 1004,
-        date: "2024-01-12",
-        customer: "منى السعيد",
-        products: 1,
-        amount: 29.99,
-        status: "cancelled"
-    },
-    {
-        id: 1005,
-        date: "2024-01-11",
-        customer: "فهد العتيبي",
-        products: 4,
-        amount: 199.96,
-        status: "pending"
-    }
-];
+// Firebase imports
+import { db, collection, doc, deleteDoc, updateDoc, onSnapshot, query, orderBy } from "./firebase-config.js";
+
+// Orders data from Firestore
+let orders = [];
+let ordersUnsubscribe = null;
 
 // Pagination state
 let currentPage = 1;
@@ -85,28 +48,58 @@ function renderOrders() {
             "processing": "قيد المعالجة",
             "completed": "مكتمل",
             "cancelled": "ملغي"
-        }[order.status];
+        }[order.status] || order.status;
+
+        const customerName = order.customerName || order.customer || "غير محدد";
+        const phone = order.phone || "غير محدد";
+        const itemsCount = order.items ? order.items.length : (order.products || 0);
+        const amount = order.amount || order.total || 0;
+        const date = order.date || order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString("ar-SA") : "غير محدد";
 
         const row = document.createElement("tr");
+
+        // Create status select element
+        const statusSelect = document.createElement("select");
+        statusSelect.className = "status-select";
+        statusSelect.value = order.status;
+        statusSelect.innerHTML = `
+            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
+            <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>قيد المعالجة</option>
+            <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>مكتمل</option>
+            <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+        `;
+
+        // Add change event listener to update status
+        statusSelect.addEventListener("change", async (e) => {
+            const newStatus = e.target.value;
+            await updateOrderStatus(order.id, newStatus);
+        });
+
         row.innerHTML = `
             <td>#${order.id}</td>
-            <td>${order.date}</td>
-            <td>${order.customer}</td>
-            <td>${order.products} منتج</td>
-            <td>${order.amount.toFixed(2)} ر.س</td>
-            <td><span class="order-status ${statusClass}">${statusText}</span></td>
+            <td>${date}</td>
+            <td>${customerName}</td>
+            <td>${phone}</td>
+            <td>${itemsCount} عنصر</td>
+            <td>${amount.toFixed(2)} ر.س</td>
+            <td class="status-cell"></td>
             <td>
-                <button class="btn btn-view" onclick="viewOrder(${order.id})">
+                <button class="btn btn-view" onclick="viewOrder('${order.id}')">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="btn btn-edit" onclick="editOrder(${order.id})">
+                <button class="btn btn-edit" onclick="editOrder('${order.id}')">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="btn btn-delete" onclick="deleteOrder(${order.id})">
+                <button class="btn btn-delete" onclick="deleteOrder('${order.id}')">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
         `;
+
+        // Append status select to status cell
+        const statusCell = row.querySelector(".status-cell");
+        statusCell.appendChild(statusSelect);
+
         tbody.appendChild(row);
     });
 
@@ -157,59 +150,191 @@ function renderPagination(totalPages) {
 }
 
 // View order details
-function viewOrder(orderId) {
+window.viewOrder = function(orderId) {
     const order = orders.find(o => o.id === orderId);
     if (order) {
+        const itemsText = order.items ? order.items.map(item => 
+            `- ${item.name || item.productName || "منتج"} (${item.quantity || 1}x) ${item.price || 0} ر.س`
+        ).join("\n") : "لا توجد منتجات";
+        
         alert(`تفاصيل الطلب #${order.id}:
 
-العميل: ${order.customer}
-التاريخ: ${order.date}
-عدد المنتجات: ${order.products}
-المبلغ: ${order.amount.toFixed(2)} ر.س
-الحالة: ${order.status}`);
+العميل: ${order.customerName || order.customer || "غير محدد"}
+رقم الهاتف: ${order.phone || "غير محدد"}
+العناصر:\n${itemsText}\nالحالة: ${order.status}`);
     }
-}
+};
+
+// Update order status
+window.updateOrderStatus = async function(orderId, newStatus) {
+    // Validate orderId
+    if (!orderId) {
+        console.error("Invalid orderId:", orderId);
+        alert("رقم الطلب غير صالح");
+        return;
+    }
+
+    // Validate newStatus
+    const validStatuses = ["pending", "processing", "completed", "cancelled"];
+    if (!newStatus || !validStatuses.includes(newStatus)) {
+        console.error("Invalid status:", newStatus);
+        alert("حالة الطلب غير صالحة");
+        return;
+    }
+
+    try {
+        // Update status in Firestore
+        await updateDoc(doc(db, "orders", orderId), {
+            status: newStatus
+        });
+
+        // Data will be automatically updated via onSnapshot
+        console.log(`Order ${orderId} status updated to ${newStatus}`);
+    } catch (error) {
+        console.error("Error updating order status:", error);
+        alert("حدث خطأ أثناء تحديث حالة الطلب");
+    }
+};
 
 // Edit order
-function editOrder(orderId) {
+window.editOrder = async function(orderId) {
     const order = orders.find(o => o.id === orderId);
     if (order) {
         const newStatus = prompt("تعديل حالة الطلب (pending/processing/completed/cancelled):", order.status);
         if (newStatus && ["pending", "processing", "completed", "cancelled"].includes(newStatus)) {
-            order.status = newStatus;
-            renderOrders();
+            try {
+                await updateDoc(doc(db, "orders", orderId), {
+                    status: newStatus
+                });
+                // Data will be automatically updated via onSnapshot
+            } catch (error) {
+                console.error("Error updating order:", error);
+                alert("حدث خطأ أثناء تحديث الطلب");
+            }
         }
     }
-}
+};
 
 // Delete order
-function deleteOrder(orderId) {
+window.deleteOrder = async function(orderId) {
     if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
-        const index = orders.findIndex(o => o.id === orderId);
-        if (index > -1) {
-            orders.splice(index, 1);
+        try {
+            await deleteDoc(doc(db, "orders", orderId));
+            // Data will be automatically updated via onSnapshot
+        } catch (error) {
+            console.error("Error deleting order:", error);
+            alert("حدث خطأ أثناء حذف الطلب");
+        }
+    }
+};
+
+// Fetch orders from Firestore - Safe implementation
+function fetchOrders() {
+    try {
+        // Ensure we unsubscribe from previous listener if exists
+        if (ordersUnsubscribe) {
+            ordersUnsubscribe();
+            ordersUnsubscribe = null;
+        }
+
+        // Create query with error handling
+        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+
+        // Set up real-time listener with comprehensive error handling
+        ordersUnsubscribe = onSnapshot(
+            q,
+            (snapshot) => {
+                try {
+                    // Reset orders array
+                    orders = [];
+
+                    // Safely process each document
+                    if (snapshot && snapshot.docs) {
+                        snapshot.docs.forEach((doc) => {
+                            if (doc && doc.exists) {
+                                orders.push({
+                                    id: doc.id,
+                                    ...doc.data()
+                                });
+                            }
+                        });
+                    }
+
+                    // Update UI components safely
+                    renderOrders();
+                } catch (processingError) {
+                    console.error("Error processing orders data:", processingError);
+                    // Still attempt to render with whatever data we have
+                    try {
+                        renderOrders();
+                    } catch (renderError) {
+                        console.error("Error rendering orders:", renderError);
+                    }
+                }
+            },
+            (error) => {
+                console.error("Error in orders listener:", error);
+                // Handle listener errors gracefully
+                orders = [];
+                try {
+                    renderOrders();
+                } catch (renderError) {
+                    console.error("Error rendering orders after listener error:", renderError);
+                }
+            }
+        );
+    } catch (error) {
+        console.error("Error setting up orders listener:", error);
+        // Ensure UI shows appropriate state
+        orders = [];
+        try {
             renderOrders();
+        } catch (renderError) {
+            console.error("Error rendering orders after setup error:", renderError);
         }
     }
 }
 
 // Initialize
 document.addEventListener("DOMContentLoaded", function() {
-    renderOrders();
+    try {
+        // Fetch orders from Firestore
+        fetchOrders();
 
-    // Add event listeners for filters
-    document.getElementById("statusFilter").addEventListener("change", () => {
-        currentPage = 1;
-        renderOrders();
-    });
+        // Add event listeners for filters with null checks
+        const statusFilter = document.getElementById("statusFilter");
+        const dateFilter = document.getElementById("dateFilter");
+        const searchFilter = document.getElementById("searchFilter");
 
-    document.getElementById("dateFilter").addEventListener("change", () => {
-        currentPage = 1;
-        renderOrders();
-    });
+        if (statusFilter) {
+            statusFilter.addEventListener("change", () => {
+                currentPage = 1;
+                renderOrders();
+            });
+        }
 
-    document.getElementById("searchFilter").addEventListener("input", () => {
-        currentPage = 1;
-        renderOrders();
-    });
+        if (dateFilter) {
+            dateFilter.addEventListener("change", () => {
+                currentPage = 1;
+                renderOrders();
+            });
+        }
+
+        if (searchFilter) {
+            searchFilter.addEventListener("input", () => {
+                currentPage = 1;
+                renderOrders();
+            });
+        }
+
+        console.log("Orders page initialized successfully");
+    } catch (error) {
+        console.error("Error initializing orders page:", error);
+        // Attempt to render basic UI even if initialization fails
+        try {
+            renderOrders();
+        } catch (renderError) {
+            console.error("Error rendering initial UI:", renderError);
+        }
+    }
 });

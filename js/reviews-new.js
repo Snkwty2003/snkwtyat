@@ -18,7 +18,7 @@ class RatingSystem {
 
     init() {
         if (!this.container) {
-            console.warn("Rating container not found, creating it");
+            console.debug("Rating container not found, creating it");
             this.container = document.createElement('div');
             this.container.id = this.options.containerId;
             document.body.appendChild(this.container);
@@ -200,7 +200,7 @@ class ReviewSystem {
 
     init() {
         if (!this.container) {
-            console.warn("Review container not found");
+            console.debug("Review container not found");
             return;
         }
 
@@ -217,40 +217,33 @@ class ReviewSystem {
     }
 
     loadReviews() {
-        try {
-            // Load reviews from server or local storage
-            // For demo, we'll use mock data
-            this.reviews = [
-                {
-                    id: 1,
-                    author: "أحمد محمد",
-                    rating: 5,
-                    title: "ممتاز جداً",
-                    content: "قالب رائع وسهل التعديل، أنصح به بشدة",
-                    date: "2024-01-15",
-                    helpful: 12
-                },
-                {
-                    id: 2,
-                    author: "سارة علي",
-                    rating: 4,
-                    title: "جيد لكن يحتاج تحسين",
-                    content: "القالب جيد بشكل عام، لكن هناك بعض الميزات التي يمكن إضافتها",
-                    date: "2024-01-10",
-                    helpful: 8
-                }
-            ];
+        // Load reviews from server or local storage
+        // For demo, we'll use mock data
+        this.reviews = [
+            {
+                id: 1,
+                author: "أحمد محمد",
+                rating: 5,
+                title: "ممتاز جداً",
+                content: "قالب رائع وسهل التعديل، أنصح به بشدة",
+                date: "2024-01-15",
+                helpful: 12
+            },
+            {
+                id: 2,
+                author: "سارة علي",
+                rating: 4,
+                title: "جيد لكن يحتاج تحسين",
+                content: "القالب جيد بشكل عام، لكن هناك بعض الميزات التي يمكن إضافتها",
+                date: "2024-01-10",
+                helpful: 8
+            }
+        ];
 
-            this.displayReviews();
-        } catch (error) {
-            console.debug("Error loading reviews:", error);
-            this.reviews = [];
-        }
+        this.displayReviews();
     }
 
     displayReviews() {
-        if (!this.container || !this.reviews) return;
-        
         const reviewsContainer = this.container.querySelector(".reviews-list");
         if (!reviewsContainer) return;
 
@@ -259,26 +252,18 @@ class ReviewSystem {
     }
 
     createReviewHTML(review) {
-        if (!review) return "";
-        
-        const stars = this.createStarsHTML(review.rating || 0);
-        const authorInitial = review.author ? review.author.charAt(0) : "";
-        const authorName = this.escapeHtml(review.author || "");
-        const reviewDate = this.formatDate(review.date || "");
-        const reviewTitle = this.escapeHtml(review.title || "");
-        const reviewContent = this.escapeHtml(review.content || "");
-        const helpfulCount = review.helpful || 0;
+        const stars = this.createStarsHTML(review.rating);
 
         return `
-            <div class="review-item" data-id="${review.id || ""}">
+            <div class="review-item" data-id="${review.id}">
                 <div class="review-header">
                     <div class="review-author">
                         <div class="author-avatar">
-                            ${authorInitial}
+                            ${review.author.charAt(0)}
                         </div>
                         <div class="author-info">
-                            <div class="author-name">${authorName}</div>
-                            <div class="review-date">${reviewDate}</div>
+                            <div class="author-name">${this.escapeHtml(review.author)}</div>
+                            <div class="review-date">${this.formatDate(review.date)}</div>
                         </div>
                     </div>
                     <div class="review-rating">
@@ -286,15 +271,15 @@ class ReviewSystem {
                     </div>
                 </div>
                 <div class="review-content">
-                    <h4 class="review-title">${reviewTitle}</h4>
-                    <p class="review-text">${reviewContent}</p>
+                    <h4 class="review-title">${this.escapeHtml(review.title)}</h4>
+                    <p class="review-text">${this.escapeHtml(review.content)}</p>
                 </div>
                 <div class="review-footer">
-                    <button class="btn-helpful" data-id="${review.id || ""}">
+                    <button class="btn-helpful" data-id="${review.id}">
                         <i class="far fa-thumbs-up"></i>
-                        مفيد (${helpfulCount})
+                        مفيد (${review.helpful})
                     </button>
-                    <button class="btn-reply" data-id="${review.id || ""}">
+                    <button class="btn-reply" data-id="${review.id}">
                         <i class="far fa-comment"></i>
                         رد
                     </button>
@@ -304,8 +289,6 @@ class ReviewSystem {
     }
 
     createStarsHTML(rating) {
-        if (typeof rating !== 'number' || rating < 0) rating = 0;
-        
         let html = "<div class=\"review-stars\">";
         for (let i = 1; i <= 5; i++) {
             html += `<i class="${i <= rating ? "fas" : "far"} fa-star"></i>`;
@@ -316,62 +299,48 @@ class ReviewSystem {
 
     initForm() {
         if (!this.form) return;
-        
+
         this.form.addEventListener("submit", (e) => {
             e.preventDefault();
             this.submitReview();
         });
 
         // Add helpful and reply button listeners
-        if (this.container) {
-            this.container.addEventListener("click", (e) => {
-                const helpfulBtn = e.target.closest(".btn-helpful");
-                if (helpfulBtn) {
-                    this.markHelpful(helpfulBtn.dataset.id);
-                }
+        this.container.addEventListener("click", (e) => {
+            const helpfulBtn = e.target.closest(".btn-helpful");
+            if (helpfulBtn) {
+                this.markHelpful(helpfulBtn.dataset.id);
+            }
 
-                const replyBtn = e.target.closest(".btn-reply");
-                if (replyBtn) {
-                    this.showReplyForm(replyBtn.dataset.id);
-                }
+            const replyBtn = e.target.closest(".btn-reply");
+            if (replyBtn) {
+                this.showReplyForm(replyBtn.dataset.id);
+            }
+        });
+    }
+
+    initRatingSystem() {
+        const ratingContainer = this.form?.querySelector(".rating-input");
+        if (ratingContainer) {
+            this.ratingSystem = new RatingSystem({
+                containerId: ratingContainer.id,
+                maxRating: 5,
+                allowHalfStars: false,
+                readonly: false
             });
         }
     }
 
-    initRatingSystem() {
-        if (!this.form) {
-            console.debug("Form not found, skipping rating system initialization");
-            return;
-        }
-        
-        try {
-            const ratingContainer = this.form.querySelector(".rating-input");
-            if (ratingContainer) {
-                this.ratingSystem = new RatingSystem({
-                    containerId: ratingContainer.id,
-                    maxRating: 5,
-                    allowHalfStars: false,
-                    readonly: false
-                });
-            }
-        } catch (error) {
-            console.debug("Error initializing rating system:", error);
-        }
-    }
-
     submitReview() {
-        if (!this.form) {
-            console.debug("Form not found");
-            return;
-        }
-        
+        if (!this.form) return;
+
         const formData = new FormData(this.form);
         const review = {
             id: Date.now(),
-            author: formData.get("author") || "",
+            author: formData.get("author"),
             rating: this.ratingSystem?.getRating() || 0,
-            title: formData.get("title") || "",
-            content: formData.get("content") || "",
+            title: formData.get("title"),
+            content: formData.get("content"),
             date: new Date().toISOString().split("T")[0],
             helpful: 0
         };
@@ -382,7 +351,6 @@ class ReviewSystem {
         }
 
         // Add review
-        if (!this.reviews) this.reviews = [];
         this.reviews.unshift(review);
         this.displayReviews();
         this.form.reset();
@@ -427,11 +395,9 @@ class ReviewSystem {
     }
 
     markHelpful(reviewId) {
-        if (!this.reviews || !reviewId) return;
-        
         const review = this.reviews.find(r => r.id == reviewId);
         if (review) {
-            review.helpful = (review.helpful || 0) + 1;
+            review.helpful++;
             this.displayReviews();
             if (typeof notifications !== 'undefined' && notifications.success) {
                 notifications.success("شكراً على مشاركتك!");
@@ -440,8 +406,6 @@ class ReviewSystem {
     }
 
     showReplyForm(reviewId) {
-        if (!reviewId) return;
-        
         // Implement reply form display
         if (typeof notifications !== 'undefined' && notifications.info) {
             notifications.info("ميزة الرد قيد التطوير");
@@ -449,42 +413,18 @@ class ReviewSystem {
     }
 
     formatDate(dateString) {
-        if (!dateString) return "";
-        
-        try {
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return dateString;
-            
-            return date.toLocaleDateString("ar-SA", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            });
-        } catch (error) {
-            console.debug("Error formatting date:", error);
-            return dateString;
-        }
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ar-SA", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
     }
 
     escapeHtml(text) {
-        if (text === null || text === undefined) return "";
-        
-        try {
-            const div = document.createElement("div");
-            div.textContent = String(text);
-            return div.innerHTML;
-        } catch (error) {
-            console.debug("Error escaping HTML:", error);
-            return String(text).replace(/[&<>"']/g, function(m) {
-                return {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#039;'
-                }[m];
-            });
-        }
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
     }
 }
 
