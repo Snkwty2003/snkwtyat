@@ -381,7 +381,7 @@
             }
 
             // Validate phone
-            const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+            const phoneRegex = /^(\+?)?[0-9]{7,15}$/;
             if (!phoneRegex.test(phone)) {
                 showError('phone', 'رقم الهاتف غير صحيح');
                 hasError = true;
