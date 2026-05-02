@@ -540,16 +540,22 @@ body{
 // =======================
 // STATE MANAGEMENT
 // =======================
-let data = [
+        let data = [
   {id:1,name:"القالب الأول",desc:"قالب HTML احترافي مع تصميم متجاوب",price:19.99,cat:"HTML",img:"https://via.placeholder.com/300x200"},
   {id:2,name:"القالب الثاني",desc:"قالب CSS حديث مع تأثيرات مذهلة",price:24.99,cat:"CSS",img:"https://via.placeholder.com/300x200"},
-  {id:3,name:"القالب الثالث",desc:"قالب HTML متكامل مع ميزات متقدمة",price:29.99,cat:"HTML",img:"https://via.placeholder.com/300x200"}
+  {id:3,name:"القالب الثالث",desc:"قالب HTML متكامل مع ميزات متقدمة",price:29.99,cat:"HTML",img:"https://via.placeholder.com/300x200"},
+  {id:4,name:"قالب مطعم",desc:"تصميم احترافي لموقع مطعم مع نظام الحجوزات",price:39.99,cat:"Restaurant",img:"https://via.placeholder.com/300x200"},
+  {id:5,name:"قالب عيادة",desc:"نظام إدارة مواعيد للعيادات الطبية",price:44.99,cat:"Clinic",img:"https://via.placeholder.com/300x200"},
+  {id:6,name:"قالب شركة",desc:"موقع شركة تجاري مع معرض أعمال",price:34.99,cat:"Company",img:"https://via.placeholder.com/300x200"},
+  {id:7,name:"قالب مدرسة",desc:"نظام تعليمي مع جدول دراسي ودورات",price:49.99,cat:"School",img:"https://via.placeholder.com/300x200"},
+  {id:8,name:"قالب صالون",desc:"حجوزات وخدمات صالون تجميل متكامل",price:29.99,cat:"Salon",img:"https://via.placeholder.com/300x200"},
+  {id:9,name:"متجر ملابس",desc:"متجر إلكتروني كامل مع فلاتر متقدمة",price:59.99,cat:"Clothing",img:"https://via.placeholder.com/300x200"}
 ];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let current = null;
 let currentFilter = 'all';
-let currentSearch = '';
+let currentSearch = ''; 
 
 // =======================
 // DOM ELEMENTS
@@ -734,26 +740,21 @@ function applyFilters() {
 
   // Apply category filter
   if (currentFilter !== 'all') {
-    filtered = filtered.filter(p => p.cat === currentFilter);
+    const filterLower = currentFilter.toLowerCase();
+    filtered = filtered.filter(p => p.cat.toLowerCase() === filterLower);
   }
 
   // Apply search filter
   if (currentSearch) {
+    const searchLower = currentSearch.toLowerCase();
     filtered = filtered.filter(p => 
-      p.name.toLowerCase().includes(currentSearch) ||
-      p.desc.toLowerCase().includes(currentSearch)
+      p.name.toLowerCase().includes(searchLower) ||
+      p.desc.toLowerCase().includes(searchLower)
     );
   }
 
   render(filtered);
 }
 
-<!-- Firebase Configuration -->
-<script type="module" src="firebase-config.js"></script>
-<!-- UI Handler -->
-<script src="js/ui.js"></script>
-<!-- Initialization -->
-<script type="module" src="js/init.js"></script>
-
-</body>
+  </body>
 </html>
