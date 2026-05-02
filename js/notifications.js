@@ -84,6 +84,10 @@ class NotificationSystem {
         }
 
         return notification;
+        } catch (error) {
+            console.error("Error creating notification:", error);
+            return null;
+        }
     }
 
     addNotification(notification) {
@@ -110,6 +114,9 @@ class NotificationSystem {
             requestAnimationFrame(() => {
             notification.classList.add("show");
         });
+        } catch (error) {
+            console.error("Notification error:", error);
+        }
     }
 
     removeNotification(notification) {

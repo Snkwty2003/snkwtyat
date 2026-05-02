@@ -121,7 +121,7 @@ class I18n {
             }
 
             // Check if language is available
-            if (!this.options.availableLanguages.includes(language)) {
+            if (!this.options.availableLanguages || !this.options.availableLanguages.includes(language)) {
                 console.debug(`Language "${language}" is not available, using default`);
                 language = this.options.defaultLanguage;
             }
@@ -130,13 +130,15 @@ class I18n {
 
             // Safely store in localStorage
             try {
-                localStorage.setItem(this.options.storageKey, language);
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem(this.options.storageKey, language);
+                }
             } catch (e) {
                 console.debug("Failed to store language preference:", e);
             }
 
             // Update document direction and language
-            if (document.documentElement) {
+            if (typeof document !== 'undefined' && document.documentElement) {
                 document.documentElement.dir = this.isRTL(language) ? "rtl" : "ltr";
                 document.documentElement.lang = language;
             }
@@ -144,9 +146,11 @@ class I18n {
             this.updateTranslatableElements();
             this.updateLanguageSwitcher();
 
-            document.dispatchEvent(new CustomEvent("languageChanged", {
-                detail: { language }
-            }));
+            if (typeof document !== 'undefined') {
+                document.dispatchEvent(new CustomEvent("languageChanged", {
+                    detail: { language }
+                }));
+            }
         } catch (error) {
             console.debug("Error applying language:", error);
             // Ensure fallback to default language on error
@@ -157,9 +161,13 @@ class I18n {
     }
 
     updateTranslatableElements() {
+        if (typeof document === 'undefined') return;
+
         const elements = document.querySelectorAll("[data-i18n]");
 
         elements.forEach(element => {
+            if (!element || !element.dataset) return;
+
             const key = element.dataset.i18n;
             const translation = this.translate(key);
 
@@ -215,8 +223,10 @@ class I18n {
     }
 
     replaceParams(text, params) {
+        if (typeof text !== 'string') return text;
+
         return text.replace(/\{(\w+)\}/g, (match, key) => {
-            return params[key] !== undefined ? params[key] : match;
+            return params && params[key] !== undefined ? params[key] : match;
         });
     }
 
@@ -225,15 +235,21 @@ class I18n {
     }
 
     initLanguageSwitcher() {
+        if (typeof document === 'undefined') return;
+
         const switcher = document.querySelector(".language-switcher");
         if (!switcher) return;
 
         switcher.addEventListener("change", (e) => {
-            this.applyLanguage(e.target.value);
+            if (e && e.target && e.target.value) {
+                this.applyLanguage(e.target.value);
+            }
         });
     }
 
     updateLanguageSwitcher() {
+        if (typeof document === 'undefined') return;
+
         const switcher = document.querySelector(".language-switcher");
         if (switcher) {
             switcher.value = this.currentLanguage;
@@ -246,11 +262,14 @@ class I18n {
 }
 
 // Initialize
-const i18n = new I18n({
-    defaultLanguage: "ar",
-    availableLanguages: ["ar", "en"]
-});
+let i18n = null;
+if (typeof document !== 'undefined') {
+    i18n = new I18n({
+        defaultLanguage: "ar",
+        availableLanguages: ["ar", "en"]
+    });
+}
 
 function t(key, params = {}) {
-    return i18n.translate(key, params);
+    return i18n ? i18n.translate(key, params) : key;
 }

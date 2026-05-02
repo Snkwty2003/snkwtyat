@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر شنكوتيات</title>
+<link rel="stylesheet" href="css/store-new.css">
+</head>
+<body>
+
+<div id="header">
+  <div class="header-buttons">
+    <a href="index.html">العودة</a>
+    <button data-action="toggle-cart">
+      السلة (<span id="cart-count">0</span>)
+    </button>
+  </div>
+  <h1 class="logo">متجر شنكوتيات</h1>
+</div>
+
+<div class="top-bar">
+  <input type="text" id="search" placeholder="بحث...">
+  <select id="filter">
+    <option value="all">كل القوالب</option>
+    <option value="HTML">HTML</option>
+    <option value="CSS">CSS</option>
+  </select>
+</div>
+
+<div class="products-container" id="products"></div>
+
+<div id="cartBox">
+  <h3>سلة الشراء</h3>
+  <div id="cart-items"></div>
+  <div class="cart-total" id="cart-total"></div>
+  <div class="cart-actions">
+    <button class="clear-cart-btn" data-action="clear-cart">تفريغ السلة</button>
+    <button class="checkout-btn" data-action="go-checkout">إتمام الطلب</button>
+  </div>
+</div>
+
+<div id="modal">
+  <div class="modal-content">
+    <h3 id="mName"></h3>
+    <p id="mDesc"></p>
+    <span class="modal-price" id="mPrice"></span>
+    <div class="modal-actions">
+      <button class="add-to-cart-btn" data-action="add-to-cart-modal">أضف للسلة</button>
+      <button class="close-modal-btn" data-action="close-modal">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">تمت الإضافة للسلة ✅</div>
+
+<div id="footer">
+  <span>© 2026 شنكوتيات - جميع الحقوق محفوظة</span>
+</div>
+
+<!-- Firebase Configuration -->
+<script type="module" src="firebase-config.js"></script>
+<!-- UI Handler -->
+<script src="js/ui.js"></script>
+<!-- Initialization -->
+<script type="module" src="js/init.js"></script>
+
+</body>
+</html>

@@ -318,6 +318,9 @@ class AdvancedSearch {
             this.hideResults();
             break;
         }
+        } catch (error) {
+            console.error("Error handling keyboard:", error);
+        }
     }
 
     selectResult(result) {

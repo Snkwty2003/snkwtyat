@@ -82,6 +82,9 @@ const initMobileMenu = () => {
                 console.debug("Error in resize handler:", error);
             }
         });
+    } catch (error) {
+        console.debug("Error initializing mobile menu:", error);
+    }
 };
 
 // Active link highlighting

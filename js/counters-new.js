@@ -3,15 +3,17 @@ function animateCounters(container = null) {
     try {
         const counters = (container && container.querySelectorAll)
     ? container.querySelectorAll(".stat-number")
-            : document.querySelectorAll(".stat-number");
+            : (typeof document !== 'undefined' ? document.querySelectorAll(".stat-number") : []);
 
-        if (counters.length === 0) {
+        if (!counters || counters.length === 0) {
             console.debug("No counter elements found");
             return;
         }
 
 
         counters.forEach(counter => {
+            if (!counter || !counter.style) return;
+
             const target = +counter.getAttribute("data-counter") || +counter.getAttribute("data-target") || 0;
             const duration = +counter.getAttribute("data-duration") || 2000;
             const increment = target / (duration / 16);
@@ -24,10 +26,14 @@ function animateCounters(container = null) {
 
             const updateCount = () => {
                 try {
-                    const count = +counter.innerText;
+                    const innerText = counter.innerText;
+                    const count = innerText ? +innerText : 0;
 
                     if (count < target) {
-                        counter.innerText = Math.ceil(count + increment);
+                        const newValue = Math.ceil(count + increment);
+                        if (!isNaN(newValue)) {
+                            counter.innerText = newValue;
+                        }
                         // Add glow effect during counting
                         counter.style.textShadow = "0 0 10px rgba(227, 62, 16, 0.5)";
                         requestAnimationFrame(updateCount);
@@ -44,18 +50,24 @@ function animateCounters(container = null) {
                 }
             };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        updateCount();
-                        observer.unobserve(entry.target);
-                    }
+            // Check if IntersectionObserver is available
+            if (typeof IntersectionObserver !== 'undefined') {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry && entry.isIntersecting) {
+                            updateCount();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.5
                 });
-            }, {
-                threshold: 0.5
-            });
 
-            observer.observe(counter);
+                observer.observe(counter);
+            } else {
+                // Fallback: start animation immediately if IntersectionObserver is not available
+                updateCount();
+            }
         });
     } catch (error) {
         console.debug("Error initializing counters:", error);
@@ -116,8 +128,10 @@ let userInteracted = false;
 function initAudioContext() {
     if (!audioInitialized && userInteracted) {
         try {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            audioInitialized = true;
+            if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                audioInitialized = true;
+            }
         } catch (error) {
             console.debug("Error initializing audio context:", error);
         }
@@ -171,13 +185,15 @@ function handleUserInteraction() {
 }
 
 // Initialize audio on first user interaction
-document.addEventListener('click', handleUserInteraction, { once: true });
-document.addEventListener('touchstart', handleUserInteraction, { once: true });
-document.addEventListener('keydown', handleUserInteraction, { once: true });
+if (typeof document !== 'undefined') {
+    document.addEventListener('click', handleUserInteraction, { once: true });
+    document.addEventListener('touchstart', handleUserInteraction, { once: true });
+    document.addEventListener('keydown', handleUserInteraction, { once: true });
+}
 
 // Add CSS animations for confetti and bounce
 try {
-    if (!document || !document.head) {
+    if (typeof document === 'undefined' || !document.head) {
         console.debug("Document or head not available for styles");
     } else {
         const style = document.createElement('style');
@@ -209,13 +225,15 @@ try {
 
 // Initialize counters when DOM is loaded
 try {
-    document.addEventListener("DOMContentLoaded", () => {
-        try {
-            animateCounters();
-        } catch (error) {
-            console.debug("Error initializing counters on DOMContentLoaded:", error);
-        }
-    });
+    if (typeof document !== 'undefined') {
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                animateCounters();
+            } catch (error) {
+                console.debug("Error initializing counters on DOMContentLoaded:", error);
+            }
+        });
+    }
 } catch (error) {
     console.debug("Error setting up DOMContentLoaded listener for counters:", error);
 }
