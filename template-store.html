@@ -756,5 +756,46 @@ function applyFilters() {
   render(filtered);
 }
 
-  </body>
-</html>
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  render();
+  
+  // Event listeners
+  searchInput.addEventListener('input', function(e) {
+    currentSearch = e.target.value;
+    applyFilters();
+  });
+
+  filterSelect.addEventListener('change', function(e) {
+    currentFilter = e.target.value;
+    applyFilters();
+  });
+
+  // Product preview
+  document.addEventListener('click', function(e) {
+    if (e.target.dataset.action === 'preview-product') {
+      openModal(parseInt(e.target.dataset.id));
+    }
+  });
+
+  // Modal actions
+  document.addEventListener('click', function(e) {
+    const action = e.target.dataset.action;
+    if (action === 'add-to-cart-modal') {
+      addToCart();
+    } else if (action === 'close-modal') {
+      closeModal();
+    }
+  });
+
+  // Cart toggle
+  document.querySelector('[data-action="toggle-cart"]').addEventListener('click', toggleCart);
+
+  // Cart actions
+  document.addEventListener('click', function(e) {
+    const action = e.target.dataset.action || e.target.closest('button')?.dataset.action;
+    if (action === 'clear-cart') clearCart();
+    if (action === 'go-checkout') goCheckout();
+  });
+});
+
