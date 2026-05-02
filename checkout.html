@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,13 +203,21 @@ showOrder();
 
 /* إرسال الطلب */
 function sendOrder(){
-  let name = document.getElementById('name').value;
-  let phoneUser = document.getElementById('phone').value;
-  let address = document.getElementById('address').value;
-  let note = document.getElementById('note').value;
+  let name = document.getElementById('name').value.trim();
+  let phoneUser = document.getElementById('phone').value.trim();
+  let address = document.getElementById('address').value.trim();
+  let note = document.getElementById('note').value.trim();
 
+  // Validation
   if(!name || !phoneUser || !address){
-    alert("يرجى ملء البيانات");
+    alert("يرجى ملء الاسم والهاتف والعنوان");
+    return;
+  }
+  
+  // Check empty cart
+  let cart = JSON.parse(localStorage.getItem("cart") || '[]');
+  if(cart.length === 0){
+    alert("سلتك فارغة");
     return;
   }
 
