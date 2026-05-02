@@ -352,6 +352,7 @@
                 <li><a href="#wishlist"><i class="fas fa-heart"></i> المفضلة</a></li>
                 <li><a href="#reviews"><i class="fas fa-star"></i> تقييماتي</a></li>
                 <li><a href="#settings"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
                 <li><a href="index.html"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a></li>
             </ul>
         </aside>
@@ -474,7 +475,7 @@
                 const userName = document.getElementById('userName');
                 const userEmail = document.getElementById('userEmail');
 
-                if (userName) userName.textContent = user.name || 'مستخدم';
+                if (userName) userName.textContent = user.fullName || user.name || 'مستخدم';
                 if (userEmail) userEmail.textContent = user.email || 'user@example.com';
             }
         }
@@ -485,11 +486,40 @@
             sidebar.classList.toggle('show');
         }
 
+        // Logout function
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        // Calculate stats from localStorage
+        function calculateStats() {
+            const ordersCountEl = document.querySelector('.stat-card .orders h3');
+            const productsCountEl = document.querySelector('.stat-card .products h3');
+            const wishlistCountEl = document.querySelector('.stat-card .wishlist h3');
+            const reviewsAvgEl = document.querySelector('.stat-card .reviews h3');
+
+            // Simulate data from localStorage - increment on each visit
+            let stats = JSON.parse(localStorage.getItem('dashboardStats') || '{}');
+            stats.orders = (stats.orders || 0) + Math.floor(Math.random() * 2);
+            stats.products = stats.products || 12;
+            stats.wishlist = stats.wishlist || 8;
+            stats.reviews = (stats.reviews || 4.5).toFixed(1);
+
+            localStorage.setItem('dashboardStats', JSON.stringify(stats));
+
+            if (ordersCountEl) ordersCountEl.textContent = stats.orders;
+            if (productsCountEl) productsCountEl.textContent = stats.products;
+            if (wishlistCountEl) wishlistCountEl.textContent = stats.wishlist;
+            if (reviewsAvgEl) reviewsAvgEl.textContent = stats.reviews;
+        }
+
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             const user = checkAuth();
             if (user) {
                 updateUserInfo(user);
+                calculateStats();
             }
         });
     </script>
