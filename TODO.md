@@ -1,19 +1,10 @@
-# TODO: إصلاح index.html - مكتمل ✅
+# TODO List for Nav Link Colors Update
 
-## الخطوات المنجزة:
-- [x] إنشاء TODO.md
-- [x] تعديل index.html: إضافة onsubmit="sendForm(event)" لـ #contactForm
-- [x] تعديل index.html: حذف Firebase v8 القديم من النهاية
+## Plan Steps:
+- [x] Understand current CSS structure (inline nav a and external navbar.css)
+- [x] Step 1: Edit index.html inline styles to add !important to nav a color: #E33E10 !important
+- [x] Step 2: Edit index.html inline styles to add !important to nav a:hover color: #333333 !important  
+- [x] Step 3: Verify changes and complete task
 
-## النتيجة:
-- تم حذف Firebase v8 scripts و initializers من نهاية index.html
-- تم ربط نموذج التواصل (#contactForm) بدالة sendForm (v10 compatible)
-- الصفحة جاهزة للاختبار: املأ النموذج → تحقق console logs → Firestore entry
+**Status:** Ready to implement Step 1 and 2 in parallel.
 
-## اقتراح اختبار:
-افتح index.html في المتصفح، املأ نموذج "اطلب تصميم خاص"، أرسل → تحقق:
-1. Console: "STEP 0: FORM WORKING" ... "Saved to Firestore ID"
-2. Toast: رسالة نجاح
-3. Firestore: مجموعة "forms" (إذا سمحت القواعد)
-
-مهمة مكتملة!

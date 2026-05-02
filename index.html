@@ -111,7 +111,7 @@ nav .nav-links {
 
 nav a { 
     text-decoration: none; 
-    color: #333; 
+    color: #E33E10 !important; 
     font-weight: 500; 
     padding: 10px 15px; 
     transition: 0.3s;
@@ -120,7 +120,7 @@ nav a {
 }
 
 nav a:hover { 
-    color: #E33E10;
+    color: #333333 !important;
     background: #fff5f2;
 }
 
@@ -185,13 +185,23 @@ nav a:hover {
     font-size: 48px;
     margin-bottom: 20px;
     font-weight: 800;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
 }
 
-.hero-banner p {
+.hero-banner h1 .gradient-text {
+    color: #ffffff !important;
+}
+
+.hero-banner .banner-content p {
     font-size: 20px;
     margin-bottom: 30px;
     opacity: 0.95;
+    color: #ffffff !important;
 }
 
 .hero-banner .btn {
@@ -201,9 +211,10 @@ nav a:hover {
 }
 
 .hero-banner .btn:not(.primary) {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.2) !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.3);
 }
 
 /* =======================
@@ -412,6 +423,10 @@ nav a:hover {
     color: #333;
 }
 
+.section-title h2 .gradient-text {
+    color: #ffffff !important;
+}
+
 .section-title p {
     color: #666;
     font-size: 18px;
@@ -458,7 +473,7 @@ nav a:hover {
 }
 
 .template-preview i {
-    font-size: 60px;
+    font-size: 35px;
     color: #E33E10;
     position: relative;
     z-index: 1;
@@ -655,6 +670,18 @@ nav a:hover {
 .newsletter-content h2 {
     font-size: 36px;
     margin: 0 0 15px;
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.newsletter-content h2 .gradient-text {
+    color: #ffffff !important;
+}
+
+.newsletter-section .gradient-text { 
+    color: #ffffff !important; 
+    -webkit-text-fill-color: #ffffff !important; 
+    background: none !important; 
 }
 
 .newsletter-content p {
@@ -1756,7 +1783,7 @@ footer {
                     </div>
                     <div class="contact-text">
                         <h3>البريد الإلكتروني</h3>
-                        <p>info@snkwtyat.com</p>
+                        <p>snkwty2026ly@gmail.com</p>
                     </div>
                 </div>
                 <div class="contact-item">
@@ -1765,7 +1792,7 @@ footer {
                     </div>
                     <div class="contact-text">
                         <h3>الهاتف</h3>
-                        <p>+966 50 123 4567</p>
+                        <p>00218913230827</p>
                     </div>
                 </div>
                 <div class="contact-item">
@@ -1874,7 +1901,7 @@ footer {
                     <span>نصائح وتوجيهات احترافية</span>
                 </div>
             </div>
-            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)" novalidate>
+<form class="newsletter-form" action="https://formspree.io/f/snkwty2026ly@gmail.com" method="POST" onsubmit="subscribeNewsletter(event)" novalidate>
                 <div class="newsletter-input-group">
                     <input type="email" id="newsletterEmail" name="email" 
                            placeholder="أدخل بريدك الإلكتروني" required 
@@ -1956,9 +1983,9 @@ footer {
         <div class="footer-section">
             <h3>تواصل معنا</h3>
             <ul class="footer-links">
-                <li><i class="fas fa-envelope"></i> info@snkwtyat.com</li>
-                <li><i class="fas fa-phone"></i> +966 50 123 4567</li>
-                <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+                <li><i class="fas fa-envelope"></i> snkwty2026ly@gmail.com</li>
+                <li><i class="fas fa-phone"></i> 00218913230827</li>
+                <li><i class="fas fa-map-marker-alt"></i> هون، بلدية الجفرة، ليبيا</li>
             </ul>
         </div>
     </div>
