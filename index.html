@@ -659,6 +659,7 @@ nav a:hover {
     padding: 80px 20px;
     background: linear-gradient(135deg, #E33E10 0%, #ff6b4a 100%);
     color: #fff;
+    pointer-events: none;
 }
 
 .newsletter-container {
@@ -693,6 +694,7 @@ nav a:hover {
 .newsletter-form {
     max-width: 600px;
     margin: 0 auto;
+    pointer-events: all;
 }
 
 .newsletter-input-group {
@@ -707,6 +709,7 @@ nav a:hover {
     border-radius: 10px;
     font-family: 'Tajawal', sans-serif;
     font-size: 15px;
+    pointer-events: all;
 }
 
 .newsletter-input-group input:focus {
@@ -717,6 +720,7 @@ nav a:hover {
 .newsletter-input-group button {
     padding: 15px 30px;
     white-space: nowrap;
+    pointer-events: all;
 }
 
 /* =======================
@@ -1901,7 +1905,7 @@ footer {
                     <span>نصائح وتوجيهات احترافية</span>
                 </div>
             </div>
-<form class="newsletter-form" action="https://formspree.io/f/snkwty2026ly@gmail.com" method="POST" onsubmit="subscribeNewsletter(event)" novalidate>
+<form class="newsletter-form" onsubmit="subscribeNewsletter(event)" novalidate>
                 <div class="newsletter-input-group">
                     <input type="email" id="newsletterEmail" name="email" 
                            placeholder="أدخل بريدك الإلكتروني" required 
@@ -1913,10 +1917,7 @@ footer {
                     </button>
                 </div>
                 <div class="form-feedback" id="newsletterEmailFeedback" role="alert" aria-live="polite"></div>
-                <div class="newsletter-privacy">
-                    <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
-                    <label for="privacy">أوافق على <a href="privacy.html" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a> و <a href="terms.html" target="_blank" rel="noopener noreferrer">شروط الاستخدام</a></label>
-                </div>
+
             </form>
             <div class="newsletter-stats">
                 <div class="stat">
