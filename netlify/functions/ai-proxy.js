@@ -3,8 +3,7 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const GROQ_API_KEY = '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';
-
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
   try {
     const body = JSON.parse(event.body);
     
