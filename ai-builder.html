@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منشئ المواقع الذكي - شنكوتيات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Tajawal', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 20px; font-weight: 800; color: #E33E10; display: flex; align-items: center; gap: 8px; }
+.back-btn { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: transparent; color: #fff; cursor: pointer; font-family: 'Tajawal', sans-serif; font-size: 14px; transition: 0.3s; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+.back-btn:hover { background: rgba(255,255,255,0.1); }
+.main-container { flex: 1; display: grid; grid-template-columns: 420px 1fr; height: calc(100vh - 61px); }
+.chat-panel { background: #1a1a1a; border-left: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; }
+.chat-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.chat-header h2 { font-size: 18px; margin-bottom: 5px; }
+.chat-header p { font-size: 13px; color: #888; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+.message { display: flex; gap: 10px; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.message.user { flex-direction: row-reverse; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.avatar.ai { background: linear-gradient(135deg, #E33E10, #ff6b4a); }
+.avatar.user { background: linear-gradient(135deg, #333, #555); }
+.bubble { max-width: 280px; padding: 12px 15px; border-radius: 16px; font-size: 14px; line-height: 1.6; }
+.bubble.ai { background: rgba(255,255,255,0.08); border-radius: 16px 16px 16px 4px; }
+.bubble.user { background: #E33E10; border-radius: 16px 16px 4px 16px; }
+.typing { display: flex; gap: 4px; padding: 12px 15px; background: rgba(255,255,255,0.08); border-radius: 16px; width: fit-content; }
+.typing span { width: 8px; height: 8px; background: #888; border-radius: 50%; animation: bounce 1.2s infinite; }
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+.quick-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.quick-btn { padding: 6px 12px; border: 1px solid rgba(227,62,16,0.5); border-radius: 20px; background: transparent; color: #E33E10; font-size: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif; transition: 0.3s; }
+.quick-btn:hover { background: rgba(227,62,16,0.1); }
+.chat-input-area { padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: flex-end; }
+.chat-input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px 15px; color: #fff; font-family: 'Tajawal', sans-serif; font-size: 14px; resize: none; max-height: 120px; min-height: 48px; outline: none; transition: 0.3s; }
+.chat-input:focus { border-color: #E33E10; }
+.chat-input::placeholder { color: #555; }
+.send-btn { width: 48px; height: 48px; border-radius: 12px; background: #E33E10; border: none; color: #fff; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
+.send-btn:hover { background: #c73510; transform: scale(1.05); }
+.send-btn:disabled { background: #333; cursor: not-allowed; transform: none; }
+.preview-panel { background: #0a0a0a; display: flex; flex-direction: column; }
+.preview-header { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+.preview-header h3 { font-size: 15px; color: #888; }
+.preview-actions { display: flex; gap: 10px; }
+.preview-btn { padding: 7px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff; font-size: 13px; cursor: pointer; font-family: 'Tajawal', sans-serif; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
+.preview-btn:hover { background: rgba(255,255,255,0.1); }
+.preview-btn.primary { background: #E33E10; border-color: #E33E10; }
+.preview-btn.primary:hover { background: #c73510; }
+.preview-frame-container { flex: 1; padding: 20px; display: flex; align-items: center; justify-content: center; position: relative; }
+.preview-empty { text-align: center; color: #444; }
+.preview-empty i { font-size: 60px; margin-bottom: 20px; color: #2a2a2a; display: block; }
+.preview-empty h3 { font-size: 20px; margin-bottom: 10px; color: #555; }
+.preview-empty p { font-size: 14px; color: #444; line-height: 1.6; }
+#previewFrame { width: 100%; height: 100%; border: none; border-radius: 12px; background: #fff; display: none; }
+.loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 100; border-radius: 12px; }
+.loading-overlay.show { display: flex; }
+.loading-spinner { text-align: center; color: #fff; }
+.loading-spinner i { font-size: 40px; color: #E33E10; margin-bottom: 15px; animation: spin 1s linear infinite; display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.status-bar { padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #555; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; display: inline-block; margin-left: 6px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@media (max-width: 768px) { .main-container { grid-template-columns: 1fr; } .preview-panel { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><i class="fas fa-palette"></i> شنكوتيات — منشئ المواقع الذكي</div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة</a>
+</header>
+
+<div class="main-container">
+  <div class="chat-panel">
+    <div class="chat-header">
+      <h2>🤖 مساعد التصميم الذكي</h2>
+      <p>أخبرني عن موقعك وسأبنيه لك في ثوانٍ</p>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message">
+        <div class="avatar ai">🤖</div>
+        <div>
+          <div class="bubble ai">مرحباً! أنا مساعد التصميم الذكي من شنكوتيات 🎨<br><br>أخبرني عن موقعك وسأبنيه لك فوراً. مثلاً:<br>• نوع النشاط التجاري<br>• الألوان المفضلة<br>• المحتوى المطلوب</div>
+          <div class="quick-btns">
+            <button class="quick-btn" onclick="quickSend('موقع مطعم باللون الأحمر مع منيو وحجز طاولة')">🍽️ مطعم</button>
+            <button class="quick-btn" onclick="quickSend('موقع عيادة طبية احترافية مع حجز مواعيد')">🏥 عيادة</button>
+            <button class="quick-btn" onclick="quickSend('صفحة هبوط لمنتج تقني بتصميم حديث')">🚀 Landing Page</button>
+            <button class="quick-btn" onclick="quickSend('موقع متجر ملابس أنيق مع عرض المنتجات')">👗 متجر</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="userInput" placeholder="اكتب وصف موقعك هنا..." rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <div class="preview-panel">
+    <div class="preview-header">
+      <h3>👁️ معاينة مباشرة</h3>
+      <div class="preview-actions">
+        <button class="preview-btn" onclick="copyCode()" id="copyBtn" style="display:none"><i class="fas fa-copy"></i> نسخ الكود</button>
+        <button class="preview-btn primary" onclick="downloadSite()" id="downloadBtn" style="display:none"><i class="fas fa-download"></i> تحميل الموقع</button>
+      </div>
+    </div>
+    <div class="preview-frame-container">
+      <div class="preview-empty" id="previewEmpty">
+        <i class="fas fa-magic"></i>
+        <h3>موقعك سيظهر هنا</h3>
+        <p>اكتب وصف موقعك في الدردشة<br>وسيتم بناؤه تلقائياً في ثوانٍ</p>
+      </div>
+      <iframe id="previewFrame" title="معاينة الموقع"></iframe>
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+          <i class="fas fa-cog"></i>
+          <p>جاري بناء موقعك...</p>
+        </div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <span><span class="status-dot"></span> الأجنت جاهز</span>
+      <span id="statusText">في انتظار طلبك</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const GROQ_API_KEY = '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';
+const GROQ_API_URL = '/.netlify/functions/ai-proxy';
+let generatedCode = '';
+let isLoading = false;
+let conversationHistory = [];
+
+const SYSTEM_PROMPT = `أنت مساعد ذكاء اصطناعي متخصص في بناء مواقع ويب احترافية باللغة العربية.
+
+عندما يطلب المستخدم موقعاً، قم بإنشاء كود HTML كامل ومتكامل يتضمن:
+- تصميم احترافي وجميل مع CSS متكامل داخل نفس الملف
+- محتوى عربي مناسب للنشاط التجاري مع dir="rtl"
+- تصميم متجاوب مع الموبايل
+- ألوان متناسقة وجذابة
+- قسم header مع navigation
+- قسم hero مع عنوان جذاب
+- أقسام المحتوى المناسبة للنشاط
+- footer احترافي
+
+يجب أن يكون ردك:
+1. رسالة قصيرة باللغة العربية تشرح ما تم بناؤه
+2. ثم كود HTML كامل بين |||HTML_START||| و |||HTML_END|||`;
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const message = input.value.trim();
+  if (!message || isLoading) return;
+
+  input.value = '';
+  autoResize(input);
+  addMessage(message, 'user');
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+  document.getElementById('statusText').textContent = 'جاري المعالجة...';
+  showTyping();
+  showLoadingOverlay();
+
+  conversationHistory.push({ role: 'user', content: message });
+
+  try {
+    const response = await fetch(GROQ_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...conversationHistory],
+        max_tokens: 8000,
+        temperature: 0.7
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'خطأ في API');
+
+    const fullResponse = data.choices?.[0]?.message?.content || 'حدث خطأ';
+    conversationHistory.push({ role: 'assistant', content: fullResponse });
+    hideTyping();
+
+    const htmlMatch = fullResponse.match(/\|\|\|HTML_START\|\|\|([\s\S]*?)\|\|\|HTML_END\|\|\|/);
+    const chatMessage = fullResponse.replace(/\|\|\|HTML_START\|\|\|[\s\S]*?\|\|\|HTML_END\|\|\|/, '').trim();
+
+    if (htmlMatch) {
+      generatedCode = htmlMatch[1].trim();
+      addMessage(chatMessage || 'تم بناء موقعك بنجاح! 🎉', 'ai');
+      showPreview(generatedCode);
+      document.getElementById('copyBtn').style.display = 'flex';
+      document.getElementById('downloadBtn').style.display = 'flex';
+      document.getElementById('statusText').textContent = 'تم بناء الموقع ✅';
+    } else {
+      addMessage(fullResponse, 'ai');
+      hideLoadingOverlay();
+      document.getElementById('statusText').textContent = 'في انتظار طلبك';
+    }
+  } catch (error) {
+    hideTyping();
+    hideLoadingOverlay();
+    addMessage('عذراً، حدث خطأ: ' + error.message, 'ai');
+    document.getElementById('statusText').textContent = 'خطأ في الاتصال';
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(text, type) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `message ${type}`;
+  div.innerHTML = `<div class="avatar ${type}">${type === 'ai' ? '🤖' : '👤'}</div><div class="bubble ${type}">${text.replace(/\n/g, '<br>')}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'message';
+  el.id = 'typingIndicator';
+  el.innerHTML = `<div class="avatar ai">🤖</div><div class="typing"><span></span><span></span><span></span></div>`;
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() { const el = document.getElementById('typingIndicator'); if (el) el.remove(); }
+function showPreview(html) { document.getElementById('previewEmpty').style.display = 'none'; const f = document.getElementById('previewFrame'); f.style.display = 'block'; f.srcdoc = html; hideLoadingOverlay(); }
+function showLoadingOverlay() { document.getElementById('loadingOverlay').classList.add('show'); }
+function hideLoadingOverlay() { document.getElementById('loadingOverlay').classList.remove('show'); }
+function quickSend(text) { document.getElementById('userInput').value = text; sendMessage(); }
+function handleKeyDown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+function copyCode() { navigator.clipboard.writeText(generatedCode).then(() => { const btn = document.getElementById('copyBtn'); btn.innerHTML = '<i class="fas fa-check"></i> تم!'; setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> نسخ الكود'; }, 2000); }); }
+function downloadSite() { const blob = new Blob([generatedCode], {type:'text/html;charset=utf-8'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'my-website.html'; a.click(); URL.revokeObjectURL(url); }
+</script>
+</body>
+</html>
