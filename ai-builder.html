@@ -136,7 +136,7 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
 var API_URL = '/.netlify/functions/ai-proxy';
 var generatedCode = '';
 var isLoading = false;
-var history = [];
+var chatHistory = []; // ✅ تم التغيير من history إلى chatHistory
 
 var PROMPT = 'انت مساعد متخصص في بناء مواقع ويب احترافية باللغة العربية. عندما يطلب المستخدم موقعا قم بانشاء كود HTML كامل مع CSS متكامل داخل نفس الملف ومحتوى عربي مع dir=rtl وتصميم متجاوب مع الموبايل. يجب ان يكون ردك: 1. رسالة قصيرة تشرح ما تم بناؤه 2. ثم كود HTML كامل بين |||HTML_START||| و |||HTML_END|||';
 
@@ -175,22 +175,33 @@ function sendMsg() {
   showTyping();
   document.getElementById('loadingOverlay').classList.add('show');
 
-  history.push({ role: 'user', content: msg });
+  chatHistory.push({ role: 'user', content: msg }); // ✅
 
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: PROMPT }].concat(history),
+      messages: [{ role: 'system', content: PROMPT }].concat(chatHistory), // ✅
       max_tokens: 8000,
       temperature: 0.7
     })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
+    // التحقق من الأخطاء أولاً
+    if (data.error) {
+      hideTyping();
+      document.getElementById('loadingOverlay').classList.remove('show');
+      addMsg('خطا من Groq: ' + (data.error.message || JSON.stringify(data.error)), 'ai');
+      document.getElementById('statusText').textContent = 'خطا في الاتصال';
+      isLoading = false;
+      document.getElementById('sendBtn').disabled = false;
+      return;
+    }
+
     var resp = data.choices && data.choices[0] ? data.choices[0].message.content : 'حدث خطا';
-    history.push({ role: 'assistant', content: resp });
+    chatHistory.push({ role: 'assistant', content: resp }); // ✅
     hideTyping();
 
     var m = resp.match(/\|\|\|HTML_START\|\|\|([\s\S]*?)\|\|\|HTML_END\|\|\|/);

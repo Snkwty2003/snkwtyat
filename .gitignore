@@ -48,3 +48,6 @@ banner/optimized/
 .cache/
 .parcel-cache/
 .eslintcache
+
+# Local Netlify folder
+.netlify
