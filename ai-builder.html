@@ -35,9 +35,9 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
 .typing span:nth-child(2) { animation-delay: 0.2s; }
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
-.quick-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.quick-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .quick-btn { padding: 6px 12px; border: 1px solid rgba(227,62,16,0.5); border-radius: 20px; background: transparent; color: #E33E10; font-size: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif; transition: 0.3s; }
-.quick-btn:hover { background: rgba(227,62,16,0.1); }
+.quick-btn:hover { background: rgba(227,62,16,0.15); border-color: #E33E10; }
 .chat-input-area { padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: flex-end; }
 .chat-input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px 15px; color: #fff; font-family: 'Tajawal', sans-serif; font-size: 14px; resize: none; max-height: 120px; min-height: 48px; outline: none; transition: 0.3s; }
 .chat-input:focus { border-color: #E33E10; }
@@ -59,10 +59,16 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
 .preview-empty h3 { font-size: 20px; margin-bottom: 10px; color: #555; }
 .preview-empty p { font-size: 14px; color: #444; line-height: 1.6; }
 #previewFrame { width: 100%; height: 100%; border: none; border-radius: 12px; background: #fff; display: none; }
-.loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 100; border-radius: 12px; }
+.loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 100; border-radius: 12px; flex-direction: column; gap: 20px; }
 .loading-overlay.show { display: flex; }
 .loading-spinner { text-align: center; color: #fff; }
-.loading-spinner i { font-size: 40px; color: #E33E10; margin-bottom: 15px; animation: spin 1s linear infinite; display: block; }
+.loading-spinner i { font-size: 40px; color: #E33E10; margin-bottom: 10px; animation: spin 1s linear infinite; display: block; }
+.loading-spinner p { font-size: 16px; font-weight: 700; }
+.loading-steps { display: flex; flex-direction: column; gap: 10px; }
+.loading-step { font-size: 13px; color: #555; display: flex; align-items: center; gap: 10px; transition: 0.4s; }
+.loading-step.active { color: #fff; }
+.loading-step.done { color: #4CAF50; }
+.loading-step i { width: 16px; text-align: center; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .status-bar { padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #555; }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; display: inline-block; margin-left: 6px; animation: pulse 2s infinite; }
@@ -87,12 +93,14 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
       <div class="message">
         <div class="avatar ai">AI</div>
         <div>
-          <div class="bubble ai">مرحبا! انا مساعد التصميم الذكي من شنكوتيات. اخبرني عن موقعك وسابنيه لك فورا.</div>
+          <div class="bubble ai">مرحبا! انا مساعد التصميم الذكي من شنكوتيات. اخبرني عن موقعك وسابنيه لك فورا 🚀</div>
           <div class="quick-btns">
-            <button class="quick-btn" id="btn1">مطعم</button>
-            <button class="quick-btn" id="btn2">عيادة</button>
-            <button class="quick-btn" id="btn3">Landing Page</button>
-            <button class="quick-btn" id="btn4">متجر</button>
+            <button class="quick-btn" id="btn1">🍽️ مطعم</button>
+            <button class="quick-btn" id="btn2">🏥 عيادة</button>
+            <button class="quick-btn" id="btn3">🚀 Landing Page</button>
+            <button class="quick-btn" id="btn4">🛍️ متجر</button>
+            <button class="quick-btn" id="btn5">💼 شركة</button>
+            <button class="quick-btn" id="btn6">📸 معرض أعمال</button>
           </div>
         </div>
       </div>
@@ -108,6 +116,7 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
       <h3>معاينة مباشرة</h3>
       <div class="preview-actions">
         <button class="preview-btn" id="copyBtn" style="display:none"><i class="fas fa-copy"></i> نسخ الكود</button>
+        <button class="preview-btn" id="fullscreenBtn" style="display:none" title="فتح في تبويب جديد"><i class="fas fa-expand"></i></button>
         <button class="preview-btn primary" id="downloadBtn" style="display:none"><i class="fas fa-download"></i> تحميل الموقع</button>
       </div>
     </div>
@@ -123,6 +132,12 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
           <i class="fas fa-cog"></i>
           <p>جاري بناء موقعك...</p>
         </div>
+        <div class="loading-steps">
+          <div class="loading-step active" id="step1"><i class="fas fa-brain"></i> تحليل المتطلبات</div>
+          <div class="loading-step" id="step2"><i class="fas fa-paint-brush"></i> تصميم الواجهة</div>
+          <div class="loading-step" id="step3"><i class="fas fa-code"></i> كتابة الكود</div>
+          <div class="loading-step" id="step4"><i class="fas fa-check-circle"></i> التحقق والإنهاء</div>
+        </div>
       </div>
     </div>
     <div class="status-bar">
@@ -136,17 +151,21 @@ header { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border
 var API_URL = '/.netlify/functions/ai-proxy';
 var generatedCode = '';
 var isLoading = false;
-var chatHistory = []; // ✅ تم التغيير من history إلى chatHistory
+var chatHistory = [];
+var stepInterval = null;
 
-var PROMPT = 'انت مساعد متخصص في بناء مواقع ويب احترافية باللغة العربية. عندما يطلب المستخدم موقعا قم بانشاء كود HTML كامل مع CSS متكامل داخل نفس الملف ومحتوى عربي مع dir=rtl وتصميم متجاوب مع الموبايل. يجب ان يكون ردك: 1. رسالة قصيرة تشرح ما تم بناؤه 2. ثم كود HTML كامل بين |||HTML_START||| و |||HTML_END|||';
+var PROMPT = 'انت مصمم ومطور ويب خبير متخصص في بناء مواقع احترافية وجذابة باللغة العربية.\n\nعند طلب المستخدم موقعا، قم بانشاء كود HTML كامل واحترافي بالمواصفات التالية:\n\nمتطلبات التصميم:\n- تصميم عصري وجذاب مع تدرجات لونية جميلة\n- قسم Hero كبير مع عنوان رئيسي وعنوان فرعي وزر CTA واضح\n- نافبار عصري مع الشعار وروابط التنقل\n- اقسام متكاملة (خدمات، مميزات، احصائيات، تواصل)\n- Footer احترافي مع معلومات التواصل\n- تاثيرات hover على الازرار والبطاقات\n- ظلال وحدود دقيقة تضيف العمق للتصميم\n- بطاقات cards للخدمات مع ايقونات\n\nمتطلبات تقنية:\n- HTML5 كامل مع CSS3 متكامل داخل نفس الملف\n- dir=rtl وlang=ar للغة العربية\n- تصميم متجاوب 100% مع الموبايل\n- استخدم خط Tajawal من Google Fonts\n- استخدم Font Awesome للايقونات من CDN\n- الوان متناسقة ومتدرجة مناسبة لنوع الموقع\n- محتوى عربي واقعي ومناسب لنوع الموقع\n\nشكل الرد:\n1. رسالة قصيرة تشرح ما تم بناؤه\n2. ثم الكود كاملا بين |||HTML_START||| و |||HTML_END|||';
 
 document.getElementById('sendBtn').onclick = sendMsg;
 document.getElementById('copyBtn').onclick = copyCode;
 document.getElementById('downloadBtn').onclick = downloadSite;
-document.getElementById('btn1').onclick = function() { sendText('موقع مطعم باللون الاحمر مع منيو وحجز طاولة'); };
-document.getElementById('btn2').onclick = function() { sendText('موقع عيادة طبية احترافية مع حجز مواعيد'); };
-document.getElementById('btn3').onclick = function() { sendText('صفحة هبوط لمنتج تقني بتصميم حديث'); };
-document.getElementById('btn4').onclick = function() { sendText('موقع متجر ملابس انيق مع عرض المنتجات'); };
+document.getElementById('fullscreenBtn').onclick = openFullscreen;
+document.getElementById('btn1').onclick = function() { sendText('موقع مطعم راقي باللون الذهبي والاسود مع منيو جذاب وحجز طاولة وقسم شيف'); };
+document.getElementById('btn2').onclick = function() { sendText('موقع عيادة طبية احترافية بالوان زرقاء هادئة مع حجز مواعيد وقسم اطباء وخدمات'); };
+document.getElementById('btn3').onclick = function() { sendText('صفحة هبوط لتطبيق تقني بتصميم داكن عصري مع مميزات واحصائيات وزر تحميل'); };
+document.getElementById('btn4').onclick = function() { sendText('موقع متجر ملابس انيق بالوان بيج وبني مع عرض منتجات وعروض وتخفيضات'); };
+document.getElementById('btn5').onclick = function() { sendText('موقع شركة تقنية احترافي بتصميم ازرق حديث مع خدمات وفريق وشركاء النجاح'); };
+document.getElementById('btn6').onclick = function() { sendText('موقع معرض اعمال مصور بتصميم ابداعي داكن مع جاليري صور وسيرة ذاتية وتواصل'); };
 
 document.getElementById('userInput').onkeydown = function(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
@@ -162,38 +181,63 @@ function sendText(text) {
   sendMsg();
 }
 
+function animateSteps() {
+  var steps = ['step1', 'step2', 'step3', 'step4'];
+  var icons = ['fa-brain', 'fa-paint-brush', 'fa-code', 'fa-check-circle'];
+  var current = 0;
+  steps.forEach(function(s, i) {
+    document.getElementById(s).className = 'loading-step';
+    document.getElementById(s).querySelector('i').className = 'fas ' + icons[i];
+  });
+  document.getElementById('step1').className = 'loading-step active';
+  stepInterval = setInterval(function() {
+    if (current < steps.length - 1) {
+      document.getElementById(steps[current]).className = 'loading-step done';
+      document.getElementById(steps[current]).querySelector('i').className = 'fas fa-check';
+      current++;
+      document.getElementById(steps[current]).className = 'loading-step active';
+    }
+  }, 2500);
+}
+
+function stopSteps() {
+  if (stepInterval) { clearInterval(stepInterval); stepInterval = null; }
+}
+
 function sendMsg() {
   var input = document.getElementById('userInput');
   var msg = input.value.trim();
   if (!msg || isLoading) return;
 
   input.value = '';
+  input.style.height = 'auto';
   addMsg(msg, 'user');
   isLoading = true;
   document.getElementById('sendBtn').disabled = true;
   document.getElementById('statusText').textContent = 'جاري المعالجة...';
   showTyping();
   document.getElementById('loadingOverlay').classList.add('show');
+  animateSteps();
 
-  chatHistory.push({ role: 'user', content: msg }); // ✅
+  chatHistory.push({ role: 'user', content: msg });
 
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: PROMPT }].concat(chatHistory), // ✅
+      messages: [{ role: 'system', content: PROMPT }].concat(chatHistory),
       max_tokens: 8000,
-      temperature: 0.7
+      temperature: 0.8
     })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    // التحقق من الأخطاء أولاً
+    stopSteps();
     if (data.error) {
       hideTyping();
       document.getElementById('loadingOverlay').classList.remove('show');
-      addMsg('خطا من Groq: ' + (data.error.message || JSON.stringify(data.error)), 'ai');
+      addMsg('خطا: ' + (data.error.message || JSON.stringify(data.error)), 'ai');
       document.getElementById('statusText').textContent = 'خطا في الاتصال';
       isLoading = false;
       document.getElementById('sendBtn').disabled = false;
@@ -201,7 +245,7 @@ function sendMsg() {
     }
 
     var resp = data.choices && data.choices[0] ? data.choices[0].message.content : 'حدث خطا';
-    chatHistory.push({ role: 'assistant', content: resp }); // ✅
+    chatHistory.push({ role: 'assistant', content: resp });
     hideTyping();
 
     var m = resp.match(/\|\|\|HTML_START\|\|\|([\s\S]*?)\|\|\|HTML_END\|\|\|/);
@@ -209,13 +253,14 @@ function sendMsg() {
 
     if (m) {
       generatedCode = m[1].trim();
-      addMsg(chat || 'تم بناء موقعك بنجاح!', 'ai');
+      addMsg(chat || 'تم بناء موقعك بنجاح! يمكنك معاينته او تحميله.', 'ai');
       document.getElementById('previewEmpty').style.display = 'none';
       var f = document.getElementById('previewFrame');
       f.style.display = 'block';
       f.srcdoc = generatedCode;
       document.getElementById('copyBtn').style.display = 'flex';
       document.getElementById('downloadBtn').style.display = 'flex';
+      document.getElementById('fullscreenBtn').style.display = 'flex';
       document.getElementById('statusText').textContent = 'تم بناء الموقع';
     } else {
       addMsg(resp, 'ai');
@@ -226,6 +271,7 @@ function sendMsg() {
     document.getElementById('sendBtn').disabled = false;
   })
   .catch(function(err) {
+    stopSteps();
     hideTyping();
     document.getElementById('loadingOverlay').classList.remove('show');
     addMsg('عذرا، حدث خطا: ' + err.message, 'ai');
@@ -275,6 +321,12 @@ function downloadSite() {
   a.download = 'my-website.html';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function openFullscreen() {
+  var w = window.open('', '_blank');
+  w.document.write(generatedCode);
+  w.document.close();
 }
 </script>
 </body>
