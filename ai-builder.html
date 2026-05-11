@@ -154,7 +154,7 @@ var isLoading = false;
 var chatHistory = [];
 var stepInterval = null;
 
-var PROMPT = 'انت مصمم ومطور ويب خبير متخصص في بناء مواقع احترافية وجذابة باللغة العربية.\n\nعند طلب المستخدم موقعا، قم بانشاء كود HTML كامل واحترافي بالمواصفات التالية:\n\nمتطلبات التصميم:\n- تصميم عصري وجذاب مع تدرجات لونية جميلة\n- قسم Hero كبير مع عنوان رئيسي وعنوان فرعي وزر CTA واضح\n- نافبار عصري مع الشعار وروابط التنقل\n- اقسام متكاملة (خدمات، مميزات، احصائيات، تواصل)\n- Footer احترافي مع معلومات التواصل\n- تاثيرات hover على الازرار والبطاقات\n- ظلال وحدود دقيقة تضيف العمق للتصميم\n- بطاقات cards للخدمات مع ايقونات\n\nمتطلبات تقنية:\n- HTML5 كامل مع CSS3 متكامل داخل نفس الملف\n- dir=rtl وlang=ar للغة العربية\n- تصميم متجاوب 100% مع الموبايل\n- استخدم خط Tajawal من Google Fonts\n- استخدم Font Awesome للايقونات من CDN\n- الوان متناسقة ومتدرجة مناسبة لنوع الموقع\n- محتوى عربي واقعي ومناسب لنوع الموقع\n\nشكل الرد:\n1. رسالة قصيرة تشرح ما تم بناؤه\n2. ثم الكود كاملا بين |||HTML_START||| و |||HTML_END|||';
+var PROMPT = 'انت مصمم ومطور ويب خبير متخصص في بناء مواقع احترافية وجذابة باللغة العربية.\n\nعند طلب المستخدم موقعا، قم بانشاء كود HTML كامل واحترافي بالمواصفات التالية:\n\nمتطلبات التصميم:\n- تصميم عصري وجذاب مع تدرجات لونية جميلة\n- قسم Hero كبير مع عنوان رئيسي وعنوان فرعي وزر CTA واضح\n- نافبار عصري مع الشعار وروابط التنقل\n- اقسام متكاملة (خدمات، مميزات، احصائيات، تواصل)\n- Footer احترافي مع معلومات التواصل\n- تاثيرات hover على الازرار والبطاقات\n- ظلال وحدود دقيقة تضيف العمق للتصميم\n- بطاقات cards للخدمات مع ايقونات\n\nمتطلبات تقنية:\n- HTML5 كامل مع CSS3 متكامل داخل نفس الملف\n- dir=rtl وlang=ar للغة العربية\n- تصميم متجاوب 100% مع الموبايل\n- استخدم خط Tajawal من Google Fonts\n- استخدم Font Awesome للايقونات من CDN\n- الوان متناسقة ومتدرجة مناسبة لنوع الموقع\n- محتوى عربي واقعي ومناسب لنوع الموقع\n\nشكل الرد:\n1. رسالة قصيرة تشرح ما تم بناؤه\n2. ثم الكود كاملا بين |||HTML_START||| و |||HTML_END||| بدون اي backticks';
 
 document.getElementById('sendBtn').onclick = sendMsg;
 document.getElementById('copyBtn').onclick = copyCode;
@@ -204,6 +204,15 @@ function stopSteps() {
   if (stepInterval) { clearInterval(stepInterval); stepInterval = null; }
 }
 
+function cleanCode(code) {
+  // ✅ حذف backticks تلقائياً مهما كان شكلها
+  return code
+    .replace(/^```html\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+}
+
 function sendMsg() {
   var input = document.getElementById('userInput');
   var msg = input.value.trim();
@@ -248,11 +257,13 @@ function sendMsg() {
     chatHistory.push({ role: 'assistant', content: resp });
     hideTyping();
 
-    var m = resp.match(/\|\|\|HTML_START\|\|\|([\s\S]*?)\|\|\|HTML_END\|\|\|/);
+    // ✅ الحل الأضمن - حذف backticks تلقائياً
+    var rawMatch = resp.match(/\|\|\|HTML_START\|\|\|([\s\S]*?)\|\|\|HTML_END\|\|\|/);
+    var m = rawMatch ? [null, cleanCode(rawMatch[1])] : null;
     var chat = resp.replace(/\|\|\|HTML_START\|\|\|[\s\S]*?\|\|\|HTML_END\|\|\|/, '').trim();
 
     if (m) {
-      generatedCode = m[1].trim();
+      generatedCode = m[1];
       addMsg(chat || 'تم بناء موقعك بنجاح! يمكنك معاينته او تحميله.', 'ai');
       document.getElementById('previewEmpty').style.display = 'none';
       var f = document.getElementById('previewFrame');
