@@ -438,4 +438,3 @@ class UIHandler {
 }
 
 // Export as default module
-export default UIHandler;

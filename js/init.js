@@ -1,7 +1,4 @@
-import UIHandler from "/js/ui.js";
-
 document.addEventListener("DOMContentLoaded", () => {
-  const uiHandler = new UIHandler();
 
   const products = [
     {
@@ -24,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+  const uiHandler = new UIHandler();
   uiHandler.setProducts(products);
   uiHandler.loadCart();
 });
