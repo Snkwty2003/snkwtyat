@@ -1,16 +1,25 @@
-// Initialize UI Handler
 document.addEventListener("DOMContentLoaded", () => {
-  // Create UI Handler instance
   const uiHandler = new UIHandler();
 
-  // Set initial products data
   const products = [
-    {id:1,name:"القالب الأول",desc:"قالب HTML احترافي مع تصميم متجاوب",price:19.99,cat:"HTML",img:"https://via.placeholder.com/300x200"},
-    {id:2,name:"القالب الثاني",desc:"قالب CSS حديث مع تأثيرات مذهلة",price:24.99,cat:"CSS",img:"https://via.placeholder.com/300x200"},
-    {id:3,name:"القالب الثالث",desc:"قالب HTML متكامل مع ميزات متقدمة",price:29.99,cat:"HTML",img:"https://via.placeholder.com/300x200"}
+    {
+      id: 1,
+      name: "قالب صيدلية داوائي",
+      desc: "قالب HTML احترافي لصيدلية أو متجر أدوية - تصميم أنيق ومتجاوب مع جميع الأجهزة",
+      price: 19.99,
+      cat: "HTML",
+      img: "https://via.placeholder.com/400x250/E33E10/fff?text=قالب+صيدلية"
+    },
+    {
+      id: 2,
+      name: "قالب متجر ملابس",
+      desc: "قالب HTML لمتجر ملابس أنيق - يدعم العربية وعرض المنتجات باحترافية",
+      price: 24.99,
+      cat: "HTML",
+      img: "https://via.placeholder.com/400x250/2196f3/fff?text=قالب+ملابس"
+    }
   ];
 
-  // Initialize UI
   uiHandler.setProducts(products);
   uiHandler.renderProducts(products);
   uiHandler.loadCart();
