@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صيدلية دوائي - صحتك أولويتنا</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--green:#0a8f5e;--green-light:#12b876;--green-dark:#066b45;--green-pale:#e8f8f2;--blue:#1a7abf;--blue-light:#e8f4fd;--white:#ffffff;--gray-light:#f4f7f9;--gray:#8a97a8;--dark:#1a2332;--text:#2d3a4a;--shadow:0 4px 24px rgba(10,143,94,0.10);--shadow-lg:0 8px 40px rgba(10,143,94,0.18);--radius:16px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#f1f1f1;}::-webkit-scrollbar-thumb{background:var(--green);border-radius:3px;}
+.topbar{background:var(--green-dark);color:#fff;padding:8px 0;font-size:13px;}
+.tb-inner{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.topbar a{color:#cfffea;text-decoration:none;margin-right:14px;font-size:12px;}
+nav{background:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,0.08);}
+.nav-inner{max-width:1200px;margin:auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:70px;gap:12px;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}
+.logo-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;box-shadow:0 4px 12px rgba(10,143,94,.35);}
+.logo-text .name{font-size:20px;font-weight:800;color:var(--green-dark);font-family:'Tajawal',sans-serif;}
+.logo-text .tagline{font-size:11px;color:var(--gray);}
+.nav-links{display:flex;list-style:none;gap:2px;}
+.nav-links a{text-decoration:none;color:var(--text);font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .2s;cursor:pointer;}
+.nav-links a:hover,.nav-links a.active{color:var(--green);background:var(--green-pale);}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.btn-icon{width:40px;height:40px;border:none;background:var(--gray-light);border-radius:10px;cursor:pointer;font-size:16px;color:var(--gray);display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative;}
+.btn-icon:hover{background:var(--green-pale);color:var(--green);}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--green);color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;white-space:nowrap;}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
+.hamburger{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--dark);}
+.search-bar{background:var(--gray-light);padding:12px 0;}
+.search-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.search-box{display:flex;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.search-box input{flex:1;border:none;padding:12px 18px;font-size:15px;font-family:'Cairo',sans-serif;outline:none;}
+.search-box select{border:none;border-right:1px solid #eee;padding:0 12px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--gray);background:#fff;cursor:pointer;outline:none;}
+.search-box button{background:var(--green);color:#fff;border:none;padding:12px 22px;font-size:15px;cursor:pointer;}
+.hero{background:linear-gradient(135deg,#065535 0%,#0a8f5e 45%,#12b876 100%);min-height:500px;display:flex;align-items:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:1200px;margin:auto;padding:60px 20px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1;}
+.hero-text h1{font-size:40px;font-weight:900;color:#fff;line-height:1.2;font-family:'Tajawal',sans-serif;margin-bottom:14px;}
+.hero-text h1 span{color:#7fffd4;}
+.hero-text p{color:rgba(255,255,255,.85);font-size:16px;line-height:1.8;margin-bottom:26px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-hero-white{background:#fff;color:var(--green-dark);border:none;padding:13px 26px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.btn-hero-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.btn-hero-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);padding:13px 26px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.btn-hero-outline:hover{background:rgba(255,255,255,.15);}
+.hero-card{background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.2);border-radius:24px;padding:28px;color:#fff;}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+.stat-item{text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:16px 12px;}
+.stat-item .num{font-size:26px;font-weight:900;font-family:'Tajawal',sans-serif;}
+.stat-item .lbl{font-size:12px;opacity:.8;margin-top:3px;}
+.features-strip{background:#fff;border-bottom:1px solid #eef2f5;}
+.features-inner{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);}
+.feat-item{display:flex;align-items:center;gap:12px;padding:20px 14px;border-left:1px solid #eef2f5;transition:background .2s;}
+.feat-item:last-child{border-left:none;}
+.feat-item:hover{background:var(--green-pale);}
+.feat-icon{width:44px;height:44px;min-width:44px;background:var(--green-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:18px;}
+.feat-text .ftitle{font-size:13px;font-weight:700;color:var(--dark);}
+.feat-text .fsub{font-size:11px;color:var(--gray);}
+.sec-title{text-align:center;margin-bottom:36px;}
+.sec-title .pre{display:inline-block;background:var(--green-pale);color:var(--green);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:10px;}
+.sec-title h2{font-size:28px;font-weight:800;color:var(--dark);font-family:'Tajawal',sans-serif;margin-bottom:6px;}
+.sec-title p{color:var(--gray);font-size:14px;max-width:480px;margin:auto;}
+.categories{padding:55px 0;background:var(--gray-light);}
+.cats-grid{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;}
+.cat-card{background:#fff;border-radius:var(--radius);padding:20px 12px;text-align:center;cursor:pointer;transition:all .25s;border:2px solid transparent;text-decoration:none;color:var(--text);}
+.cat-card:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:var(--shadow);}
+.cat-card .cat-icon{font-size:30px;margin-bottom:8px;display:block;}
+.cat-card .cat-name{font-size:12px;font-weight:700;color:var(--dark);}
+.cat-card .cat-count{font-size:11px;color:var(--gray);margin-top:3px;}
+.products-section{padding:55px 0;background:#fff;}
+.products-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:28px;justify-content:center;}
+.filter-tab{background:var(--gray-light);border:none;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;color:var(--gray);transition:all .2s;}
+.filter-tab.active,.filter-tab:hover{background:var(--green);color:#fff;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;}
+.product-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:all .25s;border:1px solid #eef2f5;cursor:pointer;}
+.product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.product-img{width:100%;height:180px;background:linear-gradient(135deg,var(--green-pale),var(--blue-light));display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;}
+.product-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+.product-badge.sale{background:#e74c3c;}
+.product-body{padding:13px;}
+.product-name{font-size:13.5px;font-weight:700;color:var(--dark);margin-bottom:5px;line-height:1.4;}
+.product-desc{font-size:12px;color:var(--gray);margin-bottom:8px;line-height:1.5;}
+.product-stars{color:#f39c12;font-size:12px;margin-bottom:7px;}
+.product-stars span{color:var(--gray);margin-right:3px;}
+.product-price-row{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-size:16px;font-weight:800;color:var(--green-dark);}
+.old-price{font-size:12px;color:var(--gray);text-decoration:line-through;margin-right:5px;}
+.btn-add{background:var(--green);color:#fff;border:none;width:34px;height:34px;border-radius:9px;font-size:15px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.btn-add:hover{background:var(--green-dark);}
+.offers-banner{background:linear-gradient(135deg,#1a2332,#2d3a4a);padding:55px 0;}
+.offers-inner{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.offer-text h2{font-size:32px;font-weight:900;color:#fff;font-family:'Tajawal',sans-serif;margin-bottom:10px;}
+.offer-text h2 span{color:var(--green-light);}
+.offer-text p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;line-height:1.7;}
+.offer-timer{display:flex;gap:10px;margin-bottom:20px;}
+.timer-box{background:var(--green);color:#fff;border-radius:12px;padding:12px 16px;text-align:center;min-width:60px;}
+.timer-box .tnum{font-size:22px;font-weight:900;display:block;font-family:'Tajawal',sans-serif;}
+.timer-box .tlbl{font-size:10px;opacity:.85;}
+.offer-cards{display:flex;flex-direction:column;gap:12px;}
+.offer-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;}
+.offer-card:hover{background:rgba(255,255,255,.13);}
+.oc-icon{font-size:28px;width:48px;height:48px;background:var(--green-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.oc-text .title{color:#fff;font-size:14px;font-weight:700;margin-bottom:3px;}
+.oc-text .disc{color:var(--green-light);font-size:12px;font-weight:600;}
+.presc-section{padding:55px 0;background:var(--gray-light);}
+.presc-inner{max-width:860px;margin:auto;padding:0 20px;}
+.presc-card{background:#fff;border-radius:24px;padding:36px;box-shadow:var(--shadow);}
+.presc-card h3{font-size:22px;font-weight:800;color:var(--dark);font-family:'Tajawal',sans-serif;margin-bottom:6px;}
+.presc-card p{color:var(--gray);font-size:14px;margin-bottom:24px;}
+.upload-zone{border:2px dashed var(--green-light);border-radius:16px;padding:36px;text-align:center;cursor:pointer;transition:all .25s;background:var(--green-pale);margin-bottom:18px;}
+.upload-zone:hover{border-color:var(--green);background:#d5f5e9;}
+.upload-zone i{font-size:38px;color:var(--green);margin-bottom:10px;display:block;}
+.upload-zone p{color:var(--green-dark);font-weight:600;font-size:14px;margin:0 0 4px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg.full{grid-column:1/-1;}
+.fg label{font-size:12px;font-weight:600;color:var(--dark);}
+.fg input,.fg textarea,.fg select{border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 13px;font-size:14px;font-family:'Cairo',sans-serif;outline:none;transition:border-color .2s;background:#fff;}
+.fg input:focus,.fg textarea:focus{border-color:var(--green);}
+.fg textarea{resize:none;height:85px;}
+.btn-submit{width:100%;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:8px;transition:all .2s;}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
+.services-section{padding:55px 0;background:#fff;}
+.services-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px;}
+.service-card{background:var(--gray-light);border-radius:var(--radius);padding:24px 18px;text-align:center;transition:all .25s;cursor:pointer;}
+.service-card:hover{background:var(--green);transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.service-card:hover .serv-icon,.service-card:hover .serv-title,.service-card:hover .serv-desc{color:#fff;}
+.service-card:hover .serv-icon{background:rgba(255,255,255,.2);}
+.serv-icon{width:56px;height:56px;background:var(--green-pale);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:24px;margin:0 auto 14px;transition:all .25s;}
+.serv-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px;transition:color .25s;}
+.serv-desc{font-size:12px;color:var(--gray);line-height:1.6;transition:color .25s;}
+.blog-section{padding:55px 0;background:var(--gray-light);}
+.blog-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;}
+.blog-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:all .25s;cursor:pointer;}
+.blog-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.blog-img{height:160px;background:linear-gradient(135deg,var(--green-pale),var(--blue-light));display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
+.blog-cat{position:absolute;bottom:10px;right:10px;background:var(--green);color:#fff;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600;}
+.blog-body{padding:16px;}
+.blog-meta{font-size:11px;color:var(--gray);margin-bottom:7px;}
+.blog-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:7px;line-height:1.5;}
+.blog-excerpt{font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:10px;}
+.blog-read{color:var(--green);font-size:12px;font-weight:600;text-decoration:none;}
+.testimonials{padding:55px 0;background:#fff;}
+.testi-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;}
+.testi-card{background:var(--gray-light);border-radius:var(--radius);padding:22px;border-right:4px solid var(--green);}
+.testi-stars{color:#f39c12;font-size:14px;margin-bottom:10px;}
+.testi-text{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.testi-avatar{width:42px;height:42px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;}
+.testi-name{font-size:14px;font-weight:700;color:var(--dark);}
+.testi-role{font-size:11px;color:var(--gray);}
+footer{background:#0d1f2d;color:#fff;padding:55px 0 0;}
+.footer-inner{max-width:1200px;margin:auto;padding:0 20px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px;}
+.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.flogo-icon{width:44px;height:44px;background:var(--green);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.flogo-name{font-size:19px;font-weight:800;color:#fff;font-family:'Tajawal',sans-serif;}
+.flogo-tag{font-size:11px;color:rgba(255,255,255,.5);}
+.footer-about{color:rgba(255,255,255,.6);font-size:13px;line-height:1.8;margin-bottom:18px;}
+.social-links{display:flex;gap:8px;}
+.social-btn{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:all .2s;}
+.social-btn:hover{transform:translateY(-2px);}
+.footer-col h4{font-size:14px;font-weight:700;margin-bottom:18px;position:relative;padding-bottom:9px;}
+.footer-col h4::after{content:'';position:absolute;bottom:0;right:0;width:28px;height:2px;background:var(--green);}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.footer-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;transition:color .2s;cursor:pointer;}
+.footer-links a:hover{color:var(--green-light);}
+.fci{display:flex;align-items:center;gap:9px;margin-bottom:10px;color:rgba(255,255,255,.6);font-size:12px;}
+.fci i{color:var(--green);font-size:14px;width:14px;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-bottom p{color:rgba(255,255,255,.4);font-size:12px;}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s;}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-sidebar{position:fixed;top:0;left:-420px;width:420px;height:100%;background:#fff;z-index:2001;transition:left .3s;box-shadow:-4px 0 24px rgba(0,0,0,.15);display:flex;flex-direction:column;}
+.cart-sidebar.open{left:0;}
+.cart-header{padding:18px;border-bottom:1px solid #eef2f5;display:flex;align-items:center;justify-content:space-between;}
+.cart-header h3{font-size:17px;font-weight:700;}
+.cart-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray);}
+.cart-items{flex:1;overflow-y:auto;padding:14px;}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f0f4f7;}
+.ci-img{width:56px;height:56px;border-radius:10px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.ci-body{flex:1;}
+.ci-name{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:3px;}
+.ci-price{font-size:14px;font-weight:700;color:var(--green-dark);}
+.ci-qty{display:flex;align-items:center;gap:7px;margin-top:5px;}
+.qty-btn{width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
+.cart-footer{padding:18px;border-top:1px solid #eef2f5;}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:14px;font-size:15px;}
+.cart-total span:last-child{font-weight:800;color:var(--green-dark);}
+.btn-checkout{width:100%;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:24px;padding:34px;width:92%;max-width:420px;position:relative;}
+.modal-close{position:absolute;top:14px;left:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray);}
+.modal-box h3{font-size:21px;font-weight:800;color:var(--dark);text-align:center;margin-bottom:5px;}
+.modal-box > p{color:var(--gray);text-align:center;font-size:13px;margin-bottom:20px;}
+.modal-tabs{display:flex;background:var(--gray-light);border-radius:10px;padding:4px;margin-bottom:22px;}
+.modal-tab{flex:1;padding:8px;border:none;background:transparent;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border-radius:7px;transition:all .2s;}
+.modal-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.notification{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:5000;transition:transform .4s;white-space:nowrap;}
+.notification.show{transform:translateX(-50%) translateY(0);}
+.notification.success{background:var(--green-dark);}
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:54px;height:54px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:25px;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.5);z-index:1500;transition:all .25s;animation:pulse 2s infinite;}
+.whatsapp-float:hover{transform:scale(1.1);}
+@keyframes pulse{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.5);}50%{box-shadow:0 4px 28px rgba(37,211,102,.8);}}
+.mobile-menu{display:none;position:fixed;top:70px;right:0;left:0;background:#fff;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:14px;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:11px 14px;color:var(--text);text-decoration:none;font-size:15px;font-weight:600;border-radius:9px;cursor:pointer;}
+.mobile-menu a:hover{background:var(--green-pale);color:var(--green);}
+.page{display:none;}
+.page.active{display:block;}
+.page-hero{background:linear-gradient(135deg,var(--green-dark),var(--green));padding:50px 20px;text-align:center;}
+.page-hero h1{font-size:32px;font-weight:900;color:#fff;font-family:'Tajawal',sans-serif;}
+.page-hero p{color:rgba(255,255,255,.8);font-size:15px;margin-top:8px;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin-bottom:50px;}
+.about-img{border-radius:20px;background:linear-gradient(135deg,var(--green-pale),var(--blue-light));height:320px;display:flex;align-items:center;justify-content:center;font-size:80px;}
+.vision-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.vc{background:var(--gray-light);border-radius:14px;padding:20px;}
+.vc h3{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:7px;display:flex;align-items:center;gap:7px;}
+.vc h3 i{color:var(--green);}
+.vc p{font-size:12px;color:var(--gray);line-height:1.7;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;margin-top:20px;}
+.team-card{background:#fff;border-radius:var(--radius);padding:22px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.team-avatar{width:68px;height:68px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin:0 auto 12px;}
+.team-name{font-size:14px;font-weight:700;color:var(--dark);}
+.team-role{font-size:12px;color:var(--green);font-weight:600;margin-top:3px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
+.contact-item{display:flex;gap:14px;margin-bottom:16px;padding:16px;background:var(--gray-light);border-radius:14px;}
+.ci-icon{width:44px;height:44px;background:var(--green);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex-shrink:0;}
+.cit-label{font-size:11px;color:var(--gray);margin-bottom:3px;}
+.cit-val{font-size:14px;font-weight:700;color:var(--dark);}
+.hours-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef2f5;font-size:13px;}
+.hours-row:last-child{border-bottom:none;}
+.hours-row .day{color:var(--gray);}
+.hours-row .time{font-weight:700;color:var(--dark);}
+.hours-row .time.open{color:var(--green);}
+.map-placeholder{background:linear-gradient(135deg,#e8f4fd,#e8f8f2);height:240px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--green);margin-top:16px;}
+.map-placeholder i{font-size:38px;}
+.map-placeholder p{font-size:13px;font-weight:600;}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:28px;}
+  .hero-text h1{font-size:28px;}
+  .features-inner{grid-template-columns:1fr 1fr;}
+  .feat-item:nth-child(2){border-left:none;}
+  .offers-inner{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:22px;}
+  .about-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .vision-cards{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .nav-links,.nav-actions .btn-primary{display:none;}
+  .hamburger{display:block;}
+  .hero-text h1{font-size:22px;}
+  .hero-btns{flex-direction:column;}
+  .features-inner{grid-template-columns:1fr;}
+  .feat-item{border-left:none;border-bottom:1px solid #eef2f5;}
+  .footer-grid{grid-template-columns:1fr;}
+  .cart-sidebar{width:100%;}
+  .hero-stats{grid-template-columns:1fr 1fr;}
+  .products-grid{grid-template-columns:1fr 1fr;}
+  .page-hero h1{font-size:24px;}
+}
+@media(max-width:380px){.products-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-inner">
+    <div><i class="fas fa-phone"></i> <a href="tel:+966500000000">+966 50 000 0000</a> &nbsp; <i class="fas fa-clock"></i> <span style="color:#cfffea;font-size:12px">السبت-الخميس: 8ص - 11م</span></div>
+    <div><a href="#"><i class="fab fa-whatsapp" style="color:#7fffd4"></i> واتساب</a><a href="#"><i class="fas fa-map-marker-alt"></i> موقعنا</a></div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-icon"><i class="fas fa-capsules"></i></div>
+      <div class="logo-text"><div class="name">صيدلية دوائي</div><div class="tagline">صحتك أولويتنا</div></div>
+    </div>
+    <ul class="nav-links">
+      <li><a class="active" onclick="showPage('home')">الرئيسية</a></li>
+      <li><a onclick="showPage('store')">المتجر</a></li>
+      <li><a onclick="showPage('prescription')">وصفة طبية</a></li>
+      <li><a onclick="showPage('services')">الخدمات</a></li>
+      <li><a onclick="showPage('blog')">المدونة</a></li>
+      <li><a onclick="showPage('about')">من نحن</a></li>
+      <li><a onclick="showPage('contact')">تواصل معنا</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon" onclick="openCart()"><i class="fas fa-shopping-cart"></i><span class="badge" id="cartBadge">0</span></button>
+      <button class="btn-icon"><i class="fas fa-heart"></i></button>
+      <button class="btn-primary" onclick="openAuth()"><i class="fas fa-user" style="margin-left:5px"></i>تسجيل الدخول</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home');toggleMenu()">🏠 الرئيسية</a>
+  <a onclick="showPage('store');toggleMenu()">🛍️ المتجر</a>
+  <a onclick="showPage('prescription');toggleMenu()">📋 وصفة طبية</a>
+  <a onclick="showPage('services');toggleMenu()">⚕️ الخدمات</a>
+  <a onclick="showPage('blog');toggleMenu()">📰 المدونة</a>
+  <a onclick="showPage('about');toggleMenu()">ℹ️ من نحن</a>
+  <a onclick="showPage('contact');toggleMenu()">📞 تواصل معنا</a>
+</div>
+
+<!-- ====== HOME ====== -->
+<div id="page-home" class="page active">
+  <div class="search-bar"><div class="search-inner"><div class="search-box">
+    <select><option>كل الأقسام</option><option>مستحضرات التجميل</option><option>فيتامينات</option><option>أم وطفل</option><option>تغذية رياضية</option></select>
+    <input type="text" placeholder="ابحث عن دواء أو منتج...">
+    <button><i class="fas fa-search"></i></button>
+  </div></div></div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>صحتك <span>أمانة</span><br>في أيدٍ متخصصة</h1>
+        <p>أكثر من 5000 منتج صحي وطبي بأعلى جودة وأفضل الأسعار. وصفات طبية، استشارات دوائية، وتوصيل سريع لباب منزلك.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-white" onclick="showPage('store')"><i class="fas fa-shopping-bag"></i> تسوق الآن</button>
+          <button class="btn-hero-outline" onclick="showPage('prescription')"><i class="fas fa-file-medical"></i> ارفع وصفتك</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3 style="color:#fff;font-size:19px;font-weight:700;margin-bottom:4px">لماذا صيدلية دوائي؟</h3>
+        <p style="color:rgba(255,255,255,.7);font-size:12px">نقدم خدمات صحية متكاملة بمعايير عالمية</p>
+        <div class="hero-stats">
+          <div class="stat-item"><div class="num">5000+</div><div class="lbl">منتج متوفر</div></div>
+          <div class="stat-item"><div class="num">15+</div><div class="lbl">سنة خبرة</div></div>
+          <div class="stat-item"><div class="num">50K+</div><div class="lbl">عميل راضٍ</div></div>
+          <div class="stat-item"><div class="num">24/7</div><div class="lbl">دعم متواصل</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="features-strip"><div class="features-inner">
+    <div class="feat-item"><div class="feat-icon"><i class="fas fa-truck"></i></div><div class="feat-text"><div class="ftitle">توصيل سريع</div><div class="fsub">خلال ساعتين في المدينة</div></div></div>
+    <div class="feat-item"><div class="feat-icon"><i class="fas fa-shield-alt"></i></div><div class="feat-text"><div class="ftitle">منتجات أصلية 100%</div><div class="fsub">مضمونة من المصدر</div></div></div>
+    <div class="feat-item"><div class="feat-icon"><i class="fas fa-user-md"></i></div><div class="feat-text"><div class="ftitle">استشارة مجانية</div><div class="fsub">صيادلة متخصصون</div></div></div>
+    <div class="feat-item"><div class="feat-icon"><i class="fas fa-undo"></i></div><div class="feat-text"><div class="ftitle">إرجاع مجاني</div><div class="fsub">خلال 7 أيام</div></div></div>
+  </div></div>
+
+  <section class="categories">
+    <div style="max-width:1200px;margin:auto;padding:0 20px 28px"><div class="sec-title"><div class="pre">تصفح الأقسام</div><h2>أقسام المتجر</h2><p>اختر من بين أقسام منتجاتنا المتنوعة</p></div></div>
+    <div class="cats-grid">
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">💄</span><div class="cat-name">مستحضرات التجميل</div><div class="cat-count">+320 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">👶</span><div class="cat-name">الأم والطفل</div><div class="cat-count">+180 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">💊</span><div class="cat-name">الفيتامينات</div><div class="cat-count">+240 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">🏋️</span><div class="cat-name">تغذية رياضية</div><div class="cat-count">+150 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">🩺</span><div class="cat-name">مرضى السكري</div><div class="cat-count">+90 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">🌿</span><div class="cat-name">منتجات الحساسية</div><div class="cat-count">+110 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">✨</span><div class="cat-name">العناية بالبشرة</div><div class="cat-count">+280 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">💇</span><div class="cat-name">العناية بالشعر</div><div class="cat-count">+160 منتج</div></a>
+      <a class="cat-card" onclick="showPage('store')"><span class="cat-icon">📊</span><div class="cat-name">أجهزة قياس</div><div class="cat-count">+60 منتج</div></a>
+    </div>
+  </section>
+
+  <section class="products-section">
+    <div class="products-inner">
+      <div class="sec-title"><div class="pre">الأكثر مبيعاً</div><h2>منتجات مميزة</h2><p>اختيار عملائنا بأفضل الأسعار</p></div>
+      <div class="filter-tabs">
+        <button class="filter-tab active">الكل</button>
+        <button class="filter-tab">عروض اليوم</button>
+        <button class="filter-tab">الأكثر مبيعاً</button>
+        <button class="filter-tab">جديد</button>
+        <button class="filter-tab">فيتامينات</button>
+        <button class="filter-tab">العناية</button>
+      </div>
+      <div class="products-grid" id="homeProducts"></div>
+      <div style="text-align:center;margin-top:32px"><button class="btn-primary" style="padding:13px 36px;font-size:15px" onclick="showPage('store')">عرض كل المنتجات</button></div>
+    </div>
+  </section>
+
+  <section class="offers-banner">
+    <div class="offers-inner">
+      <div class="offer-text">
+        <h2>عروض الأسبوع<br><span>خصومات تصل إلى 50%</span></h2>
+        <p>استفد من عروضنا الأسبوعية الحصرية على أفضل المنتجات الصحية والعلاجية</p>
+        <div class="offer-timer">
+          <div class="timer-box"><span class="tnum" id="tDays">03</span><span class="tlbl">أيام</span></div>
+          <div class="timer-box"><span class="tnum" id="tHours">14</span><span class="tlbl">ساعة</span></div>
+          <div class="timer-box"><span class="tnum" id="tMins">32</span><span class="tlbl">دقيقة</span></div>
+          <div class="timer-box"><span class="tnum" id="tSecs">00</span><span class="tlbl">ثانية</span></div>
+        </div>
+        <button class="btn-hero-white" onclick="showPage('store')"><i class="fas fa-tag"></i> تسوق العروض</button>
+      </div>
+      <div class="offer-cards">
+        <div class="offer-card"><div class="oc-icon">💊</div><div class="oc-text"><div class="title">فيتامينات ومكملات</div><div class="disc">خصم 40% على الكميات</div></div></div>
+        <div class="offer-card"><div class="oc-icon">✨</div><div class="oc-text"><div class="title">منتجات العناية بالبشرة</div><div class="disc">اشترِ 2 واحصل على 1 مجاناً</div></div></div>
+        <div class="offer-card"><div class="oc-icon">👶</div><div class="oc-text"><div class="title">منتجات الأم والطفل</div><div class="disc">شحن مجاني على كل طلب</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="services-inner">
+      <div class="sec-title"><div class="pre">خدماتنا</div><h2>ما نقدمه لكم</h2><p>خدمات صيدلانية متكاملة تحت سقف واحد</p></div>
+      <div class="services-grid">
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-prescription"></i></div><div class="serv-title">صرف الوصفات</div><div class="serv-desc">صرف سريع ودقيق لجميع أنواع الوصفات الطبية</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-comments"></i></div><div class="serv-title">استشارات دوائية</div><div class="serv-desc">استشر صيدلانيينا المتخصصين مجاناً</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-truck"></i></div><div class="serv-title">توصيل للمنازل</div><div class="serv-desc">نوصل طلبك لباب منزلك خلال ساعتين</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-search-plus"></i></div><div class="serv-title">طلب الأدوية النادرة</div><div class="serv-desc">نساعدك في إيجاد الأدوية غير المتوفرة</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-heartbeat"></i></div><div class="serv-title">قياس الضغط والسكر</div><div class="serv-desc">متابعة دورية مجانية في الصيدلية</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="testi-inner">
+      <div class="sec-title"><div class="pre">آراء عملائنا</div><h2>ماذا يقولون عنّا</h2></div>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"خدمة ممتازة وأسعار منافسة. الصيادلة محترفون جداً. التوصيل سريع جداً!"</div><div class="testi-author"><div class="testi-avatar"><i class="fas fa-user"></i></div><div><div class="testi-name">أحمد محمد</div><div class="testi-role">عميل منذ 3 سنوات</div></div></div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"رفعت الوصفة الطبية وتم تجهيز الدواء في نفس اليوم. سهولة رائعة!"</div><div class="testi-author"><div class="testi-avatar"><i class="fas fa-user"></i></div><div><div class="testi-name">سارة عبدالله</div><div class="testi-role">عميلة دائمة</div></div></div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★☆</div><div class="testi-text">"منتجات أصلية 100% بأسعار معقولة. الموقع سهل الاستخدام. أنصح به بشدة."</div><div class="testi-author"><div class="testi-avatar"><i class="fas fa-user"></i></div><div><div class="testi-name">خالد الزهراني</div><div class="testi-role">عميل جديد</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px 55px">
+    <div class="sec-title"><div class="pre">موقعنا</div><h2>زورونا</h2></div>
+    <div class="map-placeholder">
+      <i class="fas fa-map-marker-alt"></i>
+      <p>شارع الملك فهد، حي العليا، الرياض</p>
+      <button onclick="window.open('https://maps.google.com','_blank')" style="background:var(--green);color:#fff;border:none;padding:9px 22px;border-radius:10px;cursor:pointer;font-family:Cairo,sans-serif;font-weight:600;font-size:13px;margin-top:6px">افتح في خرائط جوجل</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== STORE ====== -->
+<div id="page-store" class="page">
+  <div class="page-hero"><h1>المتجر الإلكتروني</h1><p>أكثر من 5000 منتج صحي بأفضل الأسعار</p></div>
+  <div style="max-width:1200px;margin:auto;padding:36px 20px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;align-items:center;justify-content:space-between">
+      <div class="filter-tabs" style="margin:0">
+        <button class="filter-tab active" onclick="filterProds('all',this)">الكل</button>
+        <button class="filter-tab" onclick="filterProds('beauty',this)">تجميل</button>
+        <button class="filter-tab" onclick="filterProds('baby',this)">أم وطفل</button>
+        <button class="filter-tab" onclick="filterProds('vitamins',this)">فيتامينات</button>
+        <button class="filter-tab" onclick="filterProds('sports',this)">رياضية</button>
+        <button class="filter-tab" onclick="filterProds('skin',this)">بشرة</button>
+        <button class="filter-tab" onclick="filterProds('devices',this)">أجهزة</button>
+      </div>
+      <span style="font-size:13px;color:var(--gray)" id="productCount">12 منتج</span>
+    </div>
+    <div class="products-grid" id="storeProducts"></div>
+  </div>
+</div>
+
+<!-- ====== PRESCRIPTION ====== -->
+<div id="page-prescription" class="page">
+  <div class="page-hero"><h1>رفع الوصفة الطبية</h1><p>ارفع وصفتك ونتولى تجهيز دوائك</p></div>
+  <section class="presc-section">
+    <div class="presc-inner">
+      <div class="presc-card">
+        <h3>🏥 طلب دواء بوصفة طبية</h3>
+        <p>ارفع صورة الوصفة الطبية وسنتولى تجهيز دوائك وتوصيله إليك في أسرع وقت</p>
+        <div class="upload-zone" onclick="document.getElementById('prescFile').click()">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>انقر لرفع صورة الوصفة الطبية</p>
+          <small style="color:var(--gray);font-size:12px">يدعم: JPG، PNG، PDF — الحجم الأقصى 10 ميجا</small>
+          <input type="file" id="prescFile" accept="image/*,.pdf" style="display:none" onchange="handleFile(this)">
+        </div>
+        <div id="uploadPreview" style="display:none;background:var(--green-pale);border-radius:12px;padding:12px;margin-bottom:14px"></div>
+        <div class="form-grid">
+          <div class="fg"><label>الاسم الكامل *</label><input type="text" placeholder="أدخل اسمك الكامل"></div>
+          <div class="fg"><label>رقم الهاتف *</label><input type="tel" placeholder="05xxxxxxxx"></div>
+          <div class="fg full"><label>العنوان *</label><input type="text" placeholder="المدينة، الحي، الشارع"></div>
+          <div class="fg"><label>وقت التوصيل</label><select><option>في أقرب وقت</option><option>صباحاً 8-12</option><option>ظهراً 12-4</option><option>مساءً 4-8</option></select></div>
+          <div class="fg"><label>طريقة الدفع</label><select><option>كاش عند الاستلام</option><option>بطاقة بنكية</option><option>تحويل بنكي</option></select></div>
+          <div class="fg full"><label>ملاحظات</label><textarea placeholder="أي ملاحظات خاصة بطلبك..."></textarea></div>
+        </div>
+        <button class="btn-submit" onclick="submitPresc()"><i class="fas fa-paper-plane" style="margin-left:7px"></i>إرسال الطلب للصيدلية</button>
+      </div>
+      <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+        <div style="text-align:center;background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)"><div style="width:46px;height:46px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:18px;font-weight:900">1</div><div style="font-size:13px;font-weight:700">ارفع الوصفة</div></div>
+        <div style="text-align:center;background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)"><div style="width:46px;height:46px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:18px;font-weight:900">2</div><div style="font-size:13px;font-weight:700">مراجعة الصيدلاني</div></div>
+        <div style="text-align:center;background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)"><div style="width:46px;height:46px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:18px;font-weight:900">3</div><div style="font-size:13px;font-weight:700">تجهيز الدواء</div></div>
+        <div style="text-align:center;background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)"><div style="width:46px;height:46px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:18px;font-weight:900">4</div><div style="font-size:13px;font-weight:700">التوصيل لبابك</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ====== SERVICES ====== -->
+<div id="page-services" class="page">
+  <div class="page-hero"><h1>خدماتنا</h1><p>خدمات صيدلانية متكاملة لراحتكم</p></div>
+  <section class="services-section" style="padding-top:50px">
+    <div class="services-inner">
+      <div class="services-grid">
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-prescription"></i></div><div class="serv-title">صرف الوصفات الطبية</div><div class="serv-desc">نصرف جميع الوصفات الطبية بدقة ومهنية مع توضيح التعليمات والجرعات</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-user-md"></i></div><div class="serv-title">استشارات دوائية</div><div class="serv-desc">صيادلة متخصصون لإجابة استفساراتكم عن الأدوية والتداخلات الدوائية</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-motorcycle"></i></div><div class="serv-title">توصيل للمنازل</div><div class="serv-desc">خدمة توصيل سريعة لباب منزلك في غضون ساعتين مع تتبع مباشر</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-search"></i></div><div class="serv-title">طلب الأدوية النادرة</div><div class="serv-desc">نساعدك في البحث عن الأدوية غير المتوفرة وتأمينها من مصادر معتمدة</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-stethoscope"></i></div><div class="serv-title">قياس ضغط الدم</div><div class="serv-desc">قياس دقيق ومجاني لضغط الدم مع متابعة دورية وتوثيق النتائج</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-tint"></i></div><div class="serv-title">قياس سكر الدم</div><div class="serv-desc">فحص مستوى السكر بأحدث الأجهزة مع نصائح لمرضى السكري</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-weight"></i></div><div class="serv-title">قياس الوزن والطول</div><div class="serv-desc">قياس مؤشر كتلة الجسم مع تقييم الحالة الصحية وتقديم نصائح للوزن المثالي</div></div>
+        <div class="service-card"><div class="serv-icon"><i class="fas fa-baby"></i></div><div class="serv-title">استشارات الأمومة</div><div class="serv-desc">دعم متخصص للأمهات خلال الحمل والرضاعة بخصوص الأدوية الآمنة</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ====== BLOG ====== -->
+<div id="page-blog" class="page">
+  <div class="page-hero"><h1>المدونة الصحية</h1><p>نصائح ومعلومات صحية من متخصصين</p></div>
+  <section class="blog-section" style="padding-top:50px">
+    <div class="blog-inner">
+      <div class="filter-tabs" style="margin-bottom:24px">
+        <button class="filter-tab active">الكل</button><button class="filter-tab">نصائح صحية</button><button class="filter-tab">الفيتامينات</button><button class="filter-tab">الأم والطفل</button><button class="filter-tab">السكري</button><button class="filter-tab">الحساسية</button>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card"><div class="blog-img">🌿<span class="blog-cat">نصائح صحية</span></div><div class="blog-body"><div class="blog-meta">📅 15 ديسمبر 2024 · ⏱️ 5 دقائق</div><div class="blog-title">10 نصائح لتعزيز المناعة في الشتاء</div><div class="blog-excerpt">اكتشف أهم الطرق الطبيعية والفيتامينات التي تساعد جهازك المناعي...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+        <div class="blog-card"><div class="blog-img">💊<span class="blog-cat">الفيتامينات</span></div><div class="blog-body"><div class="blog-meta">📅 10 ديسمبر 2024 · ⏱️ 7 دقائق</div><div class="blog-title">فيتامين D: الفوائد ومخاطر النقص</div><div class="blog-excerpt">كل ما تحتاج معرفته عن فيتامين الشمس وأهميته لصحة العظام...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+        <div class="blog-card"><div class="blog-img">👶<span class="blog-cat">الأم والطفل</span></div><div class="blog-body"><div class="blog-meta">📅 5 ديسمبر 2024 · ⏱️ 6 دقائق</div><div class="blog-title">تغذية الرضيع: دليل الأشهر الأولى</div><div class="blog-excerpt">نصائح مهمة للأمهات حول الرضاعة الطبيعية وبدائل الحليب...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+        <div class="blog-card"><div class="blog-img">🩺<span class="blog-cat">السكري</span></div><div class="blog-body"><div class="blog-meta">📅 1 ديسمبر 2024 · ⏱️ 8 دقائق</div><div class="blog-title">السكري من النوع الثاني: دليل شامل</div><div class="blog-excerpt">كيف تتحكم في مستوى السكر بالنظام الغذائي والأدوية...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+        <div class="blog-card"><div class="blog-img">🌸<span class="blog-cat">الحساسية</span></div><div class="blog-body"><div class="blog-meta">📅 25 نوفمبر 2024 · ⏱️ 5 دقائق</div><div class="blog-title">الوقاية من حساسية الربيع</div><div class="blog-excerpt">نصائح عملية لتقليل أعراض حساسية حبوب اللقاح...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+        <div class="blog-card"><div class="blog-img">💪<span class="blog-cat">التغذية</span></div><div class="blog-body"><div class="blog-meta">📅 20 نوفمبر 2024 · ⏱️ 6 دقائق</div><div class="blog-title">البروتين: متى وكيف تأخذه بعد التمرين</div><div class="blog-excerpt">دليل التغذية الرياضية الصحيحة لبناء العضلات...</div><a class="blog-read">اقرأ المزيد ←</a></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ====== ABOUT ====== -->
+<div id="page-about" class="page">
+  <div class="page-hero"><h1>من نحن</h1><p>قصتنا مع الصحة منذ أكثر من 15 عاماً</p></div>
+  <div style="max-width:1100px;margin:auto;padding:55px 20px">
+    <div class="about-grid">
+      <div class="about-img">🏥</div>
+      <div>
+        <h2 style="font-size:26px;font-weight:800;color:var(--dark);font-family:Tajawal,sans-serif;margin-bottom:12px">صيدلية دوائي</h2>
+        <p style="color:var(--gray);font-size:14px;line-height:1.8;margin-bottom:12px">تأسست صيدلية دوائي عام 2008 بهدف تقديم خدمات صيدلانية متكاملة وعالية الجودة لمجتمعنا. نؤمن أن الصحة حق للجميع، ونسعى دائماً لتوفير أفضل المنتجات وأرقى مستوى من الرعاية الصيدلانية.</p>
+        <p style="color:var(--gray);font-size:14px;line-height:1.8;margin-bottom:20px">نضم فريقاً متخصصاً من الصيادلة المؤهلين ذوي الخبرة العالية، الذين يحرصون على تقديم خدمة شخصية لكل عميل مع ضمان جودة المنتجات وسلامة الأدوية.</p>
+        <div class="vision-cards">
+          <div class="vc"><h3><i class="fas fa-eye"></i>رؤيتنا</h3><p>أن نكون المرجع الصيدلاني الأول في المنطقة بمعايير عالمية.</p></div>
+          <div class="vc"><h3><i class="fas fa-bullseye"></i>رسالتنا</h3><p>تحسين جودة حياة مجتمعنا بتوفير الأدوية مع خدمة استثنائية.</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin-bottom:44px">
+      <div style="text-align:center;background:var(--gray-light);border-radius:16px;padding:22px"><div style="font-size:30px;margin-bottom:9px">🎯</div><div style="font-size:13px;font-weight:700;color:var(--dark)">الجودة أولاً</div><div style="font-size:11px;color:var(--gray);margin-top:5px">منتجات مضمونة من مصادر موثوقة</div></div>
+      <div style="text-align:center;background:var(--gray-light);border-radius:16px;padding:22px"><div style="font-size:30px;margin-bottom:9px">❤️</div><div style="font-size:13px;font-weight:700;color:var(--dark)">نهتم بك</div><div style="font-size:11px;color:var(--gray);margin-top:5px">خدمة شخصية لكل عميل</div></div>
+      <div style="text-align:center;background:var(--gray-light);border-radius:16px;padding:22px"><div style="font-size:30px;margin-bottom:9px">🔬</div><div style="font-size:13px;font-weight:700;color:var(--dark)">خبرة علمية</div><div style="font-size:11px;color:var(--gray);margin-top:5px">صيادلة متخصصون ومؤهلون</div></div>
+      <div style="text-align:center;background:var(--gray-light);border-radius:16px;padding:22px"><div style="font-size:30px;margin-bottom:9px">🤝</div><div style="font-size:13px;font-weight:700;color:var(--dark)">الأمانة</div><div style="font-size:11px;color:var(--gray);margin-top:5px">شفافية تامة في التسعير</div></div>
+    </div>
+    <div class="sec-title"><div class="pre">فريقنا</div><h2>كوادرنا المتخصصة</h2></div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar"><i class="fas fa-user-tie"></i></div><div class="team-name">د. عبدالرحمن السالم</div><div class="team-role">الصيدلاني المؤسس</div></div>
+      <div class="team-card"><div class="team-avatar"><i class="fas fa-user-md"></i></div><div class="team-name">د. نورة العمري</div><div class="team-role">صيدلانية سريرية</div></div>
+      <div class="team-card"><div class="team-avatar"><i class="fas fa-user-md"></i></div><div class="team-name">د. فيصل الحربي</div><div class="team-role">متخصص تغذية</div></div>
+      <div class="team-card"><div class="team-avatar"><i class="fas fa-user"></i></div><div class="team-name">سلمى القحطاني</div><div class="team-role">مستشارة جمال</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== CONTACT ====== -->
+<div id="page-contact" class="page">
+  <div class="page-hero"><h1>تواصل معنا</h1><p>نحن هنا لخدمتك دائماً</p></div>
+  <div style="max-width:1100px;margin:auto;padding:55px 20px">
+    <div class="contact-grid">
+      <div>
+        <h2 style="font-size:24px;font-weight:800;color:var(--dark);margin-bottom:18px">معلومات التواصل</h2>
+        <div class="contact-item"><div class="ci-icon"><i class="fas fa-phone"></i></div><div><div class="cit-label">هاتف الصيدلية</div><div class="cit-val">+966 50 000 0000</div></div></div>
+        <div class="contact-item"><div class="ci-icon" style="background:#25d366"><i class="fab fa-whatsapp"></i></div><div><div class="cit-label">واتساب</div><div class="cit-val"><a href="https://wa.me/966500000000" style="color:var(--green);text-decoration:none">+966 50 000 0000</a></div></div></div>
+        <div class="contact-item"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><div class="cit-label">البريد الإلكتروني</div><div class="cit-val">info@dawai-pharmacy.com</div></div></div>
+        <div class="contact-item"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="cit-label">العنوان</div><div class="cit-val">شارع الملك فهد، حي العليا، الرياض</div></div></div>
+        <div style="margin-top:20px"><h3 style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:10px">⏰ ساعات العمل</h3>
+        <div class="hours-row"><span class="day">السبت - الخميس</span><span class="time open">8:00 ص - 11:00 م</span></div>
+        <div class="hours-row"><span class="day">الجمعة</span><span class="time open">2:00 م - 11:00 م</span></div>
+        <div class="hours-row"><span class="day">المناوبة الليلية</span><span class="time">24/7 الطوارئ</span></div>
+        </div>
+        <div class="map-placeholder"><i class="fas fa-map-marker-alt"></i><p>شارع الملك فهد، الرياض</p></div>
+      </div>
+      <div>
+        <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:var(--shadow)">
+          <h2 style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:18px">أرسل لنا رسالة</h2>
+          <div class="fg" style="margin-bottom:12px"><label>الاسم</label><input type="text" placeholder="اسمك الكامل"></div>
+          <div class="fg" style="margin-bottom:12px"><label>البريد الإلكتروني</label><input type="email" placeholder="email@example.com"></div>
+          <div class="fg" style="margin-bottom:12px"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx"></div>
+          <div class="fg" style="margin-bottom:12px"><label>الموضوع</label><select><option>استفسار عام</option><option>طلب دواء</option><option>استشارة دوائية</option><option>شكوى</option><option>مقترح</option></select></div>
+          <div class="fg" style="margin-bottom:12px"><label>الرسالة</label><textarea style="height:110px" placeholder="اكتب رسالتك هنا..."></textarea></div>
+          <button class="btn-submit" onclick="showNotif('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً','success')"><i class="fas fa-paper-plane" style="margin-left:7px"></i>إرسال الرسالة</button>
+        </div>
+        <a href="https://wa.me/966500000000" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#25d366;color:#fff;text-decoration:none;padding:14px;border-radius:14px;font-size:15px;font-weight:700;margin-top:14px"><i class="fab fa-whatsapp" style="font-size:20px"></i>تحدث معنا على واتساب الآن</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="flogo-icon"><i class="fas fa-capsules" style="color:#fff;font-size:19px"></i></div>
+          <div><div class="flogo-name">صيدلية دوائي</div><div class="flogo-tag">صحتك أولويتنا</div></div>
+        </div>
+        <p class="footer-about">صيدلية دوائي هي وجهتك الأولى للرعاية الصحية والدوائية. نقدم أكثر من 5000 منتج صحي مع فريق من الصيادلة المتخصصين.</p>
+        <div class="social-links">
+          <a class="social-btn" style="background:#25d366;color:#fff" href="#"><i class="fab fa-whatsapp"></i></a>
+          <a class="social-btn" style="background:#1877f2;color:#fff" href="#"><i class="fab fa-facebook-f"></i></a>
+          <a class="social-btn" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366);color:#fff" href="#"><i class="fab fa-instagram"></i></a>
+          <a class="social-btn" style="background:#1da1f2;color:#fff" href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>روابط سريعة</h4><ul class="footer-links">
+        <li><a onclick="showPage('home')">الرئيسية</a></li><li><a onclick="showPage('store')">المتجر</a></li>
+        <li><a onclick="showPage('prescription')">رفع وصفة</a></li><li><a onclick="showPage('services')">خدماتنا</a></li>
+        <li><a onclick="showPage('blog')">المدونة</a></li><li><a onclick="showPage('about')">من نحن</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>الأقسام</h4><ul class="footer-links">
+        <li><a>مستحضرات التجميل</a></li><li><a>الأم والطفل</a></li><li><a>فيتامينات ومكملات</a></li>
+        <li><a>تغذية رياضية</a></li><li><a>العناية بالبشرة</a></li><li><a>أجهزة قياس</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>تواصل معنا</h4>
+        <div class="fci"><i class="fas fa-phone"></i><span>+966 50 000 0000</span></div>
+        <div class="fci"><i class="fas fa-envelope"></i><span>info@dawai.com</span></div>
+        <div class="fci"><i class="fas fa-map-marker-alt"></i><span>شارع الملك فهد، الرياض</span></div>
+        <div class="fci"><i class="fas fa-clock"></i><span>السبت-الخميس: 8ص-11م</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 صيدلية دوائي — جميع الحقوق محفوظة</p>
+      <p>مرخصة من وزارة الصحة | ترخيص رقم: 12345</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h3>🛒 سلة المشتريات</h3><button class="cart-close" onclick="closeCart()"><i class="fas fa-times"></i></button></div>
+  <div class="cart-items" id="cartItems"><div style="text-align:center;padding:36px;color:var(--gray)"><i class="fas fa-shopping-cart" style="font-size:38px;margin-bottom:10px;display:block;opacity:.3"></i><p>سلتك فارغة</p></div></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>الإجمالي</span><span id="cartTotal">0 ريال</span></div>
+    <button class="btn-checkout" onclick="checkout()"><i class="fas fa-credit-card" style="margin-left:7px"></i>إتمام الشراء</button>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuth()"><i class="fas fa-times"></i></button>
+    <h3>مرحباً بك</h3>
+    <p>سجل دخولك للاستمتاع بكامل الخدمات</p>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab('login',this)">تسجيل الدخول</button>
+      <button class="modal-tab" onclick="switchTab('register',this)">حساب جديد</button>
+    </div>
+    <div id="loginForm">
+      <div class="fg" style="margin-bottom:12px"><label>البريد أو رقم الهاتف</label><input type="text" placeholder="أدخل بياناتك"></div>
+      <div class="fg" style="margin-bottom:12px"><label>كلمة المرور</label><input type="password" placeholder="••••••••"></div>
+      <button class="btn-submit" onclick="doLogin()">تسجيل الدخول</button>
+      <p style="text-align:center;font-size:12px;color:var(--gray);margin-top:10px"><a href="#" style="color:var(--green)">نسيت كلمة المرور؟</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="fg" style="margin-bottom:10px"><label>الاسم الكامل</label><input type="text" placeholder="اسمك الكامل"></div>
+      <div class="fg" style="margin-bottom:10px"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx"></div>
+      <div class="fg" style="margin-bottom:10px"><label>البريد الإلكتروني</label><input type="email" placeholder="email@example.com"></div>
+      <div class="fg" style="margin-bottom:10px"><label>كلمة المرور</label><input type="password" placeholder="••••••••"></div>
+      <button class="btn-submit" onclick="doRegister()">إنشاء الحساب</button>
+    </div>
+  </div>
+</div>
+
+<div class="notification" id="notification"></div>
+<a href="https://wa.me/966500000000" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+const products=[
+  {id:1,name:'فيتامين C 1000mg',desc:'لتعزيز المناعة ومضادات الأكسدة',price:45,oldPrice:60,rating:4.8,reviews:234,cat:'vitamins',emoji:'💊',badge:'الأكثر مبيعاً'},
+  {id:2,name:'كريم مرطب للوجه SPF50',desc:'حماية شاملة من الشمس وترطيب عميق',price:89,oldPrice:120,rating:4.6,reviews:156,cat:'skin',emoji:'✨',badge:'عرض'},
+  {id:3,name:'حليب الأطفال NAN 3',desc:'تغذية متكاملة للأطفال من 1-3 سنوات',price:125,rating:4.9,reviews:89,cat:'baby',emoji:'🍼',badge:null},
+  {id:4,name:'واقي شمس SPF100',desc:'حماية قصوى للبشرة الحساسة',price:65,rating:4.5,reviews:312,cat:'skin',emoji:'☀️',badge:'جديد'},
+  {id:5,name:'بروتين واي 2كجم',desc:'بروتين عالي الجودة لبناء العضلات',price:195,oldPrice:250,rating:4.7,reviews:445,cat:'sports',emoji:'💪',badge:'عرض 20%'},
+  {id:6,name:'مقياس ضغط دم رقمي',desc:'دقيق وسهل الاستخدام',price:185,rating:4.8,reviews:203,cat:'devices',emoji:'📊',badge:null},
+  {id:7,name:'شامبو للشعر التالف',desc:'يرمم الشعر ويعطيه لمعاناً',price:55,rating:4.4,reviews:178,cat:'hair',emoji:'💇',badge:null},
+  {id:8,name:'أوميغا 3 سمك',desc:'دعم صحة القلب والدماغ والمفاصل',price:75,oldPrice:95,rating:4.7,reviews:289,cat:'vitamins',emoji:'🐟',badge:'خصم 20%'},
+  {id:9,name:'جهاز قياس سكر الدم',desc:'نتائج دقيقة خلال 5 ثواني',price:145,rating:4.9,reviews:512,cat:'devices',emoji:'🩸',badge:'الأفضل'},
+  {id:10,name:'مرطب ليلي للبشرة',desc:'يجدد البشرة أثناء النوم',price:110,rating:4.6,reviews:167,cat:'skin',emoji:'🌙',badge:null},
+  {id:11,name:'فيتامين D3 5000IU',desc:'لصحة العظام والمناعة والمزاج',price:55,rating:4.8,reviews:398,cat:'vitamins',emoji:'🌞',badge:'مميز'},
+  {id:12,name:'كريم حفاضات الأطفال',desc:'يحمي بشرة الطفل اللطيفة',price:38,rating:4.7,reviews:623,cat:'baby',emoji:'👶',badge:null},
+];
+let cart=[];
+
+function renderProds(id,items){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.innerHTML=items.map(p=>`
+    <div class="product-card">
+      <div class="product-img">
+        ${p.badge?`<span class="product-badge ${p.badge.includes('خصم')||p.badge.includes('عرض')?'sale':''}">${p.badge}</span>`:''}
+        <span style="font-size:52px">${p.emoji}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))} <span>(${p.reviews})</span></div>
+        <div class="product-price-row">
+          <div>${p.oldPrice?`<span class="old-price">${p.oldPrice} ر</span>`:''}<span class="product-price">${p.price} ريال</span></div>
+          <button class="btn-add" onclick="addToCart(${p.id})"><i class="fas fa-cart-plus"></i></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderProds('homeProducts',products.slice(0,8));
+renderProds('storeProducts',products);
+
+function filterProds(cat,btn){
+  document.querySelectorAll('#page-store .filter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const f=cat==='all'?products:products.filter(p=>p.cat===cat);
+  renderProds('storeProducts',f);
+  const el=document.getElementById('productCount');
+  if(el)el.textContent=f.length+' منتج';
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const ex=cart.find(x=>x.id===id);
+  if(ex)ex.qty++;else cart.push({...p,qty:1});
+  updateCart();
+  showNotif('✓ تمت إضافة "'+p.name+'" للسلة','success');
+}
+
+function updateCart(){
+  const badge=document.getElementById('cartBadge');
+  const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  const items=cart.reduce((s,x)=>s+x.qty,0);
+  if(badge)badge.textContent=items;
+  const tel=document.getElementById('cartTotal');
+  if(tel)tel.textContent=total.toFixed(0)+' ريال';
+  renderCart();
+}
+
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  if(!el)return;
+  if(!cart.length){el.innerHTML='<div style="text-align:center;padding:36px;color:var(--gray)"><i class="fas fa-shopping-cart" style="font-size:38px;margin-bottom:10px;display:block;opacity:.3"></i><p>سلتك فارغة</p></div>';return;}
+  el.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <div class="ci-img">${item.emoji}</div>
+      <div class="ci-body">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-price">${(item.price*item.qty).toFixed(0)} ريال</div>
+        <div class="ci-qty">
+          <button class="qty-btn" onclick="chQty(${item.id},-1)">−</button>
+          <span style="font-size:13px;font-weight:700">${item.qty}</span>
+          <button class="qty-btn" onclick="chQty(${item.id},1)">+</button>
+          <button onclick="rmItem(${item.id})" style="color:#e74c3c;background:none;border:none;cursor:pointer;font-size:13px;margin-right:6px"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function chQty(id,d){const item=cart.find(x=>x.id===id);if(!item)return;item.qty+=d;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);updateCart();}
+function rmItem(id){cart=cart.filter(x=>x.id!==id);updateCart();}
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartSidebar').classList.add('open');}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartSidebar').classList.remove('open');}
+function checkout(){if(!cart.length){showNotif('سلتك فارغة! أضف منتجات أولاً');return;}showNotif('✓ تم تأكيد طلبك! سنتواصل معك قريباً','success');cart=[];updateCart();closeCart();}
+function openAuth(){document.getElementById('authModal').classList.add('open');}
+function closeAuth(){document.getElementById('authModal').classList.remove('open');}
+function switchTab(tab,btn){document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('loginForm').style.display=tab==='login'?'block':'none';document.getElementById('registerForm').style.display=tab==='register'?'block':'none';}
+function doLogin(){showNotif('✓ تم تسجيل الدخول بنجاح!','success');closeAuth();}
+function doRegister(){showNotif('✓ تم إنشاء حسابك! مرحباً بك','success');closeAuth();}
+function showNotif(msg,type=''){const el=document.getElementById('notification');el.textContent=msg;el.className='notification show'+(type?' '+type:'');setTimeout(()=>el.classList.remove('show'),3200);}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const el=document.getElementById('page-'+page);if(el)el.classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));window.scrollTo({top:0,behavior:'smooth'});}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function handleFile(input){if(input.files[0]){const p=document.getElementById('uploadPreview');p.style.display='flex';p.style.alignItems='center';p.style.gap='10px';p.innerHTML='<i class="fas fa-check-circle" style="color:var(--green);font-size:20px"></i><span style="font-size:13px;font-weight:600;color:var(--green-dark)">تم رفع: '+input.files[0].name+'</span>';showNotif('✓ تم رفع الوصفة الطبية بنجاح','success');}}
+function submitPresc(){showNotif('✓ تم إرسال طلبك! سيتواصل معك الصيدلاني خلال 30 دقيقة','success');}
+
+// Timer
+(function(){
+  const end=new Date().getTime()+(3*86400000+14*3600000+32*60000);
+  setInterval(()=>{
+    const d=end-new Date().getTime();if(d<0)return;
+    const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=String(v).padStart(2,'0');};
+    s('tDays',Math.floor(d/86400000));s('tHours',Math.floor((d%86400000)/3600000));s('tMins',Math.floor((d%3600000)/60000));s('tSecs',Math.floor((d%60000)/1000));
+  },1000);
+})();
+
+// Filter tabs visual
+document.querySelectorAll('.filter-tab').forEach(btn=>{btn.addEventListener('click',function(){this.closest('.filter-tabs').querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active');});});
+</script>
+</body>
+</html>
