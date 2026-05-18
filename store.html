@@ -11,7 +11,7 @@
 <div id="header">
   <div class="header-buttons">
     <a href="index.html">العودة</a>
-    <button data-action="toggle-cart">
+    <button onclick="toggleCart()">
       السلة (<span id="cart-count">0</span>)
     </button>
   </div>
@@ -19,8 +19,8 @@
 </div>
 
 <div class="top-bar">
-  <input type="text" id="search" placeholder="بحث...">
-  <select id="filter">
+  <input type="text" id="search" placeholder="بحث..." oninput="applyFilters()">
+  <select id="filter" onchange="applyFilters()">
     <option value="all">كل القوالب</option>
     <option value="HTML">HTML</option>
     <option value="CSS">CSS</option>
@@ -29,38 +29,155 @@
 
 <div class="products-container" id="products"></div>
 
-<div id="cartBox">
+<div id="cartBox" style="display:none;">
   <h3>سلة الشراء</h3>
   <div id="cart-items"></div>
   <div class="cart-total" id="cart-total"></div>
   <div class="cart-actions">
-    <button class="clear-cart-btn" data-action="clear-cart">تفريغ السلة</button>
-    <button class="checkout-btn" data-action="go-checkout">إتمام الطلب</button>
+    <button class="clear-cart-btn" onclick="clearCart()">تفريغ السلة</button>
+    <button class="checkout-btn" onclick="goToCheckout()">إتمام الطلب</button>
   </div>
 </div>
 
-<div id="modal">
+<div id="modal" style="display:none;">
   <div class="modal-content">
     <h3 id="mName"></h3>
     <p id="mDesc"></p>
     <span class="modal-price" id="mPrice"></span>
     <div class="modal-actions">
-      <button class="add-to-cart-btn" data-action="add-to-cart-modal">أضف للسلة</button>
-      <button class="close-modal-btn" data-action="close-modal">إغلاق</button>
+      <button class="add-to-cart-btn" onclick="addToCartFromModal()">أضف للسلة</button>
+      <button class="close-modal-btn" onclick="closeModal()">إغلاق</button>
     </div>
   </div>
 </div>
 
-<div id="toast">تمت الإضافة للسلة ✅</div>
+<div id="toast" style="display:none;">تمت الإضافة للسلة ✅</div>
 
 <div id="footer">
   <span>© 2026 شنكوتيات - جميع الحقوق محفوظة</span>
 </div>
 
-<!-- Firebase Configuration -->
-<script type="module" src="firebase-config.js"></script>
-<!-- Initialization -->
-<script type="module" src="js/init.js"></script>
+<script>
+const products = [
+  {
+    id: 1,
+    name: "قالب صيدلية داوائي",
+    desc: "قالب HTML احترافي لصيدلية أو متجر أدوية - تصميم أنيق ومتجاوب مع جميع الأجهزة",
+    price: 19.99,
+    cat: "HTML",
+    img: "https://via.placeholder.com/400x250/E33E10/fff?text=قالب+صيدلية",
+    preview: "/templates/dawai-pharmacy (1).html"
+  },
+  {
+    id: 2,
+    name: "قالب متجر ملابس",
+    desc: "قالب HTML لمتجر ملابس أنيق - يدعم العربية وعرض المنتجات باحترافية",
+    price: 24.99,
+    cat: "HTML",
+    img: "https://via.placeholder.com/400x250/2196f3/fff?text=قالب+ملابس",
+    preview: "/templates/my-website.html"
+  }
+];
+
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+let currentProduct = null;
+
+// Render products
+function renderProducts(list) {
+  const container = document.getElementById('products');
+  container.innerHTML = list.map(p => `
+    <div class="product">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="product-content">
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <div class="product-price">$${p.price}</div>
+        <button onclick="openModal(${p.id})">معاينة</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Filter
+function applyFilters() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const filter = document.getElementById('filter').value;
+  let filtered = products;
+  if (filter !== 'all') filtered = filtered.filter(p => p.cat === filter);
+  if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search));
+  renderProducts(filtered);
+}
+
+// Modal
+function openModal(id) {
+  currentProduct = products.find(p => p.id === id);
+  if (!currentProduct) return;
+  document.getElementById('mName').textContent = currentProduct.name;
+  document.getElementById('mDesc').textContent = currentProduct.desc;
+  document.getElementById('mPrice').textContent = '$' + currentProduct.price;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  currentProduct = null;
+}
+
+// Cart
+function toggleCart() {
+  const box = document.getElementById('cartBox');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+function addToCartFromModal() {
+  if (!currentProduct) return;
+  const found = cart.find(i => i.id === currentProduct.id);
+  if (found) { found.qty++; } else { cart.push({...currentProduct, qty: 1}); }
+  updateCart();
+  closeModal();
+  showToast();
+}
+
+function clearCart() {
+  if (confirm('هل أنت متأكد؟')) { cart = []; updateCart(); }
+}
+
+function goToCheckout() {
+  if (cart.length === 0) { alert('السلة فارغة!'); return; }
+  window.location.href = 'checkout.html';
+}
+
+function updateCart() {
+  const cartItems = document.getElementById('cart-items');
+  const cartCount = document.getElementById('cart-count');
+  const cartTotal = document.getElementById('cart-total');
+  let total = 0;
+  let html = '';
+  cart.forEach((p, i) => {
+    total += p.price * (p.qty || 1);
+    html += `<div class="cart-item"><span>${p.name} × ${p.qty}</span><button onclick="removeFromCart(${i})">حذف</button></div>`;
+  });
+  cartItems.innerHTML = html;
+  cartCount.textContent = cart.length;
+  cartTotal.textContent = 'الإجمالي: $' + total.toFixed(2);
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function removeFromCart(i) {
+  cart.splice(i, 1);
+  updateCart();
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 2000);
+}
+
+// Init
+renderProducts(products);
+updateCart();
+</script>
 
 </body>
 </html>
