@@ -1,4 +1,4 @@
-import UIHandler from "./ui.js";
+import UIHandler from "/js/ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const uiHandler = new UIHandler();
