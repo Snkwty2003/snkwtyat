@@ -41,6 +41,7 @@
 
 <div id="modal" style="display:none;">
   <div class="modal-content">
+    <img id="mImg" src="" alt="" style="width:100%;border-radius:8px;margin-bottom:15px;">
     <h3 id="mName"></h3>
     <p id="mDesc"></p>
     <span class="modal-price" id="mPrice"></span>
@@ -112,10 +113,11 @@ function applyFilters() {
 function openModal(id) {
   currentProduct = products.find(p => p.id === id);
   if (!currentProduct) return;
-  document.getElementById('mName').textContent = currentProduct.name;
-  document.getElementById('mDesc').textContent = currentProduct.desc;
-  document.getElementById('mPrice').textContent = '$' + currentProduct.price;
-  document.getElementById('modal').style.display = 'flex';
+ document.getElementById('mName').textContent = currentProduct.name;
+document.getElementById('mDesc').textContent = currentProduct.desc;
+document.getElementById('mPrice').textContent = '$' + currentProduct.price;
+document.getElementById('mImg').src = currentProduct.img;
+document.getElementById('modal').style.display = 'flex';
 }
 
 function closeModal() {
