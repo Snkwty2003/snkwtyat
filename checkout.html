@@ -11,10 +11,9 @@ body{
   background:linear-gradient(135deg,#f5f5f5,#eaeaea);
   direction:rtl;
   margin:0;
-  padding-top:80px; /* لتجنب تغطية الهيدر */
+  padding-top:80px;
 }
 
-/* HEADER ثابت */
 #header{
   position:fixed;
   top:0;
@@ -56,7 +55,6 @@ body{
   transform:scale(1.05);
 }
 
-/* الحاوية */
 .container{
   max-width:500px;
   margin:20px auto 40px;
@@ -67,7 +65,6 @@ body{
   animation:fadeIn .5s ease;
 }
 
-/* عنوان */
 h2{
   text-align:center;
   color:#ff5722;
@@ -75,7 +72,6 @@ h2{
   font-size:22px;
 }
 
-/* صندوق الطلب */
 .order-box{
   background:#fafafa;
   padding:15px;
@@ -85,7 +81,6 @@ h2{
   font-size:14px;
 }
 
-/* الحقول */
 input, textarea{
   width:100%;
   padding:12px;
@@ -102,7 +97,6 @@ input:focus, textarea:focus{
   box-shadow:0 0 5px rgba(255,87,34,0.3);
 }
 
-/* زر إرسال */
 #sendBtn{
   width:100%;
   padding:12px;
@@ -122,7 +116,6 @@ input:focus, textarea:focus{
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* رسالة نجاح */
 #successMessage{
   display:none;
   text-align:center;
@@ -133,23 +126,15 @@ input:focus, textarea:focus{
   margin-bottom:10px;
 }
 
-/* أنيميشن */
 @keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER ثابت -->
 <div id="header">
   <div class="header-buttons">
     <button onclick="window.location.href='index.html'">العودة للمتجر</button>
@@ -158,99 +143,102 @@ input:focus, textarea:focus{
   <div class="logo">شنكوتيات</div>
 </div>
 
-<!-- الحاوية -->
 <div class="container">
   <h2>إتمام الطلب</h2>
-
   <div id="successMessage">تمت إضافة الطلب! سيتم تحويلك لواتساب...</div>
-
   <div class="order-box" id="orderSummary"></div>
-
   <input type="text" id="name" placeholder="الاسم">
   <input type="text" id="phone" placeholder="رقم الهاتف">
   <textarea id="address" placeholder="العنوان"></textarea>
   <textarea id="note" placeholder="ملاحظات (اختياري)"></textarea>
-
   <button id="sendBtn" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
 </div>
 
-<script>
+<script type="module">
+import { db, collection, addDoc } from "./firebase-config.js";
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-/* عرض الطلب */
 function showOrder(){
   let html='';
   let total=0;
-
   cart.forEach(p=>{
     let qty = p.qty || 1;
     total += p.price * qty;
-
     html += `<div>${p.name} × ${qty} = $${(p.price*qty).toFixed(2)}</div>`;
   });
-
   html += `<hr>الإجمالي: $${total.toFixed(2)}`;
   document.getElementById('orderSummary').innerHTML=html;
 }
 showOrder();
 
-/* حفظ البيانات مؤقتًا */
 ['name','phone','address','note'].forEach(id=>{
   const el = document.getElementById(id);
   el.value = localStorage.getItem(id) || '';
   el.addEventListener('input',()=> localStorage.setItem(id, el.value));
 });
 
-/* إرسال الطلب */
-function sendOrder(){
+window.sendOrder = async function(){
   let name = document.getElementById('name').value.trim();
   let phoneUser = document.getElementById('phone').value.trim();
   let address = document.getElementById('address').value.trim();
   let note = document.getElementById('note').value.trim();
 
-  // Validation
   if(!name || !phoneUser || !address){
     alert("يرجى ملء الاسم والهاتف والعنوان");
     return;
   }
-  
-  // Check empty cart
+
   let cart = JSON.parse(localStorage.getItem("cart") || '[]');
   if(cart.length === 0){
     alert("سلتك فارغة");
     return;
   }
 
-  let message = "طلب جديد:%0A%0A";
-
   let total = 0;
+  cart.forEach(p=>{ total += (p.price * (p.qty||1)); });
 
+  // حفظ في Firebase
+  try {
+    await addDoc(collection(db, "orders"), {
+      customerName: name,
+      phone: phoneUser,
+      address: address,
+      note: note,
+      items: cart,
+      amount: total,
+      status: "pending",
+      createdAt: new Date()
+    });
+    console.log("✅ تم حفظ الطلب في Firebase");
+  } catch(e) {
+    console.error("❌ خطأ في حفظ الطلب:", e);
+  }
+
+  // إرسال واتساب
+  let message = "طلب جديد:%0A%0A";
   cart.forEach(p=>{
     let qty = p.qty || 1;
     message += `${p.name} × ${qty} = $${(p.price*qty).toFixed(2)}%0A`;
-    total += p.price * qty;
   });
-
   message += `%0Aالإجمالي: $${total.toFixed(2)}%0A%0A`;
   message += `الاسم: ${name}%0A`;
   message += `الهاتف: ${phoneUser}%0A`;
   message += `العنوان: ${address}%0A`;
   message += `ملاحظات: ${note}`;
 
-  let phone = "218913230827"; // حط رقمك
+  let phone = "218913230827";
   let url = `https://wa.me/${phone}?text=${message}`;
 
-  // عرض رسالة نجاح
-  const msg = document.getElementById('successMessage');
-  msg.style.display='block';
+  document.getElementById('successMessage').style.display='block';
 
   setTimeout(()=>{
     window.open(url, "_blank");
-    // ⭐ تفريغ النموذج بعد الإرسال
     ['name','phone','address','note'].forEach(id=>{
       document.getElementById(id).value='';
       localStorage.removeItem(id);
     });
+    localStorage.removeItem("cart");
   },1500);
 }
 </script>
