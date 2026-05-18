@@ -1,3 +1,5 @@
+import UIHandler from "./ui.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const uiHandler = new UIHandler();
 
@@ -21,6 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   uiHandler.setProducts(products);
-  uiHandler.renderProducts(products);
   uiHandler.loadCart();
 });
