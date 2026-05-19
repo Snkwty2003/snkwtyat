@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أرشيف الموضة | Fashion Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-light: #666;
+    --accent: #c41e3a;
+    --accent-warm: #d4a574;
+    --border: #e8e4df;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Editorial Header */
+.editorial-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(250, 248, 245, 0.85);
+    border-bottom: 1px solid var(--border);
+}
+
+.masthead {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.masthead span {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Hero Editorial */
+.hero-editorial {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+}
+
+.hero-image-wrap {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    position: absolute;
+    top: -10%;
+    will-change: transform;
+}
+
+.hero-image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--bg), transparent);
+}
+
+.issue-badge {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.hero-content {
+    padding: 2rem;
+}
+
+.hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.hero-desc {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 450px;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2.5rem;
+    background: var(--text);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.hero-cta:hover {
+    background: var(--accent);
+    gap: 1.5rem;
+}
+
+/* Editorial Grid */
+.editorial-section {
+    padding: 6rem 4rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.view-all {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 2px;
+    transition: all 0.3s;
+}
+
+.view-all:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Asymmetric Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.product-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.product-card:nth-child(1) { grid-column: span 5; }
+.product-card:nth-child(2) { grid-column: span 4; }
+.product-card:nth-child(3) { grid-column: span 3; }
+.product-card:nth-child(4) { grid-column: span 4; }
+.product-card:nth-child(5) { grid-column: span 5; }
+.product-card:nth-child(6) { grid-column: span 3; }
+
+.product-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.product-info {
+    padding: 1.25rem 0;
+}
+
+.product-category {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.product-price .old {
+    text-decoration: line-through;
+    color: var(--text-light);
+    margin-right: 0.5rem;
+    font-weight: 400;
+}
+
+/* Lookbook Section */
+.lookbook {
+    padding: 6rem 4rem;
+    background: var(--text);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.lookbook::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(196, 30, 58, 0.15), transparent 70%);
+}
+
+.lookbook-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.lookbook-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.lookbook-content p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.lookbook-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.lookbook-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.lookbook-img:hover {
+    transform: scale(1.03);
+}
+
+/* Footer */
+.editorial-footer {
+    padding: 4rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+}
+
+.footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.footer-brand span {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.footer-desc {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.footer-links h4 {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+/* Reveal Animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hairline Divider */
+.hairline {
+    height: 1px;
+    background: var(--border);
+    margin: 4rem 0;
+    position: relative;
+}
+
+.hairline::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 80px;
+    height: 5px;
+    background: var(--accent);
+}
+
+@media (max-width: 968px) {
+    .hero-editorial { grid-template-columns: 1fr; padding: 6rem 2rem 2rem; }
+    .hero-image-wrap { height: 50vh; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-card:nth-child(n) { grid-column: span 1; }
+    .lookbook-grid { grid-template-columns: 1fr; }
+    .editorial-footer { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .editorial-header { padding: 1rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="editorial-header">
+    <div class="masthead">أرشيف <span>الموضة</span></div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#">الجديد</a></li>
+            <li><a href="#">النساء</a></li>
+            <li><a href="#">الرجال</a></li>
+            <li><a href="#">الإكسسوارات</a></li>
+            <li><a href="#">المجلة</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero-editorial">
+    <div class="hero-image-wrap">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=1000&fit=crop" alt="Fashion" class="hero-image" id="heroImage">
+        <div class="hero-image-overlay"></div>
+        <span class="issue-badge">مجموعة 2026</span>
+    </div>
+    <div class="hero-content">
+        <div class="hero-label">العدد 12 — ربيع / صيف</div>
+        <h1 class="hero-title">أناقة لا تُرى<br>إلا في <em>التفاصيل</em></h1>
+        <p class="hero-desc">مجموعة ربيع 2026 تجمع بين البساطة المتناهية والفخامة الصامتة. كل قطعة تحكي قصة، وكل تفصيل يحمل معنى.</p>
+        <a href="#" class="hero-cta">استكشف المجموعة →</a>
+    </div>
+</section>
+
+<section class="editorial-section">
+    <div class="section-header">
+        <div>
+            <div class="section-label">مختارات المحرر</div>
+            <h2 class="section-title">الأكثر رواجاً</h2>
+        </div>
+        <a href="#" class="view-all">عرض الكل</a>
+    </div>
+    <div class="product-grid">
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">بدلة رسمية</div>
+                <div class="product-name">بدلة كحلي كلاسيكية</div>
+                <div class="product-price">1,250 د.ل</div>
+            </div>
+        </div>
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">جاكيت</div>
+                <div class="product-name">جاكيت جلد بني</div>
+                <div class="product-price">890 د.ل</div>
+            </div>
+        </div>
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">قميص</div>
+                <div class="product-name">قميص كتان أبيض</div>
+                <div class="product-price">340 د.ل</div>
+            </div>
+        </div>
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1548624149-f8c8d5fb8a0f?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">فستان</div>
+                <div class="product-name">فستان حرير أسود</div>
+                <div class="product-price"><span class="old">980 د.ل</span> 750 د.ل</div>
+            </div>
+        </div>
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">بنطلون</div>
+                <div class="product-name">بنطلون كتان بيج</div>
+                <div class="product-price">420 د.ل</div>
+            </div>
+        </div>
+        <div class="product-card reveal">
+            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&h=700&fit=crop" alt="Product" class="product-image">
+            <div class="product-info">
+                <div class="product-category">حقيبة</div>
+                <div class="product-name">حقيبة يد جلدية</div>
+                <div class="product-price">560 د.ل</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="lookbook">
+    <div class="lookbook-grid">
+        <div class="lookbook-content">
+            <h2>كتاب الأناقة<br>للموسم الجديد</h2>
+            <p>اكتشف الإطلالات الكاملة التي صممها فريقنا خصيصاً لك. من المكتب إلى السهرة، من العطلة إلى المناسبات الخاصة.</p>
+            <a href="#" class="hero-cta" style="background: white; color: var(--text);">تصفح Lookbook</a>
+        </div>
+        <div class="lookbook-images">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=550&fit=crop" alt="Lookbook" class="lookbook-img">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=550&fit=crop" alt="Lookbook" class="lookbook-img">
+        </div>
+    </div>
+</section>
+
+<div class="hairline"></div>
+
+<footer class="editorial-footer">
+    <div>
+        <div class="footer-brand">أرشيف <span>الموضة</span></div>
+        <p class="footer-desc">وجهتك الأولى للأناقة المعاصرة. نؤمن بأن الأزياء ليست مجرد ملابس، بل هي تعبير عن الذات.</p>
+    </div>
+    <div class="footer-links">
+        <h4>التسوق</h4>
+        <ul>
+            <li><a href="#">الجديد</a></li>
+            <li><a href="#">النساء</a></li>
+            <li><a href="#">الرجال</a></li>
+            <li><a href="#">الإكسسوارات</a></li>
+        </ul>
+    </div>
+    <div class="footer-links">
+        <h4>العلامة</h4>
+        <ul>
+            <li><a href="#">من نحن</a></li>
+            <li><a href="#">المجلة</a></li>
+            <li><a href="#">الاستدامة</a></li>
+            <li><a href="#">وظائف</a></li>
+        </ul>
+    </div>
+    <div class="footer-links">
+        <h4>الدعم</h4>
+        <ul>
+            <li><a href="#">الشحن</a></li>
+            <li><a href="#">الإرجاع</a></li>
+            <li><a href="#">الأسئلة</a></li>
+            <li><a href="#">تواصل</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script>
+// Parallax Hero Image
+const heroImage = document.getElementById('heroImage');
+window.addEventListener('scroll', () => {
+    if (heroImage) {
+        const scrolled = window.pageYOffset;
+        heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
+});
+
+// Reveal on Scroll
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

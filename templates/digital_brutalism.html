@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروتالية رقمية ٢.٠ | Digital Brutalism</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #ccff00;
+            --grid: #f0f0f0;
+            --border: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: auto; }
+
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            cursor: crosshair;
+        }
+
+        /* Visible Grid */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.4;
+        }
+
+        .grid-line-v {
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: var(--grid);
+        }
+
+        .grid-line-h {
+            position: absolute;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: var(--grid);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            border-bottom: 2px solid var(--border);
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 1.5rem 2rem;
+            border-left: 2px solid var(--border);
+            font-weight: 500;
+            transition: none;
+        }
+
+        .nav-links a:hover {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        .hero-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -4px;
+            margin-bottom: 2rem;
+            word-break: break-word;
+        }
+
+        .hero-title span {
+            display: block;
+            background: var(--accent);
+            padding: 0 1rem;
+            width: fit-content;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        /* Projects */
+        .projects {
+            padding: 0;
+        }
+
+        .project-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            border-bottom: 2px solid var(--border);
+            transition: none;
+        }
+
+        .project-item:hover {
+            background: var(--accent);
+        }
+
+        .project-item:hover .project-image {
+            filter: grayscale(100%) contrast(200%);
+        }
+
+        .project-info {
+            padding: 3rem;
+            border-left: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ccc;
+            line-height: 1;
+        }
+
+        .project-meta {
+            margin-top: 2rem;
+        }
+
+        .project-meta h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-meta p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: none;
+        }
+
+        /* Manifesto */
+        .manifesto {
+            padding: 6rem 3rem;
+            border-bottom: 2px solid var(--border);
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .manifesto h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .manifesto-list {
+            list-style: none;
+        }
+
+        .manifesto-list li {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            font-size: 1.1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .manifesto-list li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--text);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.3s infinite linear alternate-reverse;
+            color: #ff0000;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.3s infinite linear alternate-reverse;
+            color: #00ff00;
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+            0% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
+            100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, 0); }
+        }
+
+        @keyframes glitch-2 {
+            0% { clip-path: inset(60% 0 20% 0); transform: translate(2px, 0); }
+            100% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .project-item { grid-template-columns: 1fr; }
+            .project-info { border-left: none; border-bottom: 2px solid var(--border); }
+            .manifesto-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Grid Overlay -->
+    <div class="grid-overlay" id="grid"></div>
+
+    <nav>
+        <div class="nav-logo">BRUTALISM_2.0</div>
+        <ul class="nav-links">
+            <li><a href="#work">الأعمال</a></li>
+            <li><a href="#manifesto">المنشور</a></li>
+            <li><a href="#about">من نحن</a></li>
+            <li><a href="#contact">تواصل</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">استوديو تصميم معماري رقمي</div>
+        <h1 class="hero-title">
+            نبني<br>
+            <span>المستقبل</span><br>
+            بلا زخرفة
+        </h1>
+        <p class="hero-desc">تصميم بروتالي رقمي يعيد تعريف العلاقة بين الوظيفة والشكل. لا زخرفة إلا ما كان ضرورياً.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-number">142</span>
+                <span class="stat-label">مشروع منجز</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">08</span>
+                <span class="stat-label">سنوات خبرة</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">24</span>
+                <span class="stat-label">جائزة عالمية</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects" id="work">
+        <div class="project-item">
+            <div class="project-info">
+                <span class="project-number">01</span>
+                <div class="project-meta">
+                    <h3>متحف الفن الرقمي</h3>
+                    <p>الرياض، السعودية · 2025</p>
+                </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop" alt="Project" class="project-image">
+        </div>
+
+        <div class="project-item">
+            <div class="project-info">
+                <span class="project-number">02</span>
+                <div class="project-meta">
+                    <h3>برج المراقبة الحضري</h3>
+                    <p>دبي، الإمارات · 2024</p>
+                </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=800&h=400&fit=crop" alt="Project" class="project-image">
+        </div>
+
+        <div class="project-item">
+            <div class="project-info">
+                <span class="project-number">03</span>
+                <div class="project-meta">
+                    <h3>المكتبة المعلقة</h3>
+                    <p>الكويت · 2024</p>
+                </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=400&fit=crop" alt="Project" class="project-image">
+        </div>
+    </section>
+
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-grid">
+            <div>
+                <h2>المنشور<br>الرقمي</h2>
+                <p style="color: rgba(255,255,255,0.6); line-height: 1.8;">نؤمن بأن التصميم الجيد لا يحتاج إلى تبرير. كل خط، كل مسافة، كل لون موجود لسبب وظيفي محدد.</p>
+            </div>
+            <ul class="manifesto-list">
+                <li>لا زخرفة إلا ما كان وظيفياً</li>
+                <li>الشبكة مرئية دائماً</li>
+                <li>التباين العالي قاعدة أساسية</li>
+                <li>الفراغ هو العنصر الأهم</li>
+                <li>الحركة سريعة ومباشرة</li>
+                <li>لا تدرجات، ألوان مسطحة فقط</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2026 BRUTALISM_2.0</div>
+        <div class="footer-links">
+            <a href="#">تويتر</a>
+            <a href="#">إنستغرام</a>
+            <a href="#">بريد</a>
+        </div>
+    </footer>
+
+    <script>
+        // Generate Grid Lines
+        const grid = document.getElementById('grid');
+        for (let i = 1; i < 20; i++) {
+            const vLine = document.createElement('div');
+            vLine.className = 'grid-line-v';
+            vLine.style.left = `${i * 5}%`;
+            grid.appendChild(vLine);
+        }
+        for (let i = 1; i < 20; i++) {
+            const hLine = document.createElement('div');
+            hLine.className = 'grid-line-h';
+            hLine.style.top = `${i * 5}%`;
+            grid.appendChild(hLine);
+        }
+
+        // Random Glitch Effect
+        setInterval(() => {
+            const titles = document.querySelectorAll('.project-number');
+            const random = titles[Math.floor(Math.random() * titles.length)];
+            random.classList.add('glitch');
+            random.setAttribute('data-text', random.textContent);
+            setTimeout(() => random.classList.remove('glitch'), 300);
+        }, 3000);
+    </script>
+</body>
+</html>

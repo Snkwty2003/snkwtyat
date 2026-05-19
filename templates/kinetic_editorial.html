@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأرشيف المتحرك | Kinetic Editorial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #faf8f5;
+            --bg-secondary: #f0ebe4;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --accent: #c41e3a;
+            --border: #e0d5c8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Naskh Arabic', 'Inter', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Editorial Grid System */
+        .editorial-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4rem;
+        }
+
+        .masthead {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .issue-info {
+            text-align: left;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .issue-info span {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Hero Editorial */
+        .hero-editorial {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .hero-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: all 1s ease;
+        }
+
+        .hero-image-container:hover .hero-image {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        .image-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(26,26,26,0.8));
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .hero-title {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-excerpt {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+            color: var(--accent);
+        }
+
+        /* Hairline Divider */
+        .hairline {
+            height: 1px;
+            background: var(--border);
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .hairline::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -2px;
+            width: 100px;
+            height: 5px;
+            background: var(--accent);
+        }
+
+        /* Articles Grid */
+        .articles-section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            position: relative;
+        }
+
+        .article-card:nth-child(1) { grid-column: span 7; }
+        .article-card:nth-child(2) { grid-column: span 5; }
+        .article-card:nth-child(3) { grid-column: span 4; }
+        .article-card:nth-child(4) { grid-column: span 4; }
+        .article-card:nth-child(5) { grid-column: span 4; }
+
+        .article-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .article-card:hover .article-image {
+            filter: brightness(1.1);
+        }
+
+        .article-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Vertical Text */
+        .vertical-text {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--border);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* Footer Editorial */
+        footer {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 4rem 0;
+            margin-top: 6rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        .footer-links h4 {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 968px) {
+            .editorial-container { padding: 0 2rem; }
+            .hero-editorial { grid-template-columns: 1fr; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card:nth-child(n) { grid-column: span 1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .vertical-text { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="vertical-text">Kinetic Editorial — Issue 24</div>
+
+    <div class="editorial-container">
+        <header>
+            <div class="masthead">
+                <div class="logo-text">الأرشيف</div>
+                <div class="issue-info">
+                    <span>العدد ٢٤</span>
+                    <span>مايو ٢٠٢٦</span>
+                    <span>المجلد الثاني عشر</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero-editorial">
+            <div class="hero-image-container reveal">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="Cover" class="hero-image">
+                <div class="image-mask"></div>
+            </div>
+            <div class="hero-content reveal">
+                <span class="category-tag">غلاف العدد</span>
+                <h1 class="hero-title">فن الرواية في العصر الرقمي: بين التراث والحداثة</h1>
+                <p class="hero-excerpt">استكشاف عميق لكيفية تأثير التحول الرقمي على أشكال السرد الأدبي، وكيف يعيد الكتاب اكتشاف هوية النص في زمن الصورة المتحركة.</p>
+                <a href="#" class="read-more">اقرأ المقال ←</a>
+            </div>
+        </section>
+
+        <div class="hairline"></div>
+
+        <section class="articles-section">
+            <h2 class="section-title">مقالات مختارة</h2>
+            <div class="articles-grid">
+                <article class="article-card reveal">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop" alt="Article" class="article-image">
+                    <div class="article-meta">أدب · ١٥ دقيقة قراءة</div>
+                    <h3 class="article-title">الشعر العربي المعاصر: تجديدات اللغة وتحديات المعنى</h3>
+                    <p class="article-excerpt">قراءة نقدية في تجارب الشعراء الشباب الذين يحاولون كسر القوالب التقليدية.</p>
+                </article>
+
+                <article class="article-card reveal">
+                    <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop" alt="Article" class="article-image">
+                    <div class="article-meta">فنون بصرية · ١٠ دقائق</div>
+                    <h3 class="article-title">الخط العربي في التصميم المعاصر</h3>
+                    <p class="article-excerpt">كيف يعيد المصممون اكتشاف جماليات الحروف العربية.</p>
+                </article>
+
+                <article class="article-card reveal">
+                    <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=400&h=300&fit=crop" alt="Article" class="article-image">
+                    <div class="article-meta">ثقافة · ٨ دقائق</div>
+                    <h3 class="article-title">مدن ما بعد الكولونيالية</h3>
+                    <p class="article-excerpt">قراءة في المكان والهوية.</p>
+                </article>
+
+                <article class="article-card reveal">
+                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=300&fit=crop" alt="Article" class="article-image">
+                    <div class="article-meta">سينما · ١٢ دقيقة</div>
+                    <h3 class="article-title">السينما العربية الجديدة</h3>
+                    <p class="article-excerpt">أفلام تتحدى المألوف.</p>
+                </article>
+
+                <article class="article-card reveal">
+                    <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=300&fit=crop" alt="Article" class="article-image">
+                    <div class="article-meta">فكر · ٢٠ دقيقة</div>
+                    <h3 class="article-title">فلسفة التكنولوجيا</h3>
+                    <p class="article-excerpt">هل نحن أدوات أم صناع؟</p>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="editorial-container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">الأرشيف</div>
+                    <p class="footer-desc">مجلة ثقافية فصلية تهتم بالأدب والفن والفكر. ننشر ما يستحق القراءة منذ عام ٢٠١٤.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>التصنيفات</h4>
+                    <ul>
+                        <li><a href="#">أدب</a></li>
+                        <li><a href="#">فنون</a></li>
+                        <li><a href="#">فكر</a></li>
+                        <li><a href="#">سينما</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>العدد</h4>
+                    <ul>
+                        <li><a href="#">الأرشيف</a></li>
+                        <li><a href="#">الاشتراكات</a></li>
+                        <li><a href="#">عن المجلة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>تواصل</h4>
+                    <ul>
+                        <li><a href="#">تويتر</a></li>
+                        <li><a href="#">إنستغرام</a></li>
+                        <li><a href="#">بريدنا</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

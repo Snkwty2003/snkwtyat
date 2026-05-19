@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحد الأدنى الوظيفي | Minimal Functionalism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gray-900: #111;
+            --gray-800: #222;
+            --gray-700: #444;
+            --gray-600: #666;
+            --gray-500: #888;
+            --gray-400: #aaa;
+            --gray-300: #ccc;
+            --gray-200: #e5e5e5;
+            --gray-100: #f5f5f5;
+            --gray-50: #fafafa;
+            --radius: 4px;
+            --space-unit: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+            background: white;
+            color: var(--gray-900);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 8pt Grid System */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 calc(var(--space-unit) * 4);
+        }
+
+        /* Navigation */
+        nav {
+            padding: calc(var(--space-unit) * 3) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--gray-900);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: calc(var(--space-unit) * 4);
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gray-900);
+        }
+
+        /* Hero */
+        .hero {
+            padding: calc(var(--space-unit) * 12) 0 calc(var(--space-unit) * 8);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: calc(var(--space-unit) * 3);
+            max-width: 700px;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 540px;
+            margin-bottom: calc(var(--space-unit) * 4);
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: calc(var(--space-unit));
+            padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 3);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--gray-900);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gray-800);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gray-900);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gray-900);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: calc(var(--space-unit) * 2);
+        }
+
+        /* Section */
+        .section {
+            padding: calc(var(--space-unit) * 8) 0;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray-500);
+            margin-bottom: calc(var(--space-unit) * 3);
+        }
+
+        .section-heading {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: calc(var(--space-unit) * 4);
+            letter-spacing: -0.5px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: calc(var(--space-unit) * 3);
+        }
+
+        .product-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: var(--gray-100);
+        }
+
+        .product-info {
+            padding: calc(var(--space-unit) * 2) 0;
+        }
+
+        .product-name {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: calc(var(--space-unit) * 0.5);
+        }
+
+        .product-price {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Features List */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--space-unit) * 4);
+        }
+
+        .feature-item {
+            padding: calc(var(--space-unit) * 3);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+        }
+
+        .feature-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            margin-bottom: calc(var(--space-unit) * 2);
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: calc(var(--space-unit));
+        }
+
+        .feature-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: var(--gray-50);
+            padding: calc(var(--space-unit) * 8) 0;
+        }
+
+        .testimonial-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: calc(var(--space-unit) * 4);
+            color: var(--gray-800);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: calc(var(--space-unit) * 2);
+        }
+
+        .author-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .author-role {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: calc(var(--space-unit) * 10) 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: calc(var(--space-unit) * 2);
+        }
+
+        .cta-section p {
+            color: var(--gray-600);
+            margin-bottom: calc(var(--space-unit) * 4);
+        }
+
+        /* Footer */
+        footer {
+            padding: calc(var(--space-unit) * 6) 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: calc(var(--space-unit) * 3);
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--gray-900);
+        }
+
+        .copyright {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-buttons { flex-direction: column; }
+            .footer-inner { flex-direction: column; gap: calc(var(--space-unit) * 2); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="logo">MINIMAL.</a>
+                <ul class="nav-links">
+                    <li><a href="#">المنتجات</a></li>
+                    <li><a href="#">المميزات</a></li>
+                    <li><a href="#">من نحن</a></li>
+                    <li><a href="#">الدعم</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>أدوات بسيطة لعمل produtive</h1>
+            <p>نؤمن بأن الأدوات الجيدة لا تحتاج إلى تعقيد. كل عنصر موجود لسبب، وكل ميزة تخدم هدفاً واضحاً.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">ابدأ مجاناً</button>
+                <button class="btn btn-secondary">تعرف على المزيد</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <p class="section-title">المنتجات</p>
+            <h2 class="section-heading">مختارات هذا الأسبوع</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop" alt="Product" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">ساعة مينيمال</div>
+                        <div class="product-price">٤٩٩ ر.س</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Product" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">سماعات لاسلكية</div>
+                        <div class="product-price">٣٩٩ ر.س</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Product" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">حذاء رياضي</div>
+                        <div class="product-price">٥٩٩ ر.س</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop" alt="Product" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">كاميرا فورية</div>
+                        <div class="product-price">٧٩٩ ر.س</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <p class="section-title">المميزات</p>
+            <h2 class="section-heading">لماذا نختلف</h2>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-number">01</div>
+                    <h3 class="feature-title">تصميم وظيفي</h3>
+                    <p class="feature-desc">كل عنصر موجود لسبب واضح. لا زخرفة، لا تعقيد، فقط وظيفة نقية.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">02</div>
+                    <h3 class="feature-title">جودة متفوقة</h3>
+                    <p class="feature-desc">نختار المواد بعناية فائقة لضمان المتانة والأداء على المدى الطويل.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">03</div>
+                    <h3 class="feature-title">شحن سريع</h3>
+                    <p class="feature-desc">توصيل خلال ٢٤ ساعة لجميع الطلبات داخل المدن الرئيسية.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">04</div>
+                    <h3 class="feature-title">دعم ممتاز</h3>
+                    <p class="feature-desc">فريق دعم متاح على مدار الساعة للإجابة على جميع استفساراتك.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-inner">
+                <p class="testimonial-text">"التميز ليس في إضافة المزيد، بل في إزالة ما هو غير ضروري. هذه الفلسفة تجعل كل منتج من منتجاتهم قطعة فنية وظيفية."</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Author" class="author-img">
+                    <div>
+                        <div class="author-name">خالد العمري</div>
+                        <div class="author-role">مصمم منتجات</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>ابدأ تجربتك اليوم</h2>
+            <p>انضم إلى آلاف المستخدمين الذين اختاروا البساطة</p>
+            <button class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1rem;">سجل مجاناً</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <ul class="footer-links">
+                    <li><a href="#">الخصوصية</a></li>
+                    <li><a href="#">الشروط</a></li>
+                    <li><a href="#">الدعم</a></li>
+                </ul>
+                <p class="copyright">© 2026 Minimal. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

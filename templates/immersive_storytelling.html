@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سرد تفاعلي | Immersive Storytelling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Noto+Sans+Arabic:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --terracotta: #c65d3b;
+            --sand: #d4a574;
+            --olive: #8b956d;
+            --cream: #f5f0e8;
+            --dark: #2c241b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Noto Sans Arabic', 'Outfit', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Progress Circle */
+        .progress-circle {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            z-index: 1000;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 3;
+        }
+
+        .progress-bg { stroke: rgba(0,0,0,0.1); }
+        .progress-fill { 
+            stroke: var(--terracotta); 
+            stroke-dasharray: 157;
+            stroke-dashoffset: 157;
+            transition: stroke-dashoffset 0.1s;
+        }
+
+        /* Parallax Hero */
+        .hero-story {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
+        .layer-1 { 
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');
+            filter: brightness(0.6);
+        }
+
+        .layer-2 {
+            background: linear-gradient(to bottom, transparent 50%, var(--cream));
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Story Sections */
+        .story-section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        .story-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .chapter-number {
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--terracotta);
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: -2rem;
+        }
+
+        .chapter-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .chapter-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #555;
+            margin-bottom: 3rem;
+        }
+
+        .chapter-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image Reveal */
+        .image-reveal {
+            position: relative;
+            overflow: hidden;
+            margin: 4rem 0;
+            border-radius: 4px;
+        }
+
+        .image-reveal img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transform: scale(1.2);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .image-reveal.revealed img {
+            transform: scale(1);
+        }
+
+        .image-reveal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--terracotta);
+            transform: translateX(0);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .image-reveal.revealed::after {
+            transform: translateX(100%);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--dark);
+            color: var(--cream);
+            padding: 4rem;
+            margin: 4rem 0;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 8rem;
+            color: var(--terracotta);
+            opacity: 0.3;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-box h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Full Width Image */
+        .full-width-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            margin: 4rem 0;
+        }
+
+        /* CTA */
+        .story-cta {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: var(--dark);
+            color: var(--cream);
+        }
+
+        .story-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-cta p {
+            opacity: 0.7;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--terracotta);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .story-section { padding: 4rem 2rem; }
+            .stats-row { grid-template-columns: 1fr; }
+            .quote-block { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Circle -->
+    <div class="progress-circle">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle class="progress-bg" cx="30" cy="30" r="25"></circle>
+            <circle class="progress-fill" cx="30" cy="30" r="25"></circle>
+        </svg>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-story">
+        <div class="parallax-layer layer-1" data-speed="0.5"></div>
+        <div class="parallax-layer layer-2"></div>
+        <div class="hero-content">
+            <div class="hero-label">رحلة استكشافية</div>
+            <h1 class="hero-title">صحراء<br>الوقت</h1>
+            <p class="hero-subtitle">قصة عن البحث عن الذات في أعماق الطبيعة الصامتة</p>
+        </div>
+    </section>
+
+    <!-- Chapter 1 -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="chapter-number">01</div>
+            <h2 class="chapter-title">البداية: حيث ينتهي كل شيء</h2>
+            <div class="chapter-text">
+                <p>في قلب الصحراء، حيث تلتقي الرمال بالسماء في خط أفق لا ينتهي، بدأت الرحلة. لم تكن مجرد رحلة عبر المسافات، بل عبر الزمن itself. كل خطوة في الرمال كانت تحفر ذكرى، وكل نسمة ريح كانت تحمل قصة.</p>
+                <p>الصمت هناك ليس غياباً للصوت، بل حضوراً للمعنى. تعلمت أن أستمع إلى دقات قلبي في إيقاع مختلف، بطيء وعميق كأنه يتوافق مع نبض الأرض نفسها.</p>
+            </div>
+
+            <div class="image-reveal">
+                <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&h=600&fit=crop" alt="Desert">
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote -->
+    <div class="story-container">
+        <div class="quote-block">
+            <p class="quote-text">الصحراء تعلمك أن الجمال ليس في الازدحام، بل في الفراغ. أن العظمة لا تكمن في الضجيج، بل في السكون.</p>
+            <p class="quote-author">— من يوميات الرحلة</p>
+        </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="chapter-number">02</div>
+            <h2 class="chapter-title">الوسط: لحظات الاكتشاف</h2>
+            <div class="chapter-text">
+                <p>في اليوم الثالث، وجدت الواحة. لم تكن كما تخيلتها في الكتب، بل كانت أجمل. نخيل يتمايل ببطء، وماء يجري بصمت، وظلال تتحرك مع الشمس في رقصة يومية لا تتوقف.</p>
+                <p>التقيت بأناس لم يعرفوا التكنولوجيا، لكنهم عرفوا أسرار الرياح والنجوم. علموني أن الحكمة لا تأتي من المعلومات، بل من الملاحظة والصبر.</p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-box">
+                    <h3>١٢</h3>
+                    <p>يوماً في الرحلة</p>
+                </div>
+                <div class="stat-box">
+                    <h3>٤٨٠</h3>
+                    <p>كيلومتر مشياً</p>
+                </div>
+                <div class="stat-box">
+                    <h3>∞</h3>
+                    <p>ذكرى لا تُنسى</p>
+                </div>
+            </div>
+
+            <div class="image-reveal">
+                <img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=1200&h=600&fit=crop" alt="Oasis">
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Width Image -->
+    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&h=800&fit=crop" alt="Landscape" class="full-width-image">
+
+    <!-- Chapter 3 -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="chapter-number">03</div>
+            <h2 class="chapter-title">النهاية: بداية جديدة</h2>
+            <div class="chapter-text">
+                <p>عندما عدت، لم أعد الشخص الذي غادر. حملت معي الصحراء في عينيّ، وصمتها في أذنيّ، وبساطتها في قلبي. اكتشفت أن الرحلة الحقيقية ليست في الوصول، بل في التحول.</p>
+                <p>الآن، كلما نظرت إلى الأفق، أرى ليس النهاية، بل احتمالاً جديداً. كلما سمعت الصمت، أسمع ليس الفراغ، بل إمكانية.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="story-cta">
+        <h2>ابدأ رحلتك الخاصة</h2>
+        <p>كل رحلة تبدأ بخطوة واحدة. ما هي خطوتك الأولى؟</p>
+        <a href="#" class="cta-button">اكتشف المزيد</a>
+    </section>
+
+    <script>
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.parallax-layer').forEach(layer => {
+                const speed = layer.dataset.speed || 0.5;
+                layer.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Progress Circle
+        const progressFill = document.querySelector('.progress-fill');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            const offset = 157 - (157 * scrollPercent);
+            progressFill.style.strokeDashoffset = offset;
+        });
+
+        // Image Reveal on Scroll
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.image-reveal').forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

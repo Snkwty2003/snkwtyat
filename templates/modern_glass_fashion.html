@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>زجاجية عصرية | Modern Glass Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.65);
+    --accent: #f093fb;
+    --accent-blue: #667eea;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Outfit', 'Space Grotesk', sans-serif;
+    background: #0a0a0a;
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Animated Gradient Background */
+.gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.gradient-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 70%, rgba(102, 126, 234, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(240, 147, 251, 0.2) 0%, transparent 50%);
+    animation: orbFloat 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+/* Light Follower */
+.light-follower {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 10, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent));
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text-primary);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-btn {
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, var(--accent-blue), #764ba2);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+/* Hero */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-text h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-text h1 span {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent), #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientText 5s ease infinite;
+}
+
+@keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-text p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    max-width: 450px;
+    line-height: 1.8;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-primary {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--accent-blue), #764ba2);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+}
+
+.btn-secondary {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Glass Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: var(--glass-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+.hero-visual {
+    position: relative;
+}
+
+.hero-visual .glass-card {
+    transform: rotate(-2deg);
+    transition: transform 0.5s ease;
+}
+
+.hero-visual:hover .glass-card {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-item p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Products Section */
+.products-section {
+    padding: 6rem 3rem;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s;
+}
+
+.product-glass:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.product-glass:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    transition: transform 0.5s;
+}
+
+.product-glass:hover .product-img {
+    transform: scale(1.03);
+}
+
+.product-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.product-info p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Collection Banner */
+.collection-banner {
+    padding: 6rem 3rem;
+    text-align: center;
+    position: relative;
+}
+
+.collection-banner .glass-card {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+.collection-banner h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.collection-banner p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+footer {
+    padding: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-blue), var(--accent));
+    border-radius: 3px;
+}
+
+@media (max-width: 968px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 2rem; }
+    .products-section { padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+<div class="light-follower" id="lightFollower"></div>
+
+<nav>
+    <div class="logo">GLASS.</div>
+    <ul class="nav-links">
+        <li><a href="#">الجديد</a></li>
+        <li><a href="#">النساء</a></li>
+        <li><a href="#">الرجال</a></li>
+        <li><a href="#">المجموعات</a></li>
+    </ul>
+    <div class="nav-actions">
+        <button class="nav-btn">🛒 السلة (3)</button>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>أزياء<br>بـ <span>تدرجات حية</span></h1>
+            <p>اكتشف مجموعتنا الجديدة بتصاميم زجاجية عصرية تجمع بين الأناقة والتقنية.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">تسوق الآن</button>
+                <button class="btn-secondary">المجموعة</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="glass-card">
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <h3>+250%</h3>
+                        <p>مبيعات هذا الشهر</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>رضا العملاء</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15K+</h3>
+                        <p>طلب هذا الأسبوع</p>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&h=300&fit=crop" alt="Collection" style="width:100%; border-radius:12px; opacity:0.9;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="section-header">
+        <h2>المنتجات المميزة</h2>
+        <p>اختر من مجموعتنا الحصرية</p>
+    </div>
+    <div class="products-grid">
+        <div class="product-glass">
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=550&fit=crop" alt="Product" class="product-img">
+            <div class="product-info">
+                <h3>بدلة زجاجية سوداء</h3>
+                <p>تصميم عصري بقصة ضيقة</p>
+                <div class="product-price">1,450 د.ل</div>
+            </div>
+        </div>
+        <div class="product-glass">
+            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=550&fit=crop" alt="Product" class="product-img">
+            <div class="product-info">
+                <h3>جاكيت هولوغرام</h3>
+                <p>تأثيرات ضوئية متغيرة</p>
+                <div class="product-price">980 د.ل</div>
+            </div>
+        </div>
+        <div class="product-glass">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=550&fit=crop" alt="Product" class="product-img">
+            <div class="product-info">
+                <h3>قميص نيون</h3>
+                <p>ألوان متدرجة حية</p>
+                <div class="product-price">420 د.ل</div>
+            </div>
+        </div>
+        <div class="product-glass">
+            <img src="https://images.unsplash.com/photo-1548624149-f8c8d5fb8a0f?w=400&h=550&fit=crop" alt="Product" class="product-img">
+            <div class="product-info">
+                <h3>فستان كريستال</h3>
+                <p>لمسات زجاجية شفافة</p>
+                <div class="product-price">1,890 د.ل</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="collection-banner">
+    <div class="glass-card">
+        <h2>مجموعة الصيف 2026</h2>
+        <p>تدرجات حية، ألوان متنفسة، وتصاميم تتكيف مع إضاءتك</p>
+        <button class="btn-primary" style="margin-top:1rem;">اكتشف المجموعة</button>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Glass Fashion. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+// Light Follower
+const lightFollower = document.getElementById('lightFollower');
+let mouseX = 0, mouseY = 0;
+let currentX = 0, currentY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    lightFollower.style.opacity = '1';
+});
+
+document.addEventListener('mouseleave', () => {
+    lightFollower.style.opacity = '0';
+});
+
+function animateLight() {
+    currentX += (mouseX - currentX) * 0.08;
+    currentY += (mouseY - currentY) * 0.08;
+    lightFollower.style.left = currentX + 'px';
+    lightFollower.style.top = currentY + 'px';
+    requestAnimationFrame(animateLight);
+}
+animateLight();
+</script>
+</body>
+</html>
