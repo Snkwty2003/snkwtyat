@@ -22,8 +22,13 @@
   <input type="text" id="search" placeholder="بحث..." oninput="applyFilters()">
   <select id="filter" onchange="applyFilters()">
     <option value="all">كل القوالب</option>
-    <option value="HTML">HTML</option>
-    <option value="CSS">CSS</option>
+    <option value="ملابس">ملابس</option>
+    <option value="متجر">متجر</option>
+    <option value="مدونة">مدونة</option>
+    <option value="أعمال">أعمال</option>
+    <option value="لوحة تحكم">لوحة تحكم</option>
+    <option value="إبداعي">إبداعي</option>
+    <option value="صيدلية">صيدلية</option>
   </select>
 </div>
 
@@ -65,25 +70,114 @@ const products = [
     name: "قالب صيدلية داوائي",
     desc: "قالب HTML احترافي لصيدلية أو متجر أدوية - تصميم أنيق ومتجاوب مع جميع الأجهزة",
     price: 19.99,
-    cat: "HTML",
+    cat: "صيدلية",
     img: "/images/template-pharmacy.png",
     preview: "/templates/dawai-pharmacy (1).html"
   },
   {
     id: 2,
-    name: "قالب متجر ملابس",
-    desc: "قالب HTML لمتجر ملابس أنيق - يدعم العربية وعرض المنتجات باحترافية",
+    name: "Glass Fashion",
+    desc: "قالب ملابس بتصميم زجاجي داكن عصري وأنيق",
     price: 24.99,
-    cat: "HTML",
-    img: "https://via.placeholder.com/400x250/2196f3/fff?text=قالب+ملابس",
-    preview: "/templates/my-website.html"
+    cat: "ملابس",
+    img: "/images/template-glass-fashion.png",
+    preview: "/templates/modern_glass_fashion.html"
+  },
+  {
+    id: 3,
+    name: "Immersive Fashion",
+    desc: "قالب ملابس بتجربة غامرة وتصميم جذاب",
+    price: 24.99,
+    cat: "ملابس",
+    img: "/images/template-immersive.png",
+    preview: "/templates/immersive_fashion.html"
+  },
+  {
+    id: 4,
+    name: "Fashion Archive",
+    desc: "قالب أرشيف الموضة - تصميم كلاسيكي راقي",
+    price: 24.99,
+    cat: "ملابس",
+    img: "/images/template-archive.png",
+    preview: "/templates/fashion_archive.html"
+  },
+  {
+    id: 5,
+    name: "Brutal Fashion",
+    desc: "قالب ملابس بتصميم جريء وبدون زخرفة",
+    price: 24.99,
+    cat: "ملابس",
+    img: "/images/template-brutal.png",
+    preview: "/templates/brutalism_fashion.html"
+  },
+  {
+    id: 6,
+    name: "Typography Architecture",
+    desc: "قالب معماري يعتمد على الطباعة كعنصر تصميمي رئيسي",
+    price: 29.99,
+    cat: "أعمال",
+    img: "/images/template-typography.png",
+    preview: "/templates/typography_architecture.html"
+  },
+  {
+    id: 7,
+    name: "Minimal Functionalism",
+    desc: "قالب منتجات بسيط ونظيف - تصميم وظيفي بدون تعقيد",
+    price: 29.99,
+    cat: "متجر",
+    img: "/images/template-minimal.png",
+    preview: "/templates/minimal_functionalism.html"
+  },
+  {
+    id: 8,
+    name: "Kinetic Editorial",
+    desc: "قالب مدونة وأرشيف بتصميم تحريري متحرك",
+    price: 29.99,
+    cat: "مدونة",
+    img: "/images/template-kinetic.png",
+    preview: "/templates/kinetic_editorial.html"
+  },
+  {
+    id: 9,
+    name: "Immersive Storytelling",
+    desc: "قالب قصصي غامر للرحلات والمحتوى الإبداعي",
+    price: 34.99,
+    cat: "إبداعي",
+    img: "/images/template-storytelling.png",
+    preview: "/templates/immersive_storytelling.html"
+  },
+  {
+    id: 10,
+    name: "Glass Light UI",
+    desc: "لوحة تحكم زجاجية بتصميم داكن احترافي",
+    price: 39.99,
+    cat: "لوحة تحكم",
+    img: "/images/template-glass-ui.png",
+    preview: "/templates/glass_light_ui.html"
+  },
+  {
+    id: 11,
+    name: "Dynamic Contrast",
+    desc: "لوحة تحكم ديناميكية بتباين عالي ومميز",
+    price: 39.99,
+    cat: "لوحة تحكم",
+    img: "/images/template-dynamic.png",
+    preview: "/templates/dynamic_contrast (2).html"
+  },
+  {
+    id: 12,
+    name: "Digital Brutalism",
+    desc: "قالب معماري برتوتالي رقمي جريء",
+    price: 29.99,
+    cat: "أعمال",
+    img: "/images/template-digital-brutal.png",
+    preview: "/templates/digital_brutalism.html"
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 let currentProduct = null;
 
-// Render products
 function renderProducts(list) {
   const container = document.getElementById('products');
   container.innerHTML = list.map(p => `
@@ -99,7 +193,6 @@ function renderProducts(list) {
   `).join('');
 }
 
-// Filter
 function applyFilters() {
   const search = document.getElementById('search').value.toLowerCase();
   const filter = document.getElementById('filter').value;
@@ -109,15 +202,14 @@ function applyFilters() {
   renderProducts(filtered);
 }
 
-// Modal
 function openModal(id) {
   currentProduct = products.find(p => p.id === id);
   if (!currentProduct) return;
- document.getElementById('mName').textContent = currentProduct.name;
-document.getElementById('mDesc').textContent = currentProduct.desc;
-document.getElementById('mPrice').textContent = '$' + currentProduct.price;
-document.getElementById('mImg').src = currentProduct.img;
-document.getElementById('modal').style.display = 'flex';
+  document.getElementById('mName').textContent = currentProduct.name;
+  document.getElementById('mDesc').textContent = currentProduct.desc;
+  document.getElementById('mPrice').textContent = '$' + currentProduct.price;
+  document.getElementById('mImg').src = currentProduct.img;
+  document.getElementById('modal').style.display = 'flex';
 }
 
 function closeModal() {
@@ -125,7 +217,6 @@ function closeModal() {
   currentProduct = null;
 }
 
-// Cart
 function toggleCart() {
   const box = document.getElementById('cartBox');
   box.style.display = box.style.display === 'none' ? 'block' : 'none';
@@ -176,7 +267,6 @@ function showToast() {
   setTimeout(() => { toast.style.display = 'none'; }, 2000);
 }
 
-// Init
 renderProducts(products);
 updateCart();
 </script>
