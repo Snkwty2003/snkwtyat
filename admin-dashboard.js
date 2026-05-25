@@ -6,8 +6,37 @@ import {
   deleteDoc,
   onSnapshot,
   query,
-  orderBy
+  orderBy,
+  auth,
+  onAuthStateChanged,
+  getDoc,
+  signOut
 } from "./firebase-config.js";
+
+// التحقق من تسجيل الدخول
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        window.location.href = 'admin-login.html';
+        return;
+    }
+    
+    const adminDoc = await getDoc(doc(db, 'admins', user.uid));
+    if (!adminDoc.exists() || adminDoc.data().role !== 'admin') {
+        window.location.href = 'admin-login.html';
+        return;
+    }
+
+    // إظهار اسم المستخدم
+    const userSpan = document.querySelector('.user-info span');
+    if (userSpan) userSpan.textContent = user.email;
+});
+
+// تسجيل الخروج
+window.logout = async function() {
+    await signOut(auth);
+    localStorage.removeItem('adminUser');
+    window.location.href = 'admin-login.html';
+}
 
 // Businesses data from Firestore
 let businesses = [];
@@ -17,7 +46,7 @@ let businessesUnsubscribe = null;
 let orders = [];
 let ordersUnsubscribe = null;
 
-// Stats data (will be calculated from real data)
+// Stats data
 let statsData = {
     revenue: { value: 0, change: 0, trend: "neutral" },
     orders: { value: 0, change: 0, trend: "neutral" },
@@ -25,23 +54,16 @@ let statsData = {
     products: { value: 0, change: 0, trend: "neutral" }
 };
 
-// Helper function to calculate trend based on change value
 function calculateTrend(change) {
     if (change > 0) return "positive";
     if (change < 0) return "negative";
     return "neutral";
 }
 
-// Helper function to create stat object with dynamic trend
 function createStat(value, change = 0) {
-    return {
-        value,
-        change,
-        trend: calculateTrend(change)
-    };
+    return { value, change, trend: calculateTrend(change) };
 }
 
-// Calculate stats from real data
 function calculateStats() {
     try {
         const totalRevenue = orders.reduce((sum, order) => {
@@ -54,42 +76,23 @@ function calculateStats() {
             sum + (business.products?.length || 0), 0);
 
         statsData = {
-            revenue: { 
-                value: totalRevenue, 
-                change: 0, 
-                trend: "neutral" 
-            },
-            orders: { 
-                value: totalOrders, 
-                change: 0, 
-                trend: "neutral" 
-            },
-            users: { 
-                value: totalBusinesses, 
-                change: 0, 
-                trend: "neutral" 
-            },
-            products: { 
-                value: totalProducts, 
-                change: 0, 
-                trend: "neutral" 
-            }
+            revenue: { value: totalRevenue, change: 0, trend: "neutral" },
+            orders: { value: totalOrders, change: 0, trend: "neutral" },
+            users: { value: totalBusinesses, change: 0, trend: "neutral" },
+            products: { value: totalProducts, change: 0, trend: "neutral" }
         };
     } catch (error) {
         console.error("Error calculating stats:", error);
     }
 }
 
-// Render stats cards
 function renderStats() {
     const statsCards = document.querySelectorAll(".stat-card");
-
     if (statsCards.length === 0) return;
 
     statsCards.forEach((card, index) => {
         const statKey = Object.keys(statsData)[index];
         const stat = statsData[statKey];
-
         const valueElement = card.querySelector(".stat-value");
         const changeElement = card.querySelector(".stat-change");
 
@@ -102,7 +105,6 @@ function renderStats() {
         if (changeElement) {
             const trendIcon = stat.trend === "positive" ? "fa-arrow-up" : "fa-arrow-down";
             const trendClass = stat.trend === "positive" ? "positive" : "negative";
-
             changeElement.innerHTML = `
                 <i class="fas ${trendIcon}"></i>
                 <span>${Math.abs(stat.change)}% من الشهر الماضي</span>
@@ -112,7 +114,6 @@ function renderStats() {
     });
 }
 
-// Render orders in the dashboard
 function renderRecentOrders() {
     const ordersList = document.querySelector(".recent-orders");
     if (!ordersList) return;
@@ -130,7 +131,7 @@ function renderRecentOrders() {
                 </div>
                 <div class="order-details">
                     <h4>${order.customerName || order.customer || "عميل غير مسجل"}</h4>
-                    <span>${order.date || order.createdAt || new Date().toLocaleDateString("ar-SA")}</span>
+                    <span>${order.date || new Date().toLocaleDateString("ar-SA")}</span>
                 </div>
             </div>
             <div class="order-amount">${(order.amount || order.total || 0).toFixed(2)} ر.س</div>
@@ -138,12 +139,10 @@ function renderRecentOrders() {
     `).join("");
 }
 
-// Render top products from real data
 function renderTopProducts() {
     const productsList = document.querySelector(".top-products");
     if (!productsList) return;
 
-    // Collect all products from all businesses
     const allProducts = [];
     businesses.forEach(business => {
         if (business.products && Array.isArray(business.products)) {
@@ -158,10 +157,7 @@ function renderTopProducts() {
         }
     });
 
-    // Sort by sales and get top 5
-    const topProducts = allProducts
-        .sort((a, b) => b.sales - a.sales)
-        .slice(0, 5);
+    const topProducts = allProducts.sort((a, b) => b.sales - a.sales).slice(0, 5);
 
     if (topProducts.length === 0) {
         productsList.innerHTML = `<li class="no-products">لا توجد منتجات حالياً</li>`;
@@ -179,17 +175,13 @@ function renderTopProducts() {
     `).join("");
 }
 
-// Fetch businesses from Firestore
 function fetchBusinesses() {
     try {
         const q = query(collection(db, "businesses"));
         businessesUnsubscribe = onSnapshot(q, (snapshot) => {
             businesses = [];
             snapshot.forEach((doc) => {
-                businesses.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
+                businesses.push({ id: doc.id, ...doc.data() });
             });
             renderBusinesses();
             calculateStats();
@@ -201,20 +193,16 @@ function fetchBusinesses() {
     }
 }
 
-// Render businesses cards
 function renderBusinesses() {
     const businessesContainer = document.getElementById("businessesContainer");
     if (!businessesContainer) {
-        // Create businesses container if it doesn't exist
         const mainContent = document.querySelector(".main-content");
         if (mainContent) {
             const businessesSection = document.createElement("div");
             businessesSection.id = "businessesContainer";
             businessesSection.innerHTML = `
                 <div class="content-card" style="margin-top: 30px;">
-                    <div class="card-header">
-                        <h3>الأنشطة التجارية</h3>
-                    </div>
+                    <div class="card-header"><h3>الأنشطة التجارية</h3></div>
                     <div class="businesses-grid" id="businessesGrid"></div>
                 </div>
             `;
@@ -228,7 +216,6 @@ function renderBusinesses() {
             businessesGrid.innerHTML = `<div class="no-businesses">لا توجد أنشطة تجارية حالياً</div>`;
             return;
         }
-
         businessesGrid.innerHTML = businesses.map(business => `
             <div class="business-card">
                 <div class="business-info">
@@ -245,12 +232,10 @@ function renderBusinesses() {
     }
 }
 
-// Delete business
 window.deleteBusiness = async function(businessId) {
     if (confirm("هل أنت متأكد من حذف هذا النشاط التجاري؟")) {
         try {
             await deleteDoc(doc(db, "businesses", businessId));
-            // Data will be automatically updated via onSnapshot
         } catch (error) {
             console.error("Error deleting business:", error);
             alert("حدث خطأ أثناء حذف النشاط التجاري");
@@ -258,119 +243,60 @@ window.deleteBusiness = async function(businessId) {
     }
 };
 
-// Fetch orders from Firestore - Safe implementation
 function fetchOrders() {
     try {
-        // Ensure we unsubscribe from previous listener if exists
         if (ordersUnsubscribe) {
             ordersUnsubscribe();
             ordersUnsubscribe = null;
         }
 
-        // Create query with error handling
         const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-
-        // Set up real-time listener with comprehensive error handling
-        ordersUnsubscribe = onSnapshot(
-            q,
-            (snapshot) => {
-                try {
-                    // Reset orders array
-                    orders = [];
-
-                    // Safely process each document
-                    if (snapshot && snapshot.docs) {
-                        snapshot.docs.forEach((doc) => {
-                            if (doc && doc.exists) {
-                                orders.push({
-                                    id: doc.id,
-                                    ...doc.data()
-                                });
-                            }
-                        });
-                    }
-
-                    // Update UI components safely
-                    renderOrders();
-                    renderRecentOrders();
-                    calculateStats();
-                    renderStats();
-                } catch (processingError) {
-                    console.error("Error processing orders data:", processingError);
-                    // Still attempt to render with whatever data we have
-                    try {
-                        renderOrders();
-                        renderRecentOrders();
-                    } catch (renderError) {
-                        console.error("Error rendering orders:", renderError);
-                    }
-                }
-            },
-            (error) => {
-                console.error("Error in orders listener:", error);
-                // Handle listener errors gracefully
+        ordersUnsubscribe = onSnapshot(q, (snapshot) => {
+            try {
                 orders = [];
-                try {
-                    renderOrders();
-                    renderRecentOrders();
-                } catch (renderError) {
-                    console.error("Error rendering orders after listener error:", renderError);
+                if (snapshot && snapshot.docs) {
+                    snapshot.docs.forEach((doc) => {
+                        if (doc && doc.exists) {
+                            orders.push({ id: doc.id, ...doc.data() });
+                        }
+                    });
                 }
+                renderOrders();
+                renderRecentOrders();
+                calculateStats();
+                renderStats();
+            } catch (processingError) {
+                console.error("Error processing orders data:", processingError);
             }
-        );
+        }, (error) => {
+            console.error("Error in orders listener:", error);
+            orders = [];
+        });
     } catch (error) {
         console.error("Error setting up orders listener:", error);
-        // Ensure UI shows appropriate state
         orders = [];
-        try {
-            renderOrders();
-            renderRecentOrders();
-        } catch (renderError) {
-            console.error("Error rendering orders after setup error:", renderError);
-        }
     }
 }
 
-// Render orders in the orders management section - Safe implementation
 function renderOrders() {
     try {
-        // Safely get orders table element
         const ordersTable = document.querySelector(".orders-table tbody");
         if (!ordersTable) return;
 
-        // Handle empty orders state
         if (!orders || orders.length === 0) {
             ordersTable.innerHTML = `
-                <tr>
-                    <td colspan="6" class="no-orders">لا توجد طلبات حالياً</td>
-                </tr>
+                <tr><td colspan="6" class="no-orders">لا توجد طلبات حالياً</td></tr>
             `;
             return;
         }
 
-        // Safely render orders with optional chaining
         ordersTable.innerHTML = orders.map(order => {
-            // Ensure order object exists
             if (!order) return '';
-
-            // Safely get order ID
-            const orderId = order.id || order.orderId || '-';
-
-            // Safely get customer name
+            const orderId = order.id || '-';
             const customerName = order.customerName || order.customer || 'عميل غير مسجل';
-
-            // Safely get business name
             const businessName = order.businessName || order.restaurant || '-';
-
-            // Safely get status
             const status = order.status || 'قيد المعالجة';
-
-            // Safely get amount
             const amount = parseFloat(order.amount || order.total || 0).toFixed(2);
-
-            // Safely get order ID for delete button
-            const deleteOrderId = order.id || '';
-
             return `
                 <tr>
                     <td>#${orderId}</td>
@@ -379,7 +305,7 @@ function renderOrders() {
                     <td>${status}</td>
                     <td>${amount} ر.س</td>
                     <td>
-                        <button class="btn btn-delete" onclick="deleteOrder('${deleteOrderId}')" ${!deleteOrderId ? 'disabled' : ''}>
+                        <button class="btn btn-delete" onclick="deleteOrder('${order.id || ''}')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -388,49 +314,21 @@ function renderOrders() {
         }).join('');
     } catch (error) {
         console.error("Error rendering orders:", error);
-        // Attempt to show error state in table if possible
-        try {
-            const ordersTable = document.querySelector(".orders-table tbody");
-            if (ordersTable) {
-                ordersTable.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="error-message">حدث خطأ في عرض الطلبات</td>
-                    </tr>
-                `;
-            }
-        } catch (innerError) {
-            console.error("Error showing error state:", innerError);
-        }
     }
 }
 
-// Delete order - Safe implementation
 window.deleteOrder = async function(orderId) {
-    try {
-        // Validate orderId
-        if (!orderId || typeof orderId !== 'string') {
-            console.error("Invalid order ID:", orderId);
-            alert("معرف الطلب غير صالح");
-            return;
+    if (!orderId) { alert("معرف الطلب غير صالح"); return; }
+    if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
+        try {
+            await deleteDoc(doc(db, "orders", orderId));
+        } catch (error) {
+            console.error("Error deleting order:", error);
+            alert("حدث خطأ أثناء حذف الطلب");
         }
-
-        // Confirm deletion
-        if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
-            try {
-                await deleteDoc(doc(db, "orders", orderId));
-                // Data will be automatically updated via onSnapshot
-            } catch (deleteError) {
-                console.error("Error deleting order document:", deleteError);
-                alert("حدث خطأ أثناء حذف الطلب من قاعدة البيانات");
-            }
-        }
-    } catch (error) {
-        console.error("Error in deleteOrder function:", error);
-        alert("حدث خطأ غير متوقع أثناء حذف الطلب");
     }
 };
 
-// Update dashboard data
 function updateDashboard() {
     calculateStats();
     renderStats();
@@ -438,26 +336,13 @@ function updateDashboard() {
     renderTopProducts();
 }
 
-// Initialize - Safe implementation
 document.addEventListener("DOMContentLoaded", function() {
     try {
-        // Initialize dashboard with empty state
         updateDashboard();
-
-        // Fetch data with proper error handling
         fetchBusinesses();
         fetchOrders();
-
         console.log("Dashboard initialized successfully");
     } catch (error) {
         console.error("Error initializing dashboard:", error);
-        // Attempt to render basic UI even if initialization fails
-        try {
-            renderStats();
-            renderOrders();
-            renderRecentOrders();
-        } catch (renderError) {
-            console.error("Error rendering initial UI:", renderError);
-        }
     }
 });
