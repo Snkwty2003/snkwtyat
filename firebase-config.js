@@ -10,8 +10,15 @@ import {
     orderBy,
     getDocs,
     addDoc,
-    setDoc
+    setDoc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzlJRfoFi8jBevT6fZb6cMTcEslOazmN8",
@@ -24,5 +31,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-export { db, collection, doc, deleteDoc, updateDoc, onSnapshot, query, orderBy, getDocs, addDoc, setDoc };
+export { db, auth, collection, doc, deleteDoc, updateDoc, onSnapshot, query, orderBy, getDocs, addDoc, setDoc, getDoc, signInWithEmailAndPassword, signOut, onAuthStateChanged };
