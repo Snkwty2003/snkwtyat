@@ -1,3 +1,26 @@
+// Firebase imports
+import { auth, onAuthStateChanged, db, getDoc, doc, signOut } from "./firebase-config.js";
+
+// التحقق من تسجيل الدخول
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        window.location.href = 'admin-login.html';
+        return;
+    }
+    const adminDoc = await getDoc(doc(db, 'admins', user.uid));
+    if (!adminDoc.exists() || adminDoc.data().role !== 'admin') {
+        window.location.href = 'admin-login.html';
+        return;
+    }
+});
+
+// تسجيل الخروج
+window.logout = async function() {
+    await signOut(auth);
+    localStorage.removeItem('adminUser');
+    window.location.href = 'admin-login.html';
+}
+
 // Sample products data
 const products = [
     {
@@ -38,7 +61,6 @@ const products = [
     }
 ];
 
-// Category labels
 const categoryLabels = {
     landing: "صفحة هبوط",
     store: "متجر إلكتروني",
@@ -46,7 +68,6 @@ const categoryLabels = {
     blog: "مدونة"
 };
 
-// Render products grid
 function renderProducts(filteredProducts) {
     const grid = document.getElementById("productsGrid");
     grid.innerHTML = filteredProducts.map(product => `
@@ -77,54 +98,33 @@ function renderProducts(filteredProducts) {
     `).join("");
 }
 
-// Filter products
 function filterProducts() {
     const category = document.getElementById("categoryFilter").value;
     const status = document.getElementById("statusFilter").value;
     const search = document.getElementById("searchFilter").value.toLowerCase();
 
     let filtered = products;
-
-    if (category !== "all") {
-        filtered = filtered.filter(product => product.category === category);
-    }
-
-    if (status !== "all") {
-        filtered = filtered.filter(product => product.status === status);
-    }
-
-    if (search) {
-        filtered = filtered.filter(product =>
-            product.name.toLowerCase().includes(search) ||
-            product.description.toLowerCase().includes(search)
-        );
-    }
-
+    if (category !== "all") filtered = filtered.filter(p => p.category === category);
+    if (status !== "all") filtered = filtered.filter(p => p.status === status);
+    if (search) filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(search) ||
+        p.description.toLowerCase().includes(search)
+    );
     renderProducts(filtered);
 }
 
-// Add new product
-function openAddProductModal() {
-    alert("فتح نموذج إضافة منتج جديد");
-}
-
-// Edit product
-function editProduct(productId) {
+window.editProduct = function(productId) {
     alert(`تعديل المنتج #${productId}`);
 }
 
-// Delete product
-function deleteProduct(productId) {
+window.deleteProduct = function(productId) {
     if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
         alert(`تم حذف المنتج #${productId}`);
     }
 }
 
-// Initialize
 document.addEventListener("DOMContentLoaded", function() {
     renderProducts(products);
-
-    // Add event listeners to filters
     document.getElementById("categoryFilter").addEventListener("change", filterProducts);
     document.getElementById("statusFilter").addEventListener("change", filterProducts);
     document.getElementById("searchFilter").addEventListener("input", filterProducts);
